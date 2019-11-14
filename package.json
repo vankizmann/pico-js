@@ -1,7 +1,7 @@
 {
     "name": "nano-js",
     "version": "0.0.1",
-    "main": "dist/index.esm.js",
+    "main": "dist/nano-js.esm.js",
     "scripts": {
         "build": "webpack --hide-modules --mode=production",
         "watch": "webpack --watch --hide-modules --mode=development"

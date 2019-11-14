@@ -1,6 +1,5 @@
 import { Dom } from "../index";
 import DefaultElement from "./default";
-import Velocity from "velocity-animate";
 
 export default class Ready extends DefaultElement
 {
@@ -17,6 +16,10 @@ export default class Ready extends DefaultElement
 
     bind()
     {
+        if ( window.$ === undefined ) {
+            return console.error('Element ready function requires jquery.')
+        }
+
         Dom.ready(this.bindAnimation.bind(this), this.options.delay);
     }
 
@@ -44,7 +47,7 @@ export default class Ready extends DefaultElement
             opacity: 1
         });
 
-        Velocity(this.el, { opacity: 0 }, options);
+        $(this.el).animate({ opacity: 0 }, options);
     }
 
     getReadyClass()
