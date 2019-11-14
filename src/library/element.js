@@ -42,8 +42,15 @@ export class Element
             return console.error(`Element "${key}" is not defined.`);
         }
 
-        let callback = (el, options) =>
-            new instance(el.get(0), options).bind();
+        let callback = (el, options) => {
+
+            let cb = new instance(
+                el.get(0), options
+            );
+
+            return Any.isFunction(cb) ?
+                cb.bind() : cb;
+        };
 
         // Bind option
         Dom.ready(() => callback.call({}, el, options));
