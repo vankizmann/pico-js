@@ -78,7 +78,6 @@ if (typeof window !== 'undefined') {
 export const Nano = new NanoInstance;
 
 if ( typeof scope.Nano === 'undefined' ) {
-    console.log('Nano JS is ready!');
     scope.Nano = Nano;
 }
 
