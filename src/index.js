@@ -78,11 +78,13 @@ if (typeof window !== 'undefined') {
 export const Nano = new NanoInstance;
 
 if ( typeof scope.Nano === 'undefined' ) {
+    console.log('Nano JS is ready!');
     scope.Nano = Nano;
 }
 
 if ( typeof scope.IE === 'undefined' ) {
-    scope.IE = scope.navigator.userAgent.match(/Edge\/|Trident\/|MSIE /) !== null;
+    scope.IE = scope.navigator.userAgent
+        .match(/Edge\/|Trident\/|MSIE /) !== null;
 }
 
 import ReadyElement from './element/ready';
