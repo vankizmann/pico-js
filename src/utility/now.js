@@ -3,49 +3,25 @@ import * as moment from 'moment';
 
 export class Now
 {
-    initial = null;
+    initialDate = null;
     moment = null;
-
-    static _months = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-    ];
-
-    static _days = [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-    ];
 
     constructor(date = null)
     {
-        this.initial = date;
-
-        if ( date === null || date.match(/^now/) ) {
-            date = new Date;
-        }
+        this.initialDate = date;
 
         if ( date instanceof Now ) {
             date = date.get().toDate();
         }
 
-        this.moment = moment(date);
+        if ( ! Any.isString(date) ) {
+            return this.moment = moment(date);
+        }
 
-        let day = this.initial.match(/(\+|-)([0-9]+)days?/);
+        this.moment = moment(date.match(/^now/) ?
+            new Date : date);
+
+        let day = this.initialDate.match(/(\+|-)([0-9]+)days?/);
 
         if ( Any.isEmpty(day) === false && day[1] === '+' ) {
             this.moment.add(day[2], 'day');
@@ -55,7 +31,7 @@ export class Now
             this.moment.subtract(day[2], 'day');
         }
 
-        let month = this.initial.match(/(\+|-)([0-9]+)months?/);
+        let month = this.initialDate.match(/(\+|-)([0-9]+)months?/);
 
         if ( Any.isEmpty(month) === false && month[1] === '+' ) {
             this.moment.add(month[2], 'month');
@@ -65,7 +41,7 @@ export class Now
             this.moment.subtract(month[2], 'month');
         }
 
-        let year = this.initial.match(/(\+|-)([0-9]+)years?/);
+        let year = this.initialDate.match(/(\+|-)([0-9]+)years?/);
 
         if ( Any.isEmpty(year) === false && year[1] === '+' ) {
             this.moment.add(year[2], 'year');
@@ -89,7 +65,7 @@ export class Now
 
     valid()
     {
-        return ! Any.isEmpty(this.initial) &&
+        return ! Any.isEmpty(this.initialDate) &&
             this.moment.isValid();
     }
 
