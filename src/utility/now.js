@@ -213,7 +213,7 @@ export class Now
     month(month = null)
     {
         if ( month === null ) {
-            return this.moment.month();
+            return this.moment.month() - 1;
         }
 
         this.moment.month(month - 1);
@@ -379,16 +379,6 @@ export class Now
     nextSecond()
     {
         return this.clone().second(this.second() + 1);
-    }
-
-    humanDay()
-    {
-        return this.day();
-    }
-
-    humanMonth()
-    {
-        return this.month();
     }
 
     getMonths()
