@@ -64,7 +64,7 @@ export class Now
 
     clone()
     {
-        return new Now(this.moment.format('X'));
+        return new Now(this.moment.toDate());
     }
 
     code(format = 'X')
@@ -167,9 +167,9 @@ export class Now
         return this.year(this.moment.year() - (count * 10));
     }
 
-    year(year = undefined)
+    year(year = null)
     {
-        if ( year === undefined ) {
+        if ( year === null ) {
             return this.moment.year();
         }
 
@@ -198,9 +198,9 @@ export class Now
         return this.year(this.year() - count);
     }
 
-    month(month = undefined)
+    month(month = null)
     {
-        if ( month === undefined ) {
+        if ( month === null ) {
             return this.moment.month();
         }
 
@@ -229,9 +229,9 @@ export class Now
         return this.clone().month(this.month() + 1);
     }
 
-    date(date = undefined)
+    date(date = null)
     {
-        if ( date === undefined ) {
+        if ( date === null ) {
             return this.moment.date();
         }
 
@@ -265,9 +265,9 @@ export class Now
         return this.prevMonth().date(0).date();
     }
 
-    day(day = undefined)
+    day(day = null)
     {
-        if ( day === undefined ) {
+        if ( day === null ) {
             return this.moment.day();
         }
 
@@ -276,9 +276,9 @@ export class Now
         return this;
     }
 
-    hour(hour = undefined)
+    hour(hour = null)
     {
-        if ( hour === undefined ) {
+        if ( hour === null ) {
             return this.moment.hour();
         }
 
@@ -307,9 +307,9 @@ export class Now
         return this.clone().hour(this.hour() + 1);
     }
 
-    minute(minute = undefined)
+    minute(minute = null)
     {
-        if ( minute === undefined ) {
+        if ( minute === null ) {
             return this.moment.minute();
         }
 
@@ -338,9 +338,9 @@ export class Now
         return this.clone().minute(this.minute() + 1);
     }
 
-    second(second = undefined)
+    second(second = null)
     {
-        if ( second === undefined ) {
+        if ( second === null ) {
             return this.moment.second();
         }
 
