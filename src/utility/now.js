@@ -398,13 +398,13 @@ export class Now
         });
     }
 
-    getDateRange(target = null)
+    getDatesRange(target = null)
     {
         let range = [], targetNow = Now.make(target);
 
         if ( this.afterDate(target) ) {
 
-            for (let day = targetNow; ! day.equalDate(this); day = day.nextDate()) {
+            for ( let day = targetNow; ! day.equalDate(this); day = day.nextDate() ) {
                 Arr.push(range, day);
             }
 
@@ -413,7 +413,7 @@ export class Now
 
         if ( this.beforeDate(target) ) {
 
-            for (let day = this; ! day.equalDate(targetNow); day = day.nextDate()) {
+            for ( let day = this; ! day.equalDate(targetNow); day = day.nextDate() ) {
                 Arr.push(range, day);
             }
 
