@@ -35,7 +35,7 @@ export class Now
     {
         this.initial = date;
 
-        if ( date === null ) {
+        if ( date === null || date.match(/^now/) ) {
             date = new Date;
         }
 
@@ -44,6 +44,37 @@ export class Now
         }
 
         this.moment = moment(date);
+
+        let day = this.initial.match(/(\+|-)([0-9]+)days?/);
+
+        if ( Any.isEmpty(day) === false && day[1] === '+' ) {
+            this.moment.add(day[2], 'day');
+        }
+
+        if ( Any.isEmpty(day) === false && day[1] === '-' ) {
+            this.moment.subtract(day[2], 'day');
+        }
+
+        let month = this.initial.match(/(\+|-)([0-9]+)months?/);
+
+        if ( Any.isEmpty(month) === false && month[1] === '+' ) {
+            this.moment.add(month[2], 'month');
+        }
+
+        if ( Any.isEmpty(month) === false && month[1] === '-' ) {
+            this.moment.subtract(month[2], 'month');
+        }
+
+        let year = this.initial.match(/(\+|-)([0-9]+)years?/);
+
+        if ( Any.isEmpty(year) === false && year[1] === '+' ) {
+            this.moment.add(year[2], 'year');
+        }
+
+        if ( Any.isEmpty(year) === false && year[1] === '-' ) {
+            this.moment.subtract(year[2], 'year');
+        }
+
     }
 
     static make(date = null)
