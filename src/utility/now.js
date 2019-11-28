@@ -1,9 +1,10 @@
 import { Num, Arr, Any } from "../index";
+import * as moment from 'moment';
 
 export class Now
 {
     initial = null;
-    timestamp = null;
+    moment = null;
 
     static _months = [
         'January',
@@ -34,23 +35,15 @@ export class Now
     {
         this.initial = date;
 
-        if ( Any.isEmpty(date) ) {
+        if ( date === null ) {
             date = new Date;
-        }
-
-        if ( Any.isString(date) ) {
-            date = Now.datetime(date)
         }
 
         if ( date instanceof Now ) {
-            date = date.get();
+            date = date.get().toDate();
         }
 
-        if ( date.getDate() !== date.getDate() ) {
-            date = new Date;
-        }
-
-        this.timestamp = date;
+        this.moment = moment(date);
     }
 
     static make(date = null)
@@ -58,117 +51,34 @@ export class Now
         return new Now(date);
     }
 
-    static datetime(val)
-    {
-        let offset = 0, offsetMatch = val.match(/\s?(.*?)(\+|\-)([0-9]{2}):([0-9]{2})$/);
-
-        if ( offsetMatch !== null ) {
-            offset = (Num.int(eval(offsetMatch[2] + '1')) *
-                Num.int(offsetMatch[3]) * 60) + Num.int(offsetMatch[4]);
-        }
-
-        val = val.replace(/\s?(\+|\-)([0-9]{2}):([0-9]{2})$/, '');
-
-        if ( val.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})/) ) {
-            val = val.replace(/^([0-9]{4})-([0-9]{2})-([0-9]{2})(.*?)$/, '$1/$2/$3$4');
-        }
-
-        if ( val.match(/^([0-9]{2})\.([0-9]{2})\.([0-9]{4})/) ) {
-            val = val.replace(/^([0-9]{4})-([0-9]{2})-([0-9]{2})/, '$3/$2/$1');
-        }
-
-        if ( val.match(/(T|\s)([0-9]{2}):([0-9]{2}):([0-9]{2})$/) ) {
-            val = val.replace(/(T|\s)([0-9]{2}):([0-9]{2}):([0-9]{2})$/, ' $2:$3:$4');
-        }
-
-        if ( val.match(/(T|\s)([0-9]{2}):([0-9]{2})($)/) ) {
-            val = val.replace(/(T|\s)([0-9]{2}):([0-9]{2})($)/, ' $2:$3:00');
-        }
-
-        let date = new Date(val);
-
-        if ( val.match(/^now/) ) {
-            date = new Date;
-        }
-
-        date.setTime(date.getTime() + (offset * 60 * 1000));
-
-        let days = val.match(/(\+|-)([0-9]+)days?/);
-
-        if ( Any.isEmpty(days) === false ) {
-            date.setDate(eval(eval('date.getDate() + days[1] + days[2]')));
-        }
-
-        let months = val.match(/(\+|-)([0-9]+)months?/);
-
-        if ( Any.isEmpty(months) === false ) {
-            date.setMonth(eval(eval('date.getMonth() + months[1] + months[2]')));
-        }
-
-        let years = val.match(/(\+|-)([0-9]+)years?/);
-
-        if ( Any.isEmpty(years) === false ) {
-            date.setFullYear(eval(eval('date.getMonth() + years[1] + years[2]')));
-        }
-
-        return date;
-    }
-
     get()
     {
-        return this.timestamp;
+        return this.moment;
     }
 
     valid()
     {
-        return Any.isEmpty(this.initial) === false &&
-            this.timestamp.getTime() === this.timestamp.getTime();
+        return ! Any.isEmpty(this.initial) &&
+            this.moment.isValid();
     }
 
     clone()
     {
-        return new Now(new Date(this.timestamp));
+        return new Now(this.moment.format('X'));
     }
 
-    code(format = 'YYYYMMDDhhiiss')
+    code(format = 'X')
     {
         return Num.int(this.format(format));
     }
 
-    iso()
+    format(format = 'YYYY-MM-DD hh:mm:ss')
     {
-        return new Date(this.timestamp.getTime() -
-            (this.timestamp.getTimezoneOffset() * 60000));
-    }
-
-    format(format = 'YYYY-MM-DD hh:ii:ss')
-    {
-        if ( this.valid() === false ) {
+        if ( this.valid() ) {
             return '';
         }
 
-        format = format.replace(/YYYY/g,
-            this.iso().toJSON().substr(0, 4));
-
-        format = format.replace(/YY/g,
-            this.iso().toJSON().substr(2, 2));
-
-        format = format.replace(/MM/g,
-            this.iso().toJSON().substr(5, 2));
-
-        format = format.replace(/DD/g,
-            this.iso().toJSON().substr(8, 2));
-
-        format = format.replace(/hh/g,
-            this.iso().toJSON().substr(11, 2));
-
-        format = format.replace(/ii/g,
-            this.iso().toJSON().substr(14, 2));
-
-        format = format.replace(/ss/g,
-            this.iso().toJSON().substr(17, 2));
-
-        return format;
+        return this.moment.format(format);
     }
 
     before(before = null)
@@ -184,8 +94,8 @@ export class Now
 
     beforeTime(before = null)
     {
-        return this.code('hhiiss') <
-            Now.make(before).code('hhiiss');
+        return this.code('hhmmss') <
+            Now.make(before).code('hhmmss');
     }
 
     after(after = null)
@@ -201,11 +111,11 @@ export class Now
 
     afterTime(after = null)
     {
-        return this.code('hhiiss') >
-            Now.make(after).code('hhiiss');
+        return this.code('hhmmss') >
+            Now.make(after).code('hhmmss');
     }
 
-    equal(equal = null, format = 'YYYYMMDDhhiiss')
+    equal(equal = null, format = 'X')
     {
         return this.code(format) ===
             Now.make(equal).code(format);
@@ -216,7 +126,7 @@ export class Now
         return this.equal(equal, format);
     }
 
-    equalTime(equal = null, format = 'hhiiss')
+    equalTime(equal = null, format = 'hhmmss')
     {
         return this.equal(equal, format);
     }
@@ -230,16 +140,6 @@ export class Now
 
         return this.after(fromDate, format) && this.before(toDate, format) &&
             ! this.equal(toDate, format) && ! this.equal(fromDate, format);
-    }
-
-    humanDay()
-    {
-        return Now._days[this.day()];
-    }
-
-    humanMonth()
-    {
-        return Now._months[this.month()];
     }
 
     decade()
@@ -259,234 +159,234 @@ export class Now
 
     addDecades(count = 1)
     {
-        return this.setYear(this.year() + (count * 10));
+        return this.year(this.moment.year() + (count * 10));
     }
 
     subDecades(count = 1)
     {
-        return this.setYear(this.year() - (count * 10));
+        return this.year(this.moment.year() - (count * 10));
     }
 
-    year()
+    year(year = undefined)
     {
-        return this.timestamp.getFullYear();
-    }
+        if ( year === undefined ) {
+            return this.moment.year();
+        }
 
-    setYear(year)
-    {
-        this.timestamp.setFullYear(year);
+        this.moment.year(year);
 
         return this;
     }
 
     prevYear()
     {
-        return this.clone().setYear(this.year() - 1);
+        return this.clone().year(this.year() - 1);
     }
 
     nextYear()
     {
-        return this.clone().setYear(this.year() + 1);
+        return this.clone().year(this.year() + 1);
     }
 
     addYears(count = 1)
     {
-        return this.setYear(this.year() + count);
+        return this.year(this.year() + count);
     }
 
     subYears(count = 1)
     {
-        return this.setYear(this.year() - count);
+        return this.year(this.year() - count);
     }
 
-    month()
+    month(month = undefined)
     {
-        return this.timestamp.getMonth() + 1;
-    }
+        if ( month === undefined ) {
+            return this.moment.month();
+        }
 
-    setMonth(month)
-    {
-        this.timestamp.setMonth(month - 1);
+        this.moment.month(month - 1);
 
         return this;
     }
 
     addMonths(count = 1)
     {
-        return this.setMonth(this.month() + count);
+        return this.month(this.month() + count);
     }
 
     subMonths(count = 1)
     {
-        return this.setMonth(this.month() - count);
+        return this.month(this.month() - count);
     }
 
     prevMonth()
     {
-        return this.clone().setMonth(this.month() - 1);
+        return this.clone().month(this.month() - 1);
     }
 
     nextMonth()
     {
-        return this.clone().setMonth(this.month() + 1);
+        return this.clone().month(this.month() + 1);
     }
 
-    date()
+    date(date = undefined)
     {
-          return this.timestamp.getDate();
-    }
+        if ( date === undefined ) {
+            return this.moment.date();
+        }
 
-    setDate(date)
-    {
-        this.timestamp.setDate(date);
+        this.moment.date(date);
 
         return this;
     }
 
     addDates(count = 1)
     {
-        return this.setDate(this.date() + count);
+        return this.date(this.date() + count);
     }
 
     subDates(count = 1)
     {
-        return this.setDate(this.date() - count);
+        return this.date(this.date() - count);
     }
 
     prevDate()
     {
-        return this.clone().setDate(this.date() - 1);
+        return this.clone().date(this.date() - 1);
     }
 
     nextDate()
     {
-        return this.clone().setDate(this.date() + 1);
-    }
-
-    day()
-    {
-        return this.timestamp.getDay();
+        return this.clone().date(this.date() + 1);
     }
 
     lastDate()
     {
-        return this.prevMonth().setDate(0).date();
+        return this.prevMonth().date(0).date();
     }
 
-    hours()
+    day(day = undefined)
     {
-        return this.timestamp.getHours();
-    }
+        if ( day === undefined ) {
+            return this.moment.day();
+        }
 
-    setHours(hours)
-    {
-        this.timestamp.setHours(hours);
+        this.moment.day(day);
 
         return this;
     }
 
-    addHours(count = 1)
+    hour(hour = undefined)
     {
-        return this.setHours(this.hours() + count);
-    }
+        if ( hour === undefined ) {
+            return this.moment.hour();
+        }
 
-    subHours(count = 1)
-    {
-        return this.setHours(this.hours() - count);
-    }
-
-    prevHours(count = 1)
-    {
-        return this.clone().subHours(count);
-    }
-
-    nextHours(count = 1)
-    {
-        return this.clone().addHours(count);
-    }
-
-    minutes()
-    {
-        return this.timestamp.getMinutes();
-    }
-
-    setMinutes(minutes)
-    {
-        this.timestamp.setMinutes(minutes);
+        this.moment.hour(hour);
 
         return this;
     }
 
-    addMinutes(count = 1)
+    addHour(count = 1)
     {
-        return this.setMinutes(this.minutes() + count);
+        return this.hour(this.hour() + count);
     }
 
-    subMinutes(count = 1)
+    subHour(count = 1)
     {
-        return this.setMinutes(this.minutes() - count);
+        return this.hour(this.hour() - count);
     }
 
-    prevMinutes(count = 1)
+    prevHour()
     {
-        return this.clone().subMinutes(count);
+        return this.clone().hour(this.hour() - 1);
     }
 
-    nextMinutes(count = 1)
+    nextHour()
     {
-        return this.clone().addMinutes(count);
+        return this.clone().hour(this.hour() + 1);
     }
 
-    seconds()
+    minute(minute = undefined)
     {
-        return this.timestamp.getSeconds();
-    }
+        if ( minute === undefined ) {
+            return this.moment.minute();
+        }
 
-    setSeconds(seconds)
-    {
-        this.timestamp.setSeconds(seconds);
+        this.moment.minute(minute);
 
         return this;
     }
 
-    addSeconds(count = 1)
+    addMinute(count = 1)
     {
-        return this.setSeconds(this.seconds() + count);
+        return this.minute(this.minute() + count);
     }
 
-    subSeconds(count = 1)
+    subMinute(count = 1)
     {
-        return this.setSeconds(this.seconds() - count);
+        return this.minute(this.minute() - count);
     }
 
-    prevSeconds(count = 1)
+    prevMinute()
     {
-        return this.clone().subSeconds(count);
+        return this.clone().minute(this.minute() - 1);
     }
 
-    nextSeconds(count = 1)
+    nextMinute()
     {
-        return this.clone().addSeconds(count);
+        return this.clone().minute(this.minute() + 1);
+    }
+
+    second(second = undefined)
+    {
+        if ( second === undefined ) {
+            return this.moment.second();
+        }
+
+        this.moment.second(second);
+
+        return this;
+    }
+
+    addSecond(count = 1)
+    {
+        return this.second(this.second() + count);
+    }
+
+    subSecond(count = 1)
+    {
+        return this.second(this.second() - count);
+    }
+
+    prevSecond()
+    {
+        return this.clone().second(this.second() - 1);
+    }
+
+    nextSecond()
+    {
+        return this.clone().second(this.second() + 1);
     }
 
     getMonths()
     {
         return Arr.make(12).map((month) => {
-            return this.clone().setMonth(month);
+            return this.clone().month(month);
         });
     }
 
     getYears()
     {
         return Arr.make(10).map((year) => {
-            return this.clone().setYear(this.decade() + year - 1);
+            return this.clone().year(this.decade() + year - 1);
         });
     }
 
     getYearsGrid(size = 12)
     {
         return Arr.make(size).map((year) => {
-            return this.clone().setYear((Math.floor(this.year() / size)
+            return this.clone().year((Math.floor(this.year() / size)
                 * size) + year - 1);
         });
     }
@@ -494,11 +394,11 @@ export class Now
     getDates()
     {
         return Arr.make(this.lastDate()).map((date) => {
-            return this.clone().setDate(date);
+            return this.clone().date(date);
         });
     }
 
-    getDatesRange(target = null)
+    getDateRange(target = null)
     {
         let range = [], targetNow = Now.make(target);
 
@@ -549,21 +449,21 @@ export class Now
     getHours(interval = 1)
     {
         return Arr.make(24 / interval).map((val, hour) => {
-            return this.clone().setHours(hour * interval);
+            return this.clone().hour(hour * interval);
         });
     }
 
     getMinutes(interval = 1)
     {
         return Arr.make(60 / interval).map((val, minute) => {
-            return this.clone().setMinutes(minute * interval);
+            return this.clone().minute(minute * interval);
         });
     }
 
     getSeconds(interval = 1)
     {
         return Arr.make(60 / interval).map((val, second) => {
-            return this.clone().setSeconds(second * interval);
+            return this.clone().second(second * interval);
         });
     }
 
