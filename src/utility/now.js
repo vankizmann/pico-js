@@ -381,6 +381,16 @@ export class Now
         return this.clone().second(this.second() + 1);
     }
 
+    humanDay()
+    {
+        return this.day();
+    }
+
+    humanMonth()
+    {
+        return this.month();
+    }
+
     getMonths()
     {
         return Arr.make(12).map((month) => {
