@@ -15,7 +15,11 @@ export class Now
         }
 
         if ( ! Any.isString(date) ) {
-            return this.moment = moment(date);
+            this.moment = moment(date);
+        }
+
+        if ( this.moment !== null ) {
+            return this;
         }
 
         this.moment = moment(date.match(/^now/) ?
@@ -51,6 +55,7 @@ export class Now
             this.moment.subtract(year[2], 'year');
         }
 
+        return this;
     }
 
     static make(date = null)
