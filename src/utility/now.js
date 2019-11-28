@@ -6,7 +6,7 @@ export class Now
     initialDate = null;
     moment = null;
 
-    constructor(date = null)
+    constructor(date = null, format = null)
     {
         this.initialDate = date;
 
@@ -15,7 +15,7 @@ export class Now
         }
 
         if ( ! Any.isString(date) ) {
-            this.moment = moment(date);
+            this.moment = moment(date, format);
         }
 
         if ( this.moment !== null ) {
@@ -23,7 +23,7 @@ export class Now
         }
 
         this.moment = moment(date.match(/^now/) ?
-            new Date : date);
+            new Date : date, format);
 
         let day = this.initialDate.match(/(\+|-)([0-9]+)days?/);
 
@@ -58,9 +58,9 @@ export class Now
         return this;
     }
 
-    static make(date = null)
+    static make(date = null, format = null)
     {
-        return new Now(date);
+        return new Now(date, format);
     }
 
     get()
