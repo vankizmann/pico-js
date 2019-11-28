@@ -394,7 +394,7 @@ export class Now
     getMonths()
     {
         return Arr.make(12).map((month) => {
-            return this.clone().month(month + 1);
+            return this.clone().month(month - 1);
         });
     }
 
