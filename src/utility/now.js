@@ -86,7 +86,7 @@ export class Now
 
     format(format = 'YYYY-MM-DD hh:mm:ss')
     {
-        if ( this.valid() ) {
+        if ( ! this.valid() ) {
             return '';
         }
 
