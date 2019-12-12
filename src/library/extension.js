@@ -40,7 +40,7 @@ export class Extension
                 };
 
                 let aborted = () => {
-                    this.aborted.push(style); error();
+                    this.aborted.push(style); next();
                 };
 
                 Asset.style(style, loaded, aborted);
@@ -61,7 +61,7 @@ export class Extension
                 };
 
                 let aborted = () => {
-                    this.aborted.push(script); error();
+                    this.aborted.push(script); next();
                 };
 
                 Asset.script(script, loaded, aborted);
