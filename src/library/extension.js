@@ -73,7 +73,14 @@ export class Extension
         }
 
         queue.run();
-    };
+    }
+
+    static promise(name, done = null)
+    {
+        return new Promise((resolve, reject) => {
+            this.get(name, () => resolve(done()), reject);
+        });
+    }
 
 }
 
