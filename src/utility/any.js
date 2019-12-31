@@ -262,6 +262,11 @@ export class Any
         };
     }
 
+    static md5(...args)
+    {
+        return require('blueimp-md5')(args);
+    }
+
 }
 
 export default Any;
