@@ -246,6 +246,16 @@ export class Obj
 
         return obj;
     }
+
+    static values(obj)
+    {
+        let result = [];
+
+        this.each(obj, val => result.push(val));
+
+        return result;
+    }
+
 }
 
 export default Obj;
