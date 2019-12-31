@@ -262,9 +262,13 @@ export class Any
         };
     }
 
-    static md5(...args)
+    static md5(value)
     {
-        return require('blueimp-md5')(args);
+        if ( this.isObject(value) ) {
+            value = JSON.stringify(value);
+        }
+
+        return require('blueimp-md5')(value);
     }
 
 }
