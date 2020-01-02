@@ -22,12 +22,18 @@ export class Data
         Event.fire('store:' + key, clone, key);
     }
 
+    static unset(input)
+    {
+        let key = Arr.first(input);
+
+        Obj.unset(this.data, key);
+    }
 
     static get (input, fallback = null)
     {
         let key = Arr.first(input);
 
-        if (Obj.has(this.data, key) === false ) {
+        if ( Obj.has(this.data, key) === false ) {
             return fallback;
         }
 
