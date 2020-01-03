@@ -48,7 +48,7 @@ export class Element
                 el.get(0), options
             );
 
-            return Any.isFunction(cb) ?
+            return cb.bind !== undefined ?
                 cb.bind() : cb;
         };
 
