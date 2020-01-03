@@ -33,15 +33,21 @@
 
         'use strict';
 
-        Nano.Element.alias('test', function(el, options) {
-            console.log(el, options);
-        });
+        Nano.Dom.ready(function() {
 
-        Nano.Element.observe('test');
+            Nano.Element.alias('test', function(el, options) {
+                console.log(el, options);
+            });
 
-        Nano.Any.delay(() => {
-            Nano.Element.bind('ready', '[js-custom]', { duration: 2500 });
-        }, 2500);
+            Nano.Element.observe('test');
+
+            Nano.Any.delay(() => {
+                Nano.Element.bind('ready', '[js-custom]', { duration: 2500 });
+            }, 2500);
+
+        }, 1500);
+
+
 
     })(window.Nano);
 </script>
