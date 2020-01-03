@@ -23,12 +23,12 @@ export class Dom
     {
         let ready = document.readyState !== 'loading';
 
-        if ( delay === 0 && (ready === false || count < delay) ) {
+        if ( delay === 0 && (ready === false || count >= delay) ) {
             Dom.find(document).on('DOMContentLoaded', callback);
             return this;
         }
 
-        if ( delay !== 0 && (ready === false || count < delay) ) {
+        if ( delay !== 0 && (ready === false || count <= delay) ) {
             setTimeout(() => Dom.ready(callback, delay, count + 100), 100);
             return this;
         }
