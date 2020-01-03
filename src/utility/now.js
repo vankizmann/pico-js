@@ -15,7 +15,7 @@ export class Now
         }
 
         if ( ! Any.isString(date) ) {
-            this.moment = moment(date, format);
+            this.moment = moment(date || new Date, format);
         }
 
         if ( this.moment !== null ) {
@@ -71,7 +71,7 @@ export class Now
     valid()
     {
         return ! Any.isEmpty(this.initialDate) &&
-            this.moment.isValid();
+            moment(this.initialDate).isValid();
     }
 
     clone()

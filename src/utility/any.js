@@ -86,6 +86,11 @@ export class Any
         return this.isObject(val) && val.constructor === Array;
     }
 
+    static isDate(val)
+    {
+        return val instanceof Date;
+    }
+
     static string(val)
     {
         return String(val);
