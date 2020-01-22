@@ -1,4 +1,4 @@
-import { Obj } from "../index";
+import { Obj, Now } from "../index";
 
 export class Any
 {
@@ -139,46 +139,13 @@ export class Any
         return result === null ||  result.length === 0 ? no : yes;
     }
 
-    static datetime(val)
-    {
-        val = val.replace(/^([0-9]{4})-([0-9]{2})-([0-9]{2})/, '$1/$2/$3');
-
-        return new Date(val);
-    }
-
-    static datetimeISO(val)
-    {
-        return new Date(this.datetime(val).getTime() -
-            (this.datetime(val).getTimezoneOffset() * 60000));
-    }
-
     static convertDatetime(val, format = 'YYYY-MM-DD hh:ii:ss', empty = '-')
     {
         if ( Any.isEmpty(val) === true ) {
             return empty;
         }
 
-        let date = this.datetimeISO(val);
-
-        format = format.replace(/YYYY/g,
-            date.toISOString().substr(0, 4));
-
-        format = format.replace(/MM/g,
-            date.toISOString().substr(5, 2));
-
-        format = format.replace(/DD/g,
-            date.toISOString().substr(8, 2));
-
-        format = format.replace(/hh/g,
-            date.toISOString().substr(11, 2));
-
-        format = format.replace(/ii/g,
-            date.toISOString().substr(14, 2));
-
-        format = format.replace(/ss/g,
-            date.toISOString().substr(17, 2));
-
-        return format;
+        return Now.make(val).format(format);
     }
 
     static vals(obj)
