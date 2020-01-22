@@ -139,7 +139,7 @@ export class Any
         return result === null ||  result.length === 0 ? no : yes;
     }
 
-    static convertDatetime(val, format = 'YYYY-MM-DD hh:ii:ss', empty = '-')
+    static convertDatetime(val, format = 'YYYY-MM-DD hh:mm:ss', empty = '-')
     {
         if ( Any.isEmpty(val) === true ) {
             return empty;
