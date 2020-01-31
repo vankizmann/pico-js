@@ -57,7 +57,7 @@ export class Any
     static isNumber(val)
     {
         return typeof val === 'number' ||
-            (typeof val === 'string' && val.match(/^[0-9]$/));
+            (typeof val === 'string' && val.match(/-?^[0-9]$/));
     }
 
     static isBool(val)
