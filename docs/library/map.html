@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano JS Ready</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <!--[if IE ]>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=Element.prototype.append%2CElement.prototype.before%2CElement.prototype.classList%2CElement.prototype.closest%2CElement.prototype.matches%2CElement.prototype.prepend%2CElement.prototype.remove%2CNodeList.prototype.%40%40iterator%2CNodeList.prototype.forEach%2CNode.prototype.contains%2CMutationObserver%2CURL%2CElement%2CDocumentFragment%2CDocumentFragment.prototype.append%2CDocumentFragment.prototype.prepend%2CHTMLDocument%2Cdocument.querySelector%2Cdocument.getElementsByClassName%2Cdocument%2CgetComputedStyle%2CrequestAnimationFrame"></script>
+    <![endif]-->
+
+    <script src="../../dist/nano-js.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvJ7NNFrrSL13b3xEB07Itw0luJSHDTmE"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <div id="map" style="width: 100%; height: 400px;"></div>
+</div>
+
+<script>
+    (function (Nano) {
+
+        'use strict';
+
+        Nano.Dom.ready(function() {
+
+            var map = new Nano.Map('#map', {
+                lat: 11.26373, lng: 108.62004
+            });
+
+            var marker = map.createMarker(null, {
+                lat: 11.26373, lng: 108.62004, group: 'test'
+            });
+
+            map.toggleMarker(marker.key);
+
+            Nano.Any.delay(function () {
+                map.toggleMarker(marker.key);
+
+                console.log(marker);
+            }, 1500);
+
+        }, 1500);
+
+    })(window.Nano);
+</script>
+</body>
+</html>
