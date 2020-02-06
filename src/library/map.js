@@ -22,7 +22,7 @@ export default class Map
             options.styles = Map.mapStyle;
         }
 
-        options = Obj.assign({ scrollwheel: false, zoom: 12, center },
+        options = Obj.assign({ gestureHandling: 'cooperative', scrollwheel: null, zoom: 12, center },
             Obj.except(options, ['lat', 'lng']));
 
         this.map = new google.maps.Map(Dom.find(el).get(0), options)
