@@ -335,7 +335,7 @@ export default class Map
         item.marker.addListener('mouseout', () => this.leaveMarker(key));
 
         item.info = new google.maps.InfoWindow({
-            content: Obj.get(options, 'html')
+            content: '<div class="gw-i-html">' + Obj.get(options, 'html') + '</div>'
         });
 
         item.marker.addListener('click', () => this.toggleInfo(key));
