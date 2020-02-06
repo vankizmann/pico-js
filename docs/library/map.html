@@ -22,7 +22,12 @@
 <body>
 
 <div id="app">
-    <div id="map" style="width: 100%; height: 400px;"></div>
+    <div id="map" style="width: 100%; height: 600px;"></div>
+    <div id="directions"></div>
+    <a href="javascript:void(0)" id="focusGroup0">Focus group 0</a>
+    <a href="javascript:void(0)" id="focusGroup1">Focus group 1</a>
+    <a href="javascript:void(0)" id="focusReset">Reset focus</a>
+    <a href="javascript:void(0)" id="getDirections">Directions</a>
 </div>
 
 <script>
@@ -32,21 +37,257 @@
 
         Nano.Dom.ready(function() {
 
+            Nano.Map.setMapStyle([
+                {
+                    "featureType": "all",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "weight": "2.00"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "all",
+                    "elementType": "geometry.stroke",
+                    "stylers": [
+                        {
+                            "color": "#9c9c9c"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "all",
+                    "elementType": "labels.text",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "color": "#f2f2f2"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#ffffff"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape.man_made",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#ffffff"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "saturation": -100
+                        },
+                        {
+                            "lightness": 45
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#eeeeee"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#7b7b7b"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [
+                        {
+                            "color": "#ffffff"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "simplified"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "elementType": "labels.icon",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "transit",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "color": "#46bcec"
+                        },
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#c8d7d4"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#070707"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [
+                        {
+                            "color": "#ffffff"
+                        }
+                    ]
+                }
+            ]);
+
+            var lat = Nano.Num.random(1000, 2000) / 100;
+            var lng = Nano.Num.random(1000, 2000) / 100;
+
             var map = new Nano.Map('#map', {
-                lat: 11.26373, lng: 108.62004
+                lat: lat, lng: lng
             });
 
-            var marker = map.createMarker(null, {
-                lat: 11.26373, lng: 108.62004, group: 'test'
+            Nano.Map.setMarkerStyle('default', {
+                default: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
+                hover: 'https://static.thenounproject.com/png/462-200.png',
+                active: 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/map-marker-512.png'
             });
 
-            map.toggleMarker(marker.key);
+            map.createMarker(null, {
+                lat: lat, lng: lng, html: `<h4>Home Marker</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>`
+            });
 
-            Nano.Any.delay(function () {
-                map.toggleMarker(marker.key);
+            Nano.Arr.each(Nano.Arr.make(50), function (index) {
 
-                console.log(marker);
-            }, 1500);
+                var lat = Nano.Num.random(1000, 2000) / 100;
+                var lng = Nano.Num.random(1000, 2000) / 100;
+
+                var html = `<h4>Marker ${index}</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>`;
+
+                var groups = [
+                    Nano.Num.random(0, 1) ? 'group1' : 'group0'
+                ];
+
+                console.log(groups);
+
+                map.createMarker(null, {
+                    lat: lat, lng: lng, html: html, groups: groups
+                });
+
+            });
+
+            map.focusMarkers();
+
+            Nano.Dom.find('#focusGroup0').on('click', function () {
+                map.showMarkers(function (item) {
+                    return Nano.Arr.has(item.extras.groups, 'group0');
+                }).focusMarkers();
+            });
+
+            Nano.Dom.find('#focusGroup1').on('click', function () {
+                map.showMarkers(function (item) {
+                    return Nano.Arr.has(item.extras.groups, 'group1');
+                }).focusMarkers();
+            });
+
+            Nano.Dom.find('#focusReset').on('click', function () {
+                map.showMarkers().focusMarkers();
+            });
+
+            Nano.Dom.find('#getDirections').on('click', function () {
+
+                let success = function () {
+                    console.log('YES');
+                };
+
+                let error = function () {
+                    console.log('NOO');
+                };
+
+                map.renderDirections({
+                    origin: 'Lübeck', destination: 'Hamburg', panel: '#directions'
+                }).then(success, error);
+            });
+
+            // var marker = map.createMarker(null, {
+            //     lat: 11.26373, lng: 108.62004, group: 'test'
+            // });
+
+            // map.toggleMarker(marker.key);
+            //
+            // Nano.Any.delay(function () {
+            //     map.toggleMarker(marker.key);
+            //
+            //     console.log(marker);
+            // }, 1500);
 
         }, 1500);
 

@@ -146,30 +146,30 @@ export class Obj
         return result;
     }
 
-    static filter(arr, filter)
+    static filter(obj, filter)
     {
-        return Obj.each(Obj.filterIndex(arr, filter), (key) => {
-            return arr[key];
+        return Obj.each(Obj.filterIndex(obj, filter), (key) => {
+            return obj[key];
         });
     }
 
-    static filterIndex(arr, filter)
+    static filterIndex(obj, filter)
     {
-        return Any.keys(arr).filter((key) => {
+        return Any.keys(obj).filter((key) => {
 
             if ( Any.isFunction(filter) ) {
-                return filter.call({}, arr[key], key);
+                return filter.call({}, obj[key], key);
             }
 
             if ( Any.isPlain(filter) ) {
-                return Obj.includes(filter, arr[key]);
+                return Obj.includes(filter, obj[key]);
             }
 
             if ( Any.isArray(filter) ) {
-                return Arr.includes(filter, arr[key]);
+                return Arr.includes(filter, obj[key]);
             }
 
-            return filter === arr[key];
+            return filter === obj[key];
         });
     }
 

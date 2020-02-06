@@ -34,6 +34,11 @@ export class Num
         return this.float(num).toFixed(fixed);
     }
 
+    static random(start = 0, end = 100)
+    {
+        return Math.floor((Math.random() * (end + 1)) + start);
+    }
+
     static matrix(num, limit = 10, base = [])
     {
         let value = 0;
