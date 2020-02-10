@@ -82,12 +82,16 @@ export default class Map
         return this;
     }
 
-    styleMarker(key, type = 'default')
+    styleMarker(key, type = null)
     {
         let item = Obj.get(this.markers, key);
 
         if ( Any.isEmpty(item) ) {
             return console.error(`Marker "${key}" not found`);
+        }
+
+        if ( Any.isEmpty(type) ) {
+            type = this.getInfoVisibility(key) ? 'active' : 'default';
         }
 
         if ( ! Obj.has(Map.markerStyles, [item.style, type]) ) {
