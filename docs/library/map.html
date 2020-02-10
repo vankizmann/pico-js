@@ -16,7 +16,7 @@
 
     <script src="../../dist/nano-js.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvJ7NNFrrSL13b3xEB07Itw0luJSHDTmE"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOURKEY"></script>
 
 </head>
 <body>
@@ -27,6 +27,7 @@
     <a href="javascript:void(0)" id="focusGroup0">Focus group 0</a>
     <a href="javascript:void(0)" id="focusGroup1">Focus group 1</a>
     <a href="javascript:void(0)" id="focusReset">Reset focus</a>
+    <a href="javascript:void(0)" id="changeMarkerByAddress">Marker Address</a>
     <a href="javascript:void(0)" id="getDirections">Directions</a>
 </div>
 
@@ -221,11 +222,11 @@
                 active: 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/map-marker-512.png'
             });
 
-            map.createMarker(null, {
+            var mainMarker = map.createMarker(null, {
                 lat: lat, lng: lng, html: `<h4>Home Marker</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>`
             });
 
-            Nano.Arr.each(Nano.Arr.make(50), function (index) {
+            Nano.Arr.each(Nano.Arr.make(2), function (index) {
 
                 var lat = Nano.Num.random(1000, 2000) / 100;
                 var lng = Nano.Num.random(1000, 2000) / 100;
@@ -235,8 +236,6 @@
                 var groups = [
                     Nano.Num.random(0, 1) ? 'group1' : 'group0'
                 ];
-
-                console.log(groups);
 
                 map.createMarker(null, {
                     lat: lat, lng: lng, html: html, groups: groups
@@ -260,6 +259,19 @@
 
             Nano.Dom.find('#focusReset').on('click', function () {
                 map.showMarkers().focusMarkers();
+            });
+
+            Nano.Dom.find('#changeMarkerByAddress').on('click', function () {
+
+                let success = function () {
+                    map.focusMarkers();
+                };
+
+                let error = function () {
+                    console.log('NOO');
+                };
+
+                map.setMarkerByAddress(mainMarker.key, 'Hamburg').then(success, error);
             });
 
             Nano.Dom.find('#getDirections').on('click', function () {

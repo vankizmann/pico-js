@@ -346,6 +346,42 @@ export default class Map
         return Obj.get(this.markers, key);
     }
 
+    setMarkerPosition(key, options = {})
+    {
+        let item = Obj.get(this.markers, key);
+
+        if ( Any.isEmpty(item) ) {
+            return console.error(`Marker "${key}" not found`);
+        }
+
+        item.marker.setPosition(options);
+    }
+
+    setMarkerByAddress(key, address)
+    {
+        let geocoderService = new google.maps.Geocoder();
+
+        let geocoderPromise = (resolve, reject) => {
+
+            let geocoderResult = (response, status) => {
+
+                if ( status === 'OK' ) {
+                    this.setMarkerPosition(key, Obj.get(response, '0.geometry.location', {}));
+                    resolve(response);
+                }
+
+                if ( status !== 'OK' ) {
+                    reject(response);
+                }
+
+            };
+
+            geocoderService.geocode({ address }, geocoderResult);
+        };
+
+        return new Promise(geocoderPromise);
+    }
+
     showMarkers(filter = null)
     {
         let markers = this.markers;
