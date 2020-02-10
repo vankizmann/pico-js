@@ -221,7 +221,7 @@ export default class Map
     {
         let item = Obj.get(this.markers, key);
 
-        if ( Any.isEmpty(item) ) {
+        if ( Any.isEmpty(item) || ! Obj.has(item, 'info') ) {
             return fallback;
         }
 
