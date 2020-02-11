@@ -459,7 +459,7 @@ export default class Map
         return boundry;
     }
 
-    focusMarkers(filter = null, maxZoom = 12)
+    focusMarkers(filter = null, maxZoom = 14)
     {
         let boundry = this.getMarkerBoundry(filter);
 
