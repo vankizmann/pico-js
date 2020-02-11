@@ -16,7 +16,8 @@
 
     <script src="../../dist/nano-js.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOURKEY"></script>
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
 
 </head>
 <body>
@@ -216,6 +217,8 @@
                 lat: lat, lng: lng
             });
 
+            map.clusterMarkers({ gridSize: 20 });
+
             Nano.Map.setMarkerStyle('default', {
                 default: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
                 hover: 'https://static.thenounproject.com/png/462-200.png',
@@ -226,7 +229,7 @@
                 lat: lat, lng: lng, html: `<h4>Home Marker</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>`
             });
 
-            Nano.Arr.each(Nano.Arr.make(2), function (index) {
+            Nano.Arr.each(Nano.Arr.make(60), function (index) {
 
                 var lat = Nano.Num.random(1000, 2000) / 100;
                 var lng = Nano.Num.random(1000, 2000) / 100;

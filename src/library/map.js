@@ -1,4 +1,4 @@
-import { Obj, Any, Dom, Locale, UUID } from "../index";
+import { Obj, Arr, Any, Dom, UUID } from "../index";
 
 export default class Map
 {
@@ -10,9 +10,13 @@ export default class Map
 
     static markerStyles = {};
 
-    hideMarkers = true;
+    cluster = null;
 
-    closeInfoWindows = true;
+    clusterOptions = {};
+
+    static hideMarkers = true;
+
+    static closeInfoWindows = true;
 
     constructor(el, options = {})
     {
@@ -82,6 +86,32 @@ export default class Map
         return this;
     }
 
+    clusterMarkers(options = {}, allowCreate = true)
+    {
+        if ( ! this.cluster && ! allowCreate ) {
+            return;
+        }
+
+        if ( typeof MarkerClusterer === "undefined" ) {
+            return console.error('Google Maps Cluster library not laoded!');
+        }
+
+        if ( ! Obj.has(options, 'imagePath') && ! Obj.has(options, 'styles') ) {
+            options.imagePath = '//developers.google.com/maps/documentation/javascript/examples/markerclusterer/m';
+        }
+
+        if ( this.cluster ) {
+            this.cluster.clearMarkers()
+        }
+
+        let markers = Arr.filter(this.markers, (item) => {
+            return this.getMarkerVisibility(item.key);
+        });
+
+        this.cluster = new MarkerClusterer(this.map, Arr.each(markers, (item) => item.marker),
+            this.clusterOptions = options);
+    }
+
     styleMarker(key, type = null)
     {
         let item = Obj.get(this.markers, key);
@@ -114,7 +144,7 @@ export default class Map
             return fallback;
         }
 
-        return !! item.info.getMap();
+        return item.marker.getVisible();
     }
 
     getMarkerPositon(key, fallback = null)
@@ -257,7 +287,7 @@ export default class Map
 
         let hidden = ! item.info.getMap();
 
-        if ( this.closeInfoWindows ) {
+        if ( Map.closeInfoWindows ) {
             Obj.each(Any.keys(this.markers), this.closeInfo.bind(this));
         }
 
@@ -320,6 +350,8 @@ export default class Map
         item.marker = new google.maps.Marker(options);
 
         Obj.set(this.markers, key, item);
+
+        this.clusterMarkers(this.clusterOptions, false);
 
         if ( ! Obj.has(options, 'html') ) {
             return Obj.get(this.markers, key);
@@ -394,11 +426,13 @@ export default class Map
             markers = Obj.filter(this.markers, filter);
         }
 
-        if ( this.hideMarkers ) {
+        if ( Map.hideMarkers ) {
             Obj.each(Any.keys(this.markers), this.hideMarker.bind(this));
         }
 
         Obj.each(markers, (item) => this.showMarker(item.key));
+
+        this.clusterMarkers(this.clusterOptions, false);
 
         return this;
     }
