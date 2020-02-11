@@ -59,10 +59,13 @@ export default class Map
         let size = new google.maps.Size(style.width, style.height);
 
         // Point position
-        let point = new google.maps.Point(0, 0);
+        let origin = new google.maps.Point(0, 0);
+
+        // Point position
+        let anchor = new google.maps.Point(style.width / 2, style.height);
 
         final.default = {
-            url: style.default, size: size, origin: point, anchor: point, scaledSize: size
+            url: style.default, size: size, origin: origin, anchor: anchor, scaledSize: size
         };
 
         if ( Obj.has(style, 'hover') ) {
