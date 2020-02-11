@@ -440,11 +440,17 @@ export default class Map
         return this;
     }
 
-    getMarkerBoundry()
+    getMarkerBoundry(filter = null)
     {
+        let markers = this.markers;
+
+        if ( ! Any.isEmpty(filter) ) {
+            markers = Obj.filter(this.markers, filter);
+        }
+
         let boundry = new google.maps.LatLngBounds();
 
-        Obj.each(this.markers, (item) => {
+        Obj.each(markers, (item) => {
             if ( item.marker.getVisible() ) {
                 boundry.extend(item.marker.getPosition());
             }
@@ -455,7 +461,7 @@ export default class Map
 
     focusMarkers(filter = null, maxZoom = 12)
     {
-        let boundry = this.getMarkerBoundry();
+        let boundry = this.getMarkerBoundry(filter);
 
         // Center map to boundry
         this.map.setCenter(boundry.getCenter());
