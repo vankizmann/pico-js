@@ -672,7 +672,7 @@ export class Dom
         }
 
         let observer = new MutationObserver((mutation) => {
-            this.each((el) => Any.throttle(callback(el, mutation), 50));
+            this.each((el) => callback(el, mutation));
         });
 
         return (el, options) => {
@@ -687,7 +687,7 @@ export class Dom
         }
 
         let observer = new ResizeObserver(() => {
-            this.each((el) => Any.throttle(callback(el), 50));
+            this.each((el) => callback(el));
         });
 
         return (el) => {
