@@ -240,7 +240,7 @@ export class Any
 
         return (...args) => {
 
-            if ( Date.now() - latest <= 40 ) {
+            if ( Date.now() - latest <= (1000 / rate) ) {
                 return;
             }
 
