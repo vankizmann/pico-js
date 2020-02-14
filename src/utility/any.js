@@ -234,6 +234,22 @@ export class Any
         };
     }
 
+    static framerate(callback, rate = 30, reference = 0)
+    {
+        let latest = reference;
+
+        return (...args) => {
+
+            if ( Date.now() - latest <= 40 ) {
+                return;
+            }
+
+            callback(...args);
+
+            latest = Date.now();
+        };
+    }
+
     static md5(value)
     {
         if ( this.isObject(value) ) {

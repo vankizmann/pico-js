@@ -29,12 +29,16 @@ export class Data
         Obj.unset(this.data, key);
     }
 
-    static get (input, fallback = null)
+    static get (input, fallback = null, forceSet = false)
     {
         let key = Arr.first(input);
 
-        if ( Obj.has(this.data, key) === false ) {
+        if ( ! Obj.has(this.data, key) && ! forceSet ) {
             return fallback;
+        }
+
+        if ( Obj.has(this.data, key) && forceSet ) {
+            Obj.set(this.data, key, fallback);
         }
 
         let value = Obj.get(this.data, key, fallback);
