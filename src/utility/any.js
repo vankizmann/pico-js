@@ -234,9 +234,13 @@ export class Any
         };
     }
 
-    static framerate(callback, rate = 30, reference = 0)
+    static framerate(callback, rate = 30, ref = null)
     {
-        let latest = reference;
+        let latest = 0;
+
+        if ( ! Any.isEmpty(ref) ) {
+            latest = ref();
+        }
 
         return (...args) => {
 
@@ -247,6 +251,11 @@ export class Any
             callback(...args);
 
             latest = Date.now();
+
+            if ( ! Any.isEmpty(ref) ) {
+                ref(latest);
+            }
+
         };
     }
 
