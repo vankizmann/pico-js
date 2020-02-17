@@ -132,9 +132,19 @@ export class Obj
 
     static sort(obj, key)
     {
-        let keys = Any.keys(obj).sort((a, b) => {
-            return Any.integer(Obj.get(obj[a], key)) - Any.integer(Obj.get(obj[b], key));
-        });
+        let keys = Any.keys(obj);
+
+        if ( Any.isFunction(key) ) {
+            keys = keys.sort((a, b) => {
+                return Any.integer(Obj.get(obj[a], key)) - Any.integer(Obj.get(obj[b], key));
+            });
+        }
+
+        if ( ! Any.isFunction(key) ) {
+            keys = keys.sort((a, b) => {
+                return Any.integer(key(obj[a])) - Any.integer(key(obj[b]));
+            })
+        }
 
         let result = [];
 
