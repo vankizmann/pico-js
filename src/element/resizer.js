@@ -64,7 +64,7 @@ export default class Resizer extends DefaultElement
                 (event) => event.preventDefault(), { _uid: this._uid });
 
             Dom.find(document.body).on('mousemove',
-                Any.throttle(this.resizeElement.bind(this), 10), { _uid: this._uid });
+                Any.throttle(this.resizeElement.bind(this), 10));
 
             Dom.find(document.body).on('mouseup',
                 unbindCallback.bind(this), { _uid: this._uid });

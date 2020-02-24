@@ -196,6 +196,10 @@ export class Any
     {
         let debounce = null;
 
+        if ( ! Any.isEmpty(ref) ) {
+            debounce = ref();
+        }
+
         if ( ref !== null && ref.__debouce !== undefined ) {
             debounce = ref.__debouce;
         }
@@ -208,15 +212,19 @@ export class Any
                 callback(...args);
             }, delay);
 
-            if ( ref !== null ) {
-                ref.__debouce = debounce;
+            if ( ! Any.isEmpty(ref) ) {
+                ref(debounce);
             }
         };
     }
 
-    static throttle(callback, delay = 100, reference = null)
+    static throttle(callback, delay = 100, ref = null)
     {
-        let throttle = reference;
+        let throttle = null;
+
+        if ( ! Any.isEmpty(ref) ) {
+            throttle = ref();
+        }
 
         return (...args) => {
 
@@ -226,9 +234,9 @@ export class Any
 
             throttle = true;
 
-            setTimeout(() => {
-                throttle = null;
-            }, delay);
+            if ( ! Any.isEmpty(ref) ) {
+                ref(throttle);
+            }
 
             callback(...args);
         };
