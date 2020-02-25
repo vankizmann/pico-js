@@ -68,7 +68,7 @@ export class Arr
 
         if ( ! Any.isFunction(key) ) {
             keys = keys.sort((a, b) => {
-                return Any.integer(key(obj[a])) - Any.integer(key(obj[b]));
+                return Any.integer(Obj.get(obj[a], key)) - Any.integer(Obj.get(obj[b], key));
             })
         }
 
