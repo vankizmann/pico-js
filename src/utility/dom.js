@@ -246,6 +246,17 @@ export class Dom
         return null;
     }
 
+    closestScrollable(fallback = document.body)
+    {
+        for (let el = this.get(0); el !== null && el.parentNode !== undefined; el = el.parentNode) {
+            if ( el.scrollHeight > el.clientHeight ) {
+                return el;
+            }
+        }
+
+        return fallback;
+    }
+
     contains(selector)
     {
         if ( Any.isString(selector) === true ) {
