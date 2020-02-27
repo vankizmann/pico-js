@@ -722,13 +722,19 @@ export class Dom
         return key !== null ? Obj.get(computed, key, fallback) : computed;
     }
 
-    css(vals)
+    css(vals = undefined)
     {
-        let styles = this.attr('style');
+        if ( vals === null ) {
+            return this.attr('style', null);
+        }
 
-        styles = Obj.assign({}, Str.objectify(styles), Str.objectify(vals));
+        let styles = Str.objectify(this.attr('style') || '');
 
-        this.attr('style', styles);
+        if ( vals === undefined ) {
+            return styles;
+        }
+
+        this.attr('style', Obj.assign({}, styles, Str.objectify(vals)));
     }
 
     class(vals)
