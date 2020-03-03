@@ -135,6 +135,19 @@ export class Arr
         return arr;
     }
 
+    static replace(arr, val, finder = null)
+    {
+        let index = this.findIndex(arr, finder || val);
+
+        if ( index !== - 1 ) {
+            arr.splice(index, 1);
+        }
+
+        arr.push(val);
+
+        return arr;
+    }
+
     static remove(arr, val)
     {
         let index = this.findIndex(arr, val);
