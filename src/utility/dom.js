@@ -846,6 +846,17 @@ export class Dom
         this.attr('class', cls.join(' '));
     }
 
+    toggleClass(vals)
+    {
+        if ( this.length() > 1 ) {
+            return this.each((el) => Dom.find(el).toggleClass(vals));
+        }
+
+        this.hasClass(vals) ? this.removeClass(vals) : this.addClass(vals);
+
+        return this;
+    }
+
     attr(attr, val = undefined)
     {
         if ( this.empty() ) {
