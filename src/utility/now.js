@@ -81,7 +81,7 @@ export class Now
 
     code(format = 'X')
     {
-        return Num.int(this.format(format));
+        return Num.int(this.format(format, true));
     }
 
     format(format = 'YYYY-MM-DD hh:mm:ss', force = false)
