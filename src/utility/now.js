@@ -6,7 +6,7 @@ export class Now
     initialDate = null;
     moment = null;
 
-    constructor(date = null, format = null)
+    constructor(date = null, format = 'YYYY-MM-DD hh:mm:ss')
     {
         this.initialDate = date;
 
@@ -58,7 +58,7 @@ export class Now
         return this;
     }
 
-    static make(date = null, format = null)
+    static make(date = null, format = 'YYYY-MM-DD hh:mm:ss')
     {
         return new Now(date, format);
     }
