@@ -84,9 +84,9 @@ export class Now
         return Num.int(this.format(format));
     }
 
-    format(format = 'YYYY-MM-DD hh:mm:ss')
+    format(format = 'YYYY-MM-DD hh:mm:ss', force = false)
     {
-        if ( ! this.valid() ) {
+        if ( ! this.valid() && ! force ) {
             return '';
         }
 
