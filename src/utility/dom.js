@@ -249,7 +249,7 @@ export class Dom
     closestScrollable(fallback = document.body)
     {
         for (let el = this.get(0); el !== null && el.parentNode !== undefined; el = el.parentNode) {
-            if ( el.scrollHeight > el.outerHeight ) {
+            if ( el.scrollHeight > el.clientHeight + 1 ) {
                 return el;
             }
         }
