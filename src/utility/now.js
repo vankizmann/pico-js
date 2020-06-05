@@ -25,6 +25,24 @@ export class Now
         this.moment = moment(date.match(/^now/) ?
             new Date : date, format);
 
+        let second = this.initialDate.match(/(\+|-)([0-9]+)seconds?/);
+
+        if ( Any.isEmpty(second) === false && second[1] === '+' ) {
+            this.moment.add(second[2], 'second');
+        }
+
+        let minute = this.initialDate.match(/(\+|-)([0-9]+)minutes?/);
+
+        if ( Any.isEmpty(minute) === false && minute[1] === '+' ) {
+            this.moment.add(minute[2], 'minute');
+        }
+
+        let hour = this.initialDate.match(/(\+|-)([0-9]+)hours?/);
+
+        if ( Any.isEmpty(hour) === false && hour[1] === '+' ) {
+            this.moment.add(hour[2], 'hour');
+        }
+
         let day = this.initialDate.match(/(\+|-)([0-9]+)days?/);
 
         if ( Any.isEmpty(day) === false && day[1] === '+' ) {
