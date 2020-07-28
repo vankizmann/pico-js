@@ -156,6 +156,40 @@ export class Obj
         return result;
     }
 
+    static sortString(obj, key)
+    {
+        let keys = Any.keys(obj);
+
+        if ( Any.isFunction(key) ) {
+            keys = keys.sort((a, b) => {
+
+                let va = Any.string(Obj.get(obj[a], key)).toLowerCase();
+                let vb = Any.string(Obj.get(obj[b], key)).toLowerCase();
+
+                return(va < vb) ? -1 : (va > vb) ? 1 : 0;
+            });
+        }
+
+        if ( ! Any.isFunction(key) ) {
+            keys = keys.sort((a, b) => {
+
+                let va = Any.string(Obj.get(obj[a], key)).toLowerCase();
+                let vb = Any.string(Obj.get(obj[b], key)).toLowerCase();
+
+                return(va < vb) ? -1 : (va > vb) ? 1 : 0;
+            })
+        }
+
+        let result = [];
+
+        Arr.each(keys, (key, index) => {
+            obj[key]['_key'] = key;
+            result[index] = obj[key];
+        });
+
+        return result;
+    }
+
     static filter(obj, filter)
     {
         return Obj.each(Obj.filterIndex(obj, filter), (key) => {
