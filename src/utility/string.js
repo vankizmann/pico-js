@@ -15,6 +15,22 @@ export class Str
         return String(val).toLowerCase();
     }
 
+    static slugify(val)
+    {
+        val = String(val).replace(/^\s+|\s+$/g, '')
+            .toLowerCase();
+
+        let source = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
+        let target = "aaaaeeeeiiiioooouuuunc------";
+
+        for (let i=0, l=source.length ; i<l ; i++) {
+            val = val.replace(new RegExp(source.charAt(i), 'g'), target.charAt(i));
+        }
+
+        return val.replace(/[^a-z0-9 -]/g, '')
+            .replace(/\s+/g, '-').replace(/-+/g, '-');
+    }
+
     static ucfirst(val)
     {
         return val.charAt(0).toUpperCase() + val.slice(1);
