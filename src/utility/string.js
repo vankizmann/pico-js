@@ -20,12 +20,19 @@ export class Str
         val = String(val).replace(/^\s+|\s+$/g, '')
             .toLowerCase();
 
-        let source = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-        let target = "aaaaeeeeiiiioooouuuunc------";
+        let sources = [
+            'à', 'á', 'â', 'è', 'é', 'ê', 'ì', 'í', 'ï', 'î', 'ò', 'ó', 'ô',
+            'ù', 'ú', 'û', 'ñ', 'ç', '·', '/', '_', ',', ':', ';', 'ä', 'ö', 'ü'
+        ];
 
-        for (let i=0, l=source.length ; i<l ; i++) {
-            val = val.replace(new RegExp(source.charAt(i), 'g'), target.charAt(i));
-        }
+        let targets = [
+            'a', 'a', 'a', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'o', 'o', 'o',
+            'u', 'u', 'u', 'n', 'c', '-', '-', '-', '-', '-', '-', 'ae', 'oe', 'ue'
+        ];
+
+        Arr.each(sources, (source, index) => {
+            val = val.replace(new RegExp(source.charAt(source), 'g'), targets[index]);
+        });
 
         return val.replace(/[^a-z0-9 -]/g, '')
             .replace(/\s+/g, '-').replace(/-+/g, '-');
