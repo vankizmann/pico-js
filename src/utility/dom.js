@@ -863,6 +863,11 @@ export class Dom
             return null;
         }
 
+        if ( Any.isPlain(attr) ) {
+            return Obj.each(attr, (value, key) =>
+                this.attr(key, value));
+        }
+
         let res = this.get(0).getAttribute(attr);
 
         if ( val === undefined ) {
