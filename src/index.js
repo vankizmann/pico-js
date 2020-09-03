@@ -84,8 +84,13 @@ if ( typeof scope.Nano === 'undefined' ) {
 }
 
 if ( typeof scope.IE === 'undefined' ) {
-    scope.IE = scope.navigator.userAgent
-        .match(/Edge\/|Trident\/|MSIE /) !== null;
+    scope.IE = !! scope.navigator.userAgent
+        .match(/Edge\/|Trident\/|MSIE /);
+}
+
+if ( typeof scope.WIN === 'undefined' ) {
+    scope.WIN = !! scope.navigator.userAgent
+        .match(/Windows/);
 }
 
 import ReadyElement from './element/ready';
