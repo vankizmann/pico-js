@@ -35,7 +35,7 @@ export class Ajax
                     Data.set(Arr.second(input), res.data);
                 }
 
-                Event.fire(Arr.first(input), res, vars, options);
+                Event.fire(Arr.first(input), vars);
 
                 return resolve(res);
             }, reject);
