@@ -465,6 +465,10 @@ export class Dom
     {
         let el = this.get(0), timeout = null;
 
+        if ( ! el ) {
+            return this;
+        }
+
         timeout = setInterval(() => {
 
             if ( ! el.complete || el.naturalWidth === 0 ) {
