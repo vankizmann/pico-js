@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano JS Ready</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <!--[if IE ]>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=Element.prototype.append%2CElement.prototype.before%2CElement.prototype.classList%2CElement.prototype.closest%2CElement.prototype.matches%2CElement.prototype.prepend%2CElement.prototype.remove%2CNodeList.prototype.%40%40iterator%2CNodeList.prototype.forEach%2CNode.prototype.contains%2CMutationObserver%2CURL%2CElement%2CDocumentFragment%2CDocumentFragment.prototype.append%2CDocumentFragment.prototype.prepend%2CHTMLDocument%2Cdocument.querySelector%2Cdocument.getElementsByClassName%2Cdocument%2CgetComputedStyle%2CrequestAnimationFrame"></script>
+    <![endif]-->
+
+    <script src="../../dist/nano-js.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <div js-test="foo: 'bar';">
+        <span>Hallo!</span>
+    </div>
+    <div js-ready="duration: 200;">
+        <span>Hallo!</span>
+    </div>
+</div>
+
+<script>
+    (function (Nano) {
+
+        'use strict';
+
+        Nano.Dom.ready(function() {
+
+            // How to use:
+
+            var currentStore = null;
+
+            // Add store with setter function, so you can call an ajax instance and apply the setter
+            Nano.Store.add('attachments', function (setter) {
+
+                console.log('fetch');
+
+                Nano.Any.delay(function() {
+                    console.log('fetched');
+                    setter([123,321]);
+                }, 1500);
+
+            });
+
+
+            // Clear storage so at next request data will be fresh
+            Nano.Store.clear('attachments');
+
+            // Add listener
+            let storeGetter =  Nano.Store.get('attachments', function (data) {
+                currentStore = data;
+                console.log(currentStore);
+            });
+
+            // Add listener
+            let errorGetter =  Nano.Store.get('givemeaerror', function (data) {
+                currentStore = data;
+                console.log(currentStore);
+            });
+
+
+            // Refresh storage and submit update
+            
+            Nano.Any.delay(function () {
+                // Disable listener
+                //Nano.Store.off('attachments', storeGetter);
+                Nano.Store.clear('attachments');
+
+                Nano.Store.get('attachments', function (data) {
+                    console.log('new', data);
+                });
+
+                Nano.Any.delay(function () {
+                    Nano.Store.refresh('attachments');
+                }, 2000);
+
+            }, 2000);
+
+        });
+
+
+
+    })(window.Nano);
+</script>
+</body>
+</html>

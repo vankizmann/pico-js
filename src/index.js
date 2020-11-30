@@ -21,9 +21,10 @@ import Locale from "./library/locale";
 import Map from "./library/map";
 import Queue from "./library/queue";
 import Route from "./library/route";
+import Store from "./library/store";
 
 export {
-    Ajax, Asset, Data, Element, Event, Extension, Locale, Map, Queue, Route
+    Ajax, Asset, Data, Element, Event, Extension, Locale, Map, Queue, Route, Store
 }
 
 let UUID = require('uuid/v1');
@@ -55,6 +56,7 @@ export function NanoInstance() {
     this.Map =  Map;
     this.Queue =  Queue;
     this.Route =  Route;
+    this.Store =  Store;
 
     this.extends = (extend) => {
         Any.keys(extend).forEach((key) => this[key] = extend[key]);
