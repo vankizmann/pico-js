@@ -12,6 +12,11 @@ export class Store
         this.getters[key] = callback;
     }
 
+    static has(key)
+    {
+        return typeof this.getters[key] !== 'undefined';
+    }
+
     static refresh(key)
     {
         if ( Arr.has(this.queue, key) ) {
