@@ -35,55 +35,40 @@
 
         Nano.Dom.ready(function() {
 
-            // How to use:
-
-            var currentStore = null;
-
             // Add store with setter function, so you can call an ajax instance and apply the setter
-            Nano.Store.add('attachments', function (setter) {
-
-                console.log('fetch');
-
+            Nano.Store.add('testdata', function (setter) {
                 Nano.Any.delay(function() {
-                    console.log('fetched');
                     setter([123,321]);
                 }, 1500);
-
             });
 
 
+            Nano.Event.bind('store/fetch:testdata' ,function () {
+                console.log('fetching started');
+            });
+
+            Nano.Event.bind('store/fetched:testdata' ,function () {
+                console.log('fetching ended');
+            });
+
             // Clear storage so at next request data will be fresh
-            Nano.Store.clear('attachments');
+            //Nano.Store.clear('testdata');
 
             // Add listener
-            let storeGetter =  Nano.Store.get('attachments', function (data) {
-                currentStore = data;
-                console.log(currentStore);
+            let storeGetter =  Nano.Store.get('testdata', function (data) {
+                console.log(data);
             });
 
             // Add listener
             let errorGetter =  Nano.Store.get('givemeaerror', function (data) {
-                currentStore = data;
-                console.log(currentStore);
+                console.log(data);
             });
-
 
             // Refresh storage and submit update
             
             Nano.Any.delay(function () {
-                // Disable listener
-                //Nano.Store.off('attachments', storeGetter);
-                Nano.Store.clear('attachments');
-
-                Nano.Store.get('attachments', function (data) {
-                    console.log('new', data);
-                });
-
-                Nano.Any.delay(function () {
-                    Nano.Store.refresh('attachments');
-                }, 2000);
-
-            }, 2000);
+                Nano.Store.refresh('testdata');
+            }, 4000);
 
         });
 

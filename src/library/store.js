@@ -43,9 +43,9 @@ export class Store
 
         this.data[key] = data;
 
-        Event.fire(`store/fetched:${key}`);
-
         Arr.remove(this.queue, key);
+
+        Event.fire(`store/fetched:${key}`);
     }
 
     static get(key, callback, ident = null)
