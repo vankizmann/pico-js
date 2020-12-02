@@ -1,4 +1,4 @@
-import { Arr, Obj, Any, UUID } from "../index";
+import { Arr, Obj, Any, UUID, Event } from "../index";
 
 export class Store
 {
