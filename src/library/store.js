@@ -25,6 +25,8 @@ export class Store
 
         Arr.add(this.queue, key);
 
+        Event.fire(`store/fetch:${key}`);
+
         this.getters[key]((data) => this.set(key, data));
     }
 
@@ -40,6 +42,8 @@ export class Store
         });
 
         this.data[key] = data;
+
+        Event.fire(`store/fetched:${key}`);
 
         Arr.remove(this.queue, key);
     }
@@ -67,7 +71,7 @@ export class Store
         return ident;
     }
 
-    static off(key, ident)
+    static forget(key, ident)
     {
         Obj.unset(this.listeners, [key, ident]);
     }
