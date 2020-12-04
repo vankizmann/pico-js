@@ -244,6 +244,17 @@ export class Arr
         return result;
     }
 
+    static contains(arr, val)
+    {
+        let result = false;
+
+        for ( let key of Any.vals(arr) ) {
+            result = val.indexOf(key) !== -1 && result;
+        }
+
+        return result;
+    }
+
     static concat(arr, ...args)
     {
         return arr.concat(...args);
