@@ -248,8 +248,8 @@ export class Arr
     {
         let result = true;
 
-        for ( let key of Any.vals(arr) ) {
-            result = val.indexOf(key) !== -1 && result;
+        for ( let key of Any.vals(val) ) {
+            result = Any.vals(arr).indexOf(key) !== -1 && result;
         }
 
         return result;
