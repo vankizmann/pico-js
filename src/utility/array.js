@@ -246,7 +246,7 @@ export class Arr
 
     static contains(arr, val)
     {
-        let result = false;
+        let result = true;
 
         for ( let key of Any.vals(arr) ) {
             result = val.indexOf(key) !== -1 && result;
