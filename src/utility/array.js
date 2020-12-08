@@ -320,6 +320,11 @@ export class Arr
         return Object.values(arr).reduce(callback, accumulator);
     }
 
+    static extract(arr, path)
+    {
+        return this.each(arr, (val) => Obj.get(val, path, null));
+    }
+
     static each(arr, callback)
     {
         let result = Arr.clone(arr);
