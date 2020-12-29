@@ -19,7 +19,7 @@ export class Obj
             return fallback;
         }
 
-        keys = (typeof keys === 'string' && keys.match(/^[^\.]+(\.[^\.]+)$/)) ?
+        keys = (typeof keys === 'string' && keys.match(/^[^\.]+(\.[^\.]+)*$/)) ?
             keys.split('.') : keys;
 
         if ( Any.isArray(keys) === false ) {
@@ -41,7 +41,7 @@ export class Obj
 
     static set(obj, keys, val)
     {
-        keys = (typeof keys === 'string' && keys.match(/^[^\.]+(\.[^\.]+)$/)) ?
+        keys = (typeof keys === 'string' && keys.match(/^[^\.]+(\.[^\.]+)*$/)) ?
             keys.split('.') : keys;
 
         let key = keys.shift();
@@ -59,7 +59,7 @@ export class Obj
 
     static unset(obj, keys)
     {
-        keys = (typeof keys === 'string' && keys.match(/^[^\.]+(\.[^\.]+)$/)) ?
+        keys = (typeof keys === 'string' && keys.match(/^[^\.]+(\.[^\.]+)*$/)) ?
             keys.split('.') : keys;
 
         let key = keys.shift();
