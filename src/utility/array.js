@@ -24,24 +24,28 @@ export class Arr
         return arr[index] = value;
     }
 
-    static first(arr)
+    static first(arr, fallback = null)
     {
-        return Array.isArray(arr) ? arr[0] : arr;
+        return (Array.isArray(arr) ? arr[0] : 
+            arr) || fallback;
     }
 
-    static second(arr)
+    static second(arr, fallback = null)
     {
-        return Array.isArray(arr) ? arr[1] || arr[0] : arr;
+        return (Array.isArray(arr) ? arr[1] || 
+            arr[0] : arr) || fallback;
     }
 
-    static third(arr)
+    static third(arr, fallback = null)
     {
-        return Array.isArray(arr) ? arr[2] || arr[1] || arr[0] : arr;
+        return (Array.isArray(arr) ? arr[2] || 
+            arr[1] || arr[0] : arr) || fallback;
     }
 
-    static last(arr)
+    static last(arr, fallback = null)
     {
-        return Array.isArray(arr) ? arr[arr.length - 1] : arr;
+        return (Array.isArray(arr) ? arr[arr.length - 1] : 
+            arr) || fallback;
     }
 
     static prepend(arr, val)
