@@ -76,7 +76,7 @@ export class Obj
         return this.unset(obj[key], keys);
     }
 
-    static only(obj, keys)
+    static only(obj, keys, assign = null)
     {
         let result = {};
 
@@ -85,6 +85,10 @@ export class Obj
                 result[key] = val;
             }
         });
+
+        if ( ! Any.isEmpty(assign) ) {
+            result = this.assign(result, assign);
+        }
 
         return result;
     }
@@ -98,6 +102,10 @@ export class Obj
                 result[key] = val;
             }
         });
+
+        if ( ! Any.isEmpty(assign) ) {
+            result = this.assign(result, assign);
+        }
 
         return result;
     }
