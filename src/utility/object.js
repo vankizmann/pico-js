@@ -93,7 +93,7 @@ export class Obj
         return result;
     }
 
-    static except(obj, keys)
+    static except(obj, keys, assign = null)
     {
         let result = {};
 
