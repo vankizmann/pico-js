@@ -8,11 +8,11 @@ export class Now
 
     constructor(date = null, format = 'YYYY-MM-DD hh:mm:ss')
     {
-        this.initialDate = date;
-
         if ( date instanceof Now ) {
             date = date.get().toDate();
         }
+
+        this.initialDate = date;
 
         if ( ! Any.isString(date) ) {
             this.moment = moment(date || new Date, format);
