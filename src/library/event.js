@@ -11,6 +11,10 @@ export class Event
                 this.bind(val, callback, options, paused));
         }
 
+        if ( ! Any.isPlain(options) ) {
+            options = { value: options }
+        }
+
         this.events = Arr.push(this.events, {
             name, callback, options, paused
         });
@@ -22,6 +26,10 @@ export class Event
     {
         if ( Any.isArray(name) ) {
             return Arr.each(name, (val) => this.unbind(val, options));
+        }
+
+        if ( ! Any.isPlain(options) ) {
+            options = { value: options }
         }
 
         Arr.remove(this.events, { name, options });
