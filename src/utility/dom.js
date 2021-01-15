@@ -897,11 +897,11 @@ export class Dom
 
         this.attr('style', val);
 
-        callback.call(this.get(0), this.get(0));
+        let result = callback.call(this.get(0), this.get(0));
 
         this.attr('style', style);
 
-        return this;
+        return result;
     }
 
     loopParent(callback, target = null)
