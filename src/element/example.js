@@ -1,7 +1,7 @@
 import { Dom } from "../index";
 import DefaultElement from "./default";
 
-export default class Ready extends DefaultElement
+export default class Example extends DefaultElement
 {
     options = {
         duration: 500,

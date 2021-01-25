@@ -1,15 +1,12 @@
 const path = require('path');
-const webpack = require("webpack");
-const autoprefixer = require("autoprefixer");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let jsExtensionExport = {
     mode: "development",
     entry: ["./src/index.js"],
     output: {
-        filename: "nano-js.esm.js",
+        filename: "pico-js.esm.js",
         path: path.resolve(__dirname, "dist"),
-        library: "nano-js",
+        library: "pico-js",
         libraryTarget: "umd",
     },
     module: {
@@ -27,19 +24,17 @@ let jsExtensionExport = {
         ]
     },
     externals: {
-        'vue': {
-            root: 'Vue', commonjs: 'vue', commonjs2: 'vue', amd: 'vue'
-        }
+        moment: 'moment'
     },
 };
 
 let jsWindowExport = {
     mode: "development",
-    entry: ["@babel/polyfill", "./src/index.js"],
+    entry: ["./src/index.js"],
     output: {
-        filename: "nano-js.js",
+        filename: "pico-js.js",
         path: path.resolve(__dirname, "dist"),
-        library: "nano-js",
+        library: "pico-js",
         libraryTarget: "umd",
     },
     module: {
@@ -57,9 +52,7 @@ let jsWindowExport = {
         ]
     },
     externals: {
-        'vue': {
-            root: 'Vue', commonjs: 'vue', commonjs2: 'vue', amd: 'vue'
-        }
+        moment: 'moment'
     },
 };
 

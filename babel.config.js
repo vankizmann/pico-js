@@ -3,12 +3,7 @@ module.exports = function (api) {
     api.cache(true);
 
     const presets = [
-        [
-            '@babel/preset-env',
-            {
-                modules: false, useBuiltIns: false
-            }
-        ]
+        '@babel/preset-env'
     ];
 
     const plugins= [

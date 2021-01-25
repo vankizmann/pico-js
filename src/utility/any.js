@@ -267,15 +267,6 @@ export class Any
         };
     }
 
-    static md5(value)
-    {
-        if ( this.isObject(value) ) {
-            value = JSON.stringify(Obj.clone(value));
-        }
-
-        return require('blueimp-md5')(value);
-    }
-
 }
 
 export default Any;

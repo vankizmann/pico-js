@@ -1,107 +1,84 @@
 
 import Arr from "./utility/array";
+export { Arr };
+
 import Obj from "./utility/object";
+export { Obj };
+
 import Num from "./utility/number";
+export { Num };
+
 import Str from "./utility/string";
+export { Str };
+
 import Now from "./utility/now";
+export { Now };
+
 import Any from "./utility/any";
+export { Any };
+
 import Dom from "./utility/dom";
+export { Dom };
 
-export {
-    Arr, Obj, Num, Str, Any, Dom, Now
-}
-
-import Ajax from "./library/ajax";
-import Asset from "./library/asset";
-import Data from "./library/data";
-import Element from "./library/element";
-import Event from "./library/event";
-import Extension from "./library/extension";
-import Locale from "./library/locale";
-import Map from "./library/map";
-import Queue from "./library/queue";
-import Route from "./library/route";
-import Store from "./library/store";
-
-export {
-    Ajax, Asset, Data, Element, Event, Extension, Locale, Map, Queue, Route, Store
-}
-
-let UUID = require('uuid/v1');
-export { UUID };
-
-let Cookie = require('js-cookie');
+import Cookie from "./library/cookie";
 export { Cookie };
 
-export function NanoInstance() {
+import Data from "./library/data";
+export { Data };
 
-    this.UUID = UUID;
-    this.Cookie =  Cookie;
+import Element from "./library/element";
+export { Element };
 
-    this.Arr = Arr;
-    this.Obj =  Obj;
-    this.Num =  Num;
-    this.Str =  Str;
-    this.Now =  Now;
-    this.Any =  Any;
-    this.Dom =  Dom;
+import Event from "./library/event";
+export { Event };
 
-    this.Ajax =  Ajax;
-    this.Asset =  Asset;
-    this.Data =  Data;
-    this.Element =  Element;
-    this.Event =  Event;
-    this.Extension =  Extension;
-    this.Locale =  Locale;
-    this.Map =  Map;
-    this.Queue =  Queue;
-    this.Route =  Route;
-    this.Store =  Store;
+import Locale from "./library/locale";
+export { Locale };
 
-    this.extends = (extend) => {
-        Any.keys(extend).forEach((key) => this[key] = extend[key]);
-    };
+import Map from "./library/map";
+export { Map };
 
-    this.install = (target) => {
-        Any.keys(this).forEach((key) => target[key] = this[key]);
-    };
+import Queue from "./library/queue";
+export { Queue };
 
-    return this;
+import Route from "./library/route";
+export { Route };
+
+import { v4 as UUID } from 'uuid'
+export { UUID };
+
+export const Pico = {
+
+    UUID: UUID,
+
+    Arr: Arr,
+    Obj: Obj,
+    Num: Num,
+    Str: Str,
+    Now: Now,
+    Any: Any,
+    Dom: Dom,
+
+    Cookie: Cookie,
+    Data: Data,
+    Element: Element,
+    Event: Event,
+    Locale: Locale,
+    Map: Map,
+    Queue: Queue,
+    Route: Route,
 }
 
-let scope = {};
-
-if (typeof global !== 'undefined') {
-    scope = global;
+if ( typeof global.IE === 'undefined' ) {
+    global.IE = !! global.navigator.userAgent.match(/Edge\/|Trident\/|MSIE /);
 }
 
-if (typeof window !== 'undefined') {
-    scope = window;
+if ( typeof global.WIN === 'undefined' ) {
+    global.WIN = !! global.navigator.userAgent.match(/Windows/);
 }
 
-export const Nano = new NanoInstance;
-
-if ( typeof scope.Nano === 'undefined' ) {
-    scope.Nano = Nano;
+if ( typeof global.pi === 'undefined' ) {
+    global.pi = Pico;
 }
 
-if ( typeof scope.IE === 'undefined' ) {
-    scope.IE = !! scope.navigator.userAgent
-        .match(/Edge\/|Trident\/|MSIE /);
-}
-
-if ( typeof scope.WIN === 'undefined' ) {
-    scope.WIN = !! scope.navigator.userAgent
-        .match(/Windows/);
-}
-
-import ReadyElement from './element/ready';
-scope.Nano.Element.alias('ready', ReadyElement);
-
-import MenuElement from './element/menu';
-scope.Nano.Element.alias('menu', MenuElement);
-
-import ResizerElement from './element/resizer';
-scope.Nano.Element.alias('resizer', ResizerElement);
-
-export default scope.Nano;
+export default Pico;
