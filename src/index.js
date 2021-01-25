@@ -69,6 +69,10 @@ export const Pico = {
     Route: Route,
 }
 
+/**
+ * @const global
+ */
+
 if ( typeof global.IE === 'undefined' ) {
     global.IE = !! global.navigator.userAgent.match(/Edge\/|Trident\/|MSIE /);
 }

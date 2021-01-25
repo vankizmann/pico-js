@@ -33,13 +33,13 @@
 </div>
 
 <script>
-    (function (Nano) {
+    (function (pi) {
 
         'use strict';
 
-        Nano.Dom.ready(function() {
+        pi.Dom.ready(function() {
 
-            Nano.Map.setMapStyle([
+            pi.Map.setMapStyle([
                 {
                     "featureType": "all",
                     "elementType": "geometry.fill",
@@ -210,16 +210,16 @@
                 }
             ]);
 
-            var lat = Nano.Num.random(1000, 2000) / 100;
-            var lng = Nano.Num.random(1000, 2000) / 100;
+            var lat = pi.Num.random(1000, 2000) / 100;
+            var lng = pi.Num.random(1000, 2000) / 100;
 
-            var map = new Nano.Map('#map', {
+            var map = new pi.Map('#map', {
                 lat: lat, lng: lng
             });
 
             map.clusterMarkers({ gridSize: 20 });
 
-            Nano.Map.setMarkerStyle('default', {
+            pi.Map.setMarkerStyle('default', {
                 default: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
                 hover: 'https://static.thenounproject.com/png/462-200.png',
                 active: 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/map-marker-512.png'
@@ -229,15 +229,15 @@
                 lat: lat, lng: lng, html: `<h4>Home Marker</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>`
             });
 
-            Nano.Arr.each(Nano.Arr.make(60), function (index) {
+            pi.Arr.each(pi.Arr.make(60), function (index) {
 
-                var lat = Nano.Num.random(1000, 2000) / 100;
-                var lng = Nano.Num.random(1000, 2000) / 100;
+                var lat = pi.Num.random(1000, 2000) / 100;
+                var lng = pi.Num.random(1000, 2000) / 100;
 
                 var html = `<h4>Marker ${index}</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>`;
 
                 var groups = [
-                    Nano.Num.random(0, 1) ? 'group1' : 'group0'
+                    pi.Num.random(0, 1) ? 'group1' : 'group0'
                 ];
 
                 map.createMarker(null, {
@@ -248,23 +248,23 @@
 
             map.focusMarkers();
 
-            Nano.Dom.find('#focusGroup0').on('click', function () {
+            pi.Dom.find('#focusGroup0').on('click', function () {
                 map.showMarkers(function (item) {
-                    return Nano.Arr.has(item.extras.groups, 'group0');
+                    return pi.Arr.has(item.extras.groups, 'group0');
                 }).focusMarkers();
             });
 
-            Nano.Dom.find('#focusGroup1').on('click', function () {
+            pi.Dom.find('#focusGroup1').on('click', function () {
                 map.showMarkers(function (item) {
-                    return Nano.Arr.has(item.extras.groups, 'group1');
+                    return pi.Arr.has(item.extras.groups, 'group1');
                 }).focusMarkers();
             });
 
-            Nano.Dom.find('#focusReset').on('click', function () {
+            pi.Dom.find('#focusReset').on('click', function () {
                 map.showMarkers().focusMarkers();
             });
 
-            Nano.Dom.find('#changeMarkerByAddress').on('click', function () {
+            pi.Dom.find('#changeMarkerByAddress').on('click', function () {
 
                 let success = function () {
                     map.focusMarkers();
@@ -277,7 +277,7 @@
                 map.setMarkerByAddress(mainMarker.key, 'Hamburg').then(success, error);
             });
 
-            Nano.Dom.find('#getDirections').on('click', function () {
+            pi.Dom.find('#getDirections').on('click', function () {
 
                 let success = function () {
                     console.log('YES');
@@ -298,7 +298,7 @@
 
             // map.toggleMarker(marker.key);
             //
-            // Nano.Any.delay(function () {
+            // pi.Any.delay(function () {
             //     map.toggleMarker(marker.key);
             //
             //     console.log(marker);
@@ -306,7 +306,7 @@
 
         }, 1500);
 
-    })(window.Nano);
+    })(window.pi);
 </script>
 </body>
 </html>
