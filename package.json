@@ -1,6 +1,10 @@
 {
-    "name": "pico-js",
+    "name": "@kizmann/pico-js",
     "version": "0.1.0",
+    "license": "MIT",
+    "private": false,
+    "author": "Eduard Kizmann <kizmann@protonmail.ch>",
+    "repository": "https://github.com/vankizmann/pico-js",
     "main": "dist/pico-js.esm.js",
     "scripts": {
         "build": "webpack --hide-modules --mode=production",
@@ -15,6 +19,7 @@
         "babel-loader": "^8.0.6",
         "cross-env": "^5.1",
         "moment": "^2.24.0",
+        "terser-webpack-plugin": "^4.2.3",
         "uuid": "^3.3.2",
         "webpack": "^4.39.1",
         "webpack-cli": "^3.3.9"

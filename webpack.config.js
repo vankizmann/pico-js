@@ -1,14 +1,9 @@
-const path = require('path');
+const path = require("path");
+const webpack = require("webpack");
+const TerserPlugin = require("terser-webpack-plugin");
 
-let jsExtensionExport = {
-    mode: "development",
+let config = {
     entry: ["./src/index.js"],
-    output: {
-        filename: "pico-js.esm.js",
-        path: path.resolve(__dirname, "dist"),
-        library: "pico-js",
-        libraryTarget: "umd",
-    },
     module: {
         rules: [
             {
@@ -26,37 +21,76 @@ let jsExtensionExport = {
     externals: {
         moment: 'moment'
     },
+    plugins: []
 };
 
-let jsWindowExport = {
-    mode: "development",
-    entry: ["./src/index.js"],
-    output: {
-        filename: "pico-js.js",
-        path: path.resolve(__dirname, "dist"),
-        library: "pico-js",
-        libraryTarget: "umd",
-    },
-    module: {
-        rules: [
-            {
-                test: /.js$/,
-                include: [
-                    path.resolve(__dirname, './src')
-                ],
-                loader: 'babel-loader',
-                options: {
-                    configFile: path.resolve('./babel.config.js')
-                },
-            }
-        ]
-    },
-    externals: {
-        moment: 'moment'
-    },
-};
+module.exports = function (env, argv) {
+
+    config.mode = argv.mode;
+
+    if ( argv.mode === 'development' ) {
+        config.devtool = 'eval-source-map';
+    }
+
+    if ( argv.mode === 'production' ) {
+        config.devtool = 'source-map';
+    }
+
+    /**
+     * @const __dirname
+     */
+
+    let bundlerPackage = Object.assign({
+
+        output:{
+            filename: "pico-js.esm.js",
+            path: path.resolve(__dirname, "dist"),
+            library: "pico-js",
+            libraryTarget: "umd",
+        }
+
+    }, config);
+
+    let globalPackage = Object.assign({
+
+        output: {
+            filename: "pico-js.js",
+            path: path.resolve(__dirname, "dist"),
+            library: "pico-js",
+            libraryTarget: "window",
+        }
+
+    }, config);
+
+    if ( argv.mode === 'development' ) {
+        return [bundlerPackage, globalPackage];
+    }
+
+    let loaderOptions = new webpack.LoaderOptionsPlugin({
+        minimize: true
+    });
+
+    bundlerPackage.plugins.push(loaderOptions);
+    globalPackage.plugins.push(loaderOptions);
+
+    let terserOptions = {
+        mangle: true
+    }
+
+    let terser = new TerserPlugin({
+        terserOptions, extractComments: false,
+    });
+
+    let optimization = {
+        minimize: true, minimizer: []
+    };
+
+    optimization.minimizer.push(terser);
+
+    bundlerPackage.optimization = optimization;
+    globalPackage.optimization = optimization;
 
 
-module.exports = [
-    jsWindowExport, jsExtensionExport
-];
+
+return [bundlerPackage, globalPackage];
+}

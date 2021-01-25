@@ -95,18 +95,18 @@ export class Str
     /**
      * Parse param string to object
      */
-    static objectify(value, mode = 'options')
+    static objectify(value, mode = 'options', isArray = false)
     {
         if ( Any.isObject(value) ) {
             return value;
         }
 
         if ( mode === 'params' ) {
-            return Str.fromParams(value);
+            return Str.fromParams(value, isArray);
         }
 
         if ( mode === 'options' ) {
-            return Str.fromOptions(value);
+            return Str.fromOptions(value, isArray);
         }
 
         return JSON.parse(value);
@@ -161,26 +161,42 @@ export class Str
     /**
      * Parse string to object (e.g. foo:bar;test:lorem).
      */
-    static fromOptions(value)
+    static fromOptions(value, isArray = false)
     {
         if ( Any.isEmpty(value) ) {
             return {};
         }
 
-        let matches = value.match(/(^|;)(\s*(.*?)\s*:\s*(".*?"|'.*?'|.*?)\s*)(?=;|$)/g);
+        let regex = '(^|;)(\\s*(.*?)\\s*:\\s*' +
+            '(".*?"|\'.*?\'|.*?)\\s*)(?=;|$)';
 
-        return Arr.reduce(matches || [], (result, match) => {
+        let matches = value.match(new RegExp(regex, 'g'));
 
-            // Get key and value from match
-            let attr = match.match( /^;?\s*(.*?)\s*:\s*(".*?"|'.*?'|.*?)\s*$/);
+        let result = Arr.reduce(matches || [],
+            this.convertFromOptions, {});
 
-            // Skip if length does not match
-            if ( attr.length === 3 ) {
-                Obj.set(result, attr[1], Str.real(attr[2].replace(/(^["']*|["']*$)/g, '')));
-            }
+        if ( isArray ) {
+            return Any.vals(result);
+        }
 
+        return result;
+    }
+
+    static convertFromOptions(result, match)
+    {
+        // Get key and value from match
+        let attr = match.match(/^;?\s*(.*?)\s*:\s*(".*?"|'.*?'|.*?)\s*$/);
+
+        // Skip if length does not match
+        if ( attr.length !== 3 ) {
             return result;
-        }, {});
+        }
+
+        let val = Str.real(attr[2].replace(/(^["']*|["']*$)/g, ''));
+
+        Obj.set(result, attr[1], val);
+
+        return result;
     }
 
     /**
@@ -213,27 +229,45 @@ export class Str
     /**
      * Parse string to object (e.g. foo=bar&test=lorem).
      */
-    static fromParams(value)
+    static fromParams(value, isArray = false)
     {
         if ( Any.isEmpty(value) ) {
             return {};
         }
 
-        let matches = value.match(/(^|&)(\s*(.*?)\s*=\s*(".*?"|'.*?'|.*?)\s*)(?=&|$)/g);
+        let regex = '(^|&)(\\s*(.*?)\\s*=\\s*' +
+            '(".*?"|\'.*?\'|.*?)\\s*)(?=&|$)';
 
-        return Arr.reduce(matches || [], (result, match) => {
+        let matches = value.match(new RegExp(regex, 'g'));
 
-            // Get key and value from match
-            let attr = match.match( /^&?\s*(.*?)\s*=\s*(".*?"|'.*?'|.*?)\s*$/);
+        let result = Arr.reduce(matches || [],
+            this.convertFromParams, {});
 
-            // Skip if length does not match
-            if ( attr.length === 3 ) {
-                Obj.set(result, attr[1].replace(/(\]\[|\[|\])/g, '.').replace(/\.$/, ''),
-                    Str.real(attr[2].replace(/(^["']*|["']*$)/g, '')));
-            }
+        if ( isArray ) {
+            return Any.vals(result);
+        }
 
+        return result
+    }
+
+    static convertFromParams(result, match) {
+
+        // Get key and value from match
+        let attr = match.match(/^&?\s*(.*?)\s*=\s*(".*?"|'.*?'|.*?)\s*$/);
+
+        // Skip if length does not match
+        if ( attr.length !== 3 ) {
             return result;
-        }, {});
+        }
+
+        let key = attr[1].replace(/(\]\[|\[|\])/g, '.')
+            .replace(/\.$/, '');
+
+        let val = Str.real(attr[2].replace(/(^["']*|["']*$)/g, ''));
+
+        Obj.set(result, key, val);
+
+        return result;
     }
 
 }
