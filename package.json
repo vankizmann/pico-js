@@ -1,6 +1,6 @@
 {
     "name": "nano-js",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "main": "dist/nano-js.esm.js",
     "scripts": {
         "build": "webpack --hide-modules --mode=production",
@@ -22,7 +22,6 @@
         "mini-css-extract-plugin": "^0.8.0",
         "moment": "^2.24.0",
         "uuid": "^3.3.2",
-        "velocity-animate": "^1.5.2",
         "vue": "^2.6.10",
         "webpack": "^4.39.1",
         "webpack-cli": "^3.3.9"
