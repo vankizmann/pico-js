@@ -12,26 +12,32 @@
 
 <p align="center">A JS heleper library. <i>Docs following soon</i></p>
 
+### Installation
+
+```bash
+npm install @kizmann/pico-js [or] yarn add @kizmann/pico-js
+```
+
 ### Included utilities
 
-- [pi.Arr](#)
-- [pi.Obj](#)
-- [pi.Str](#)
-- [pi.Num](#)
-- [pi.Any](#)
-- [pi.Dom](#)
-- [pi.Now](#)<br>Requires moment
+- [pi.Arr](#coming-soon)
+- [pi.Obj](#coming-soon)
+- [pi.Str](#coming-soon)
+- [pi.Num](#coming-soon)
+- [pi.Any](#coming-soon)
+- [pi.Dom](#coming-soon)
+- [pi.Now](#coming-soon)<br>Requires moment
 
 ### Included libraries
 
-- [pi.Cookie](#)
-- [pi.Data](#)
-- [pi.Element](#)
-- [pi.Event](#)
-- [pi.Locale](#)
-- [pi.Map](#)
-- [pi.Queue](#)
-- [pi.Route](#)
+- [pi.Cookie](#coming-soon)
+- [pi.Data](#coming-soon)
+- [pi.Element](#coming-soon)
+- [pi.Event](#coming-soon)
+- [pi.Locale](#coming-soon)
+- [pi.Map](#coming-soon)
+- [pi.Queue](#coming-soon)
+- [pi.Route](#coming-soon)
 
 ### Autocomplete
 
