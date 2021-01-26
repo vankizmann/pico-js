@@ -81,8 +81,8 @@ if ( typeof global.WIN === 'undefined' ) {
     global.WIN = !! global.navigator.userAgent.match(/Windows/);
 }
 
-if ( typeof global.pi === 'undefined' ) {
-    global.pi = Pico;
-}
+// if ( typeof global.pi === 'undefined' ) {
+//     global.pi = Pico;
+// }
 
 export default Pico;

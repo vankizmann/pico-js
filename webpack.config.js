@@ -45,9 +45,8 @@ module.exports = function (env, argv) {
         output:{
             filename: "pico-js.esm.js",
             path: path.resolve(__dirname, "dist"),
-            library: "pico-js",
-            libraryTarget: "umd",
-        }
+            libraryTarget: "commonjs-module",
+        },
 
     }, config);
 
@@ -56,8 +55,8 @@ module.exports = function (env, argv) {
         output: {
             filename: "pico-js.js",
             path: path.resolve(__dirname, "dist"),
-            library: "pico-js",
-            libraryTarget: "window",
+            library: "pi",
+            libraryTarget: "var",
         }
 
     }, config);
@@ -90,7 +89,5 @@ module.exports = function (env, argv) {
     bundlerPackage.optimization = optimization;
     globalPackage.optimization = optimization;
 
-
-
-return [bundlerPackage, globalPackage];
+    return [bundlerPackage, globalPackage];
 }
