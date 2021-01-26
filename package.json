@@ -4,7 +4,7 @@
     "license": "MIT",
     "private": false,
     "author": "Eduard Kizmann <kizmann@protonmail.ch>",
-    "repository": "https://github.com/vankizmann/pico-lib",
+    "repository": "https://github.com/vankizmann/pico-js",
     "module": "src/index.js",
     "main": "dist/pico-js.esm.js",
     "scripts": {
