@@ -24,6 +24,23 @@ npm install @kizmann/pico-js [or] yarn add @kizmann/pico-js
 <script src="//unpkg.com/@kizmann/pico-js@latest/dist/pico-js.js"></script>
 ```
 
+```js
+pi.Dom.ready(function () {
+    console.log('Yeah :clap:');
+});
+```
+
+### Module Usage
+```js
+import { Dom } from "@kizmann/pico-js";
+```
+
+```js
+Dom.ready(function () {
+    console.log('Yeah :metal:');
+});
+```
+
 ### Included utilities
 
 - [pi.Arr](#coming-soon)
@@ -45,9 +62,9 @@ npm install @kizmann/pico-js [or] yarn add @kizmann/pico-js
 - [pi.Queue](#coming-soon)
 - [pi.Route](#coming-soon)
 
-### Autocomplete
+### ES5/6 Precompile
 
-Incase you are not using the babel plugins used in *babel.config.js* you will get errors when compiling with webpack. To counter that you need to add an alias to your *webpack.config.js*.
+Incase you are not using the babel plugins (ES6) used in *babel.config.js* you will encounter errors while compiling. To prevent that its required to add an alias to your *webpack.config.js*.
 
 #### webpack.config.js
 ```js
@@ -73,14 +90,14 @@ mix.webpackConfig({
 
 ### Visual Studio Code Autocomplete
 
-Incase you are using the fix above and VS Code you need to create or add to your existsing *jsconfig.json* this alias.
+When using VS Code with the ES5 fix from above you need to create or add to your existsing *jsconfig.json* this alias to enable correct autocomplete.
 
 #### jsconfig.json
 ```json
 {
   "compilerOptions": {
     "paths": {
-      "@kizmann/pico-js": ["node_modules/@kizmann/pico-js/src/index.js"],
+      "@kizmann/pico-js": ["node_modules/@kizmann/pico-js/src/index.js"]
     }
   }
 }

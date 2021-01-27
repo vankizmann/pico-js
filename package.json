@@ -6,6 +6,7 @@
     "author": "Eduard Kizmann <kizmann@protonmail.ch>",
     "repository": "https://github.com/vankizmann/pico-js",
     "main": "src/index.js",
+    "unpkg": "dist/pico-js.js",
     "scripts": {
         "build": "webpack --hide-modules --mode=production",
         "watch": "webpack --watch --hide-modules --mode=development"
