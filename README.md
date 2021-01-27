@@ -18,6 +18,12 @@
 npm install @kizmann/pico-js [or] yarn add @kizmann/pico-js
 ```
 
+### CDN Usage
+
+```html
+<script src="//unpkg.com/@kizmann/pico-js@latest/dist/pico-js.js"></script>
+```
+
 ### Included utilities
 
 - [pi.Arr](#coming-soon)
