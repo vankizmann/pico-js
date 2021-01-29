@@ -24,7 +24,7 @@ export default class Map
 
     constructor(el, options = {})
     {
-        if ( ! google ) {
+        if ( ! global.google ) {
             return console.error('Google Maps is not loaded.');
         }
         let center = Obj.only(options, ['lat', 'lng']);
@@ -36,7 +36,7 @@ export default class Map
         options = Obj.assign({ gestureHandling: 'cooperative', scrollwheel: null, zoom: 12, center },
             Obj.except(options, ['lat', 'lng']));
 
-        this.map = new google.maps.Map(Dom.find(el).get(0), options)
+        this.map = new global.google.maps.Map(Dom.find(el).get(0), options)
     }
 
     static setMapStyle(style = [])
@@ -63,13 +63,13 @@ export default class Map
         let final = {};
 
         // Marker size
-        let size = new google.maps.Size(style.width, style.height);
+        let size = new global.google.maps.Size(style.width, style.height);
 
         // Point position
-        let origin = new google.maps.Point(0, 0);
+        let origin = new global.google.maps.Point(0, 0);
 
         // Point position
-        let anchor = new google.maps.Point(style.width / 2, style.height);
+        let anchor = new global.google.maps.Point(style.width / 2, style.height);
 
         final.default = {
             url: style.default, size: size, origin: origin, anchor: anchor, scaledSize: size
@@ -102,7 +102,7 @@ export default class Map
             return;
         }
 
-        if ( typeof MarkerClusterer === "undefined" ) {
+        if ( typeof global.MarkerClusterer === "undefined" ) {
             return console.error('Google Maps Cluster library not laoded!');
         }
 
@@ -118,7 +118,7 @@ export default class Map
             return this.getMarkerVisibility(item.key);
         });
 
-        this.cluster = new MarkerClusterer(this.map, Arr.each(markers, (item) => item.marker),
+        this.cluster = new global.MarkerClusterer(this.map, Arr.each(markers, (item) => item.marker),
             this.clusterOptions = options);
     }
 
@@ -357,7 +357,7 @@ export default class Map
             item.style = options.style;
         }
 
-        item.marker = new google.maps.Marker(options);
+        item.marker = new global.google.maps.Marker(options);
 
         Obj.set(this.markers, key, item);
 
@@ -380,7 +380,7 @@ export default class Map
         // Add marker default style
         item.marker.addListener('mouseout', () => this.leaveMarker(key));
 
-        item.info = new google.maps.InfoWindow({
+        item.info = new global.google.maps.InfoWindow({
             content: '<div class="gw-i-html">' + Obj.get(options, 'html') + '</div>'
         });
 
@@ -405,7 +405,7 @@ export default class Map
 
     setMarkerByAddress(key, address)
     {
-        let geocoderService = new google.maps.Geocoder();
+        let geocoderService = new global.google.maps.Geocoder();
 
         let geocoderPromise = (resolve, reject) => {
 
@@ -455,7 +455,7 @@ export default class Map
             markers = Obj.filter(this.markers, filter);
         }
 
-        let boundry = new google.maps.LatLngBounds();
+        let boundry = new global.google.maps.LatLngBounds();
 
         Obj.each(markers, (item) => {
             if ( item.marker.getVisible() ) {
@@ -486,10 +486,10 @@ export default class Map
     renderDirections(options)
     {
         // Get directions service
-        let directionsService = new google.maps.DirectionsService();
+        let directionsService = new global.google.maps.DirectionsService();
 
         // Get directions renderer
-        let directionsRenderer = new google.maps.DirectionsRenderer();
+        let directionsRenderer = new global.google.maps.DirectionsRenderer();
 
         if ( ! Obj.has(options, 'map') ) {
             options.map = this.map;
