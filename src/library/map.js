@@ -1,5 +1,9 @@
 import { Obj, Arr, Any, Dom, UUID } from "../index";
 
+/**
+ * @const {object} google
+ */
+
 export default class Map
 {
     map = null;
@@ -20,6 +24,9 @@ export default class Map
 
     constructor(el, options = {})
     {
+        if ( ! google ) {
+            return console.error('Google Maps is not loaded.');
+        }
         let center = Obj.only(options, ['lat', 'lng']);
 
         if ( ! Obj.has(options, 'styles') ) {
