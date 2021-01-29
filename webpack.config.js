@@ -19,9 +19,7 @@ let config = {
         ]
     },
     externals: {
-        moment: {
-            root: 'moment', global: 'moment', commonjs: 'moment', commonjs2: 'moment', amd: 'moment',
-        }
+        moment: 'moment'
     },
     plugins: []
 };
