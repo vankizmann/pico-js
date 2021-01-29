@@ -58,7 +58,7 @@ module.exports = function (env, argv) {
             filename: "pico-js.js",
             path: path.resolve(__dirname, "dist"),
             library: "pi",
-            libraryTarget: "global",
+            libraryTarget: "var",
         }
 
     }, config);
