@@ -20,7 +20,7 @@ let config = {
     },
     externals: {
         'moment': {
-            root: 'moment', global: 'moment', commonjs2: 'moment', commonjs: 'moment', amd: 'moment'
+            root: 'moment', commonjs2: 'moment', commonjs: 'moment', amd: 'moment'
         },
     },
     plugins: []
@@ -59,6 +59,10 @@ module.exports = function (env, argv) {
             path: path.resolve(__dirname, "dist"),
             library: "pi",
             libraryTarget: "var",
+        },
+
+        externals: {
+            'moment': 'moment'
         }
 
     }, config);
