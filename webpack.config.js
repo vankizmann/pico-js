@@ -19,7 +19,9 @@ let config = {
         ]
     },
     externals: {
-        moment: 'moment'
+        'moment': {
+            root: 'moment', global: 'moment', commonjs2: 'moment', commonjs: 'moment', amd: 'moment'
+        },
     },
     plugins: []
 };
@@ -60,6 +62,10 @@ module.exports = function (env, argv) {
         }
 
     }, config);
+
+    Object.keys(globalPackage.externals).forEach((key) => {
+        globalPackage.externals[key] = globalPackage.externals[key].root;
+    });
 
     if ( argv.mode === 'development' ) {
         return [bundlerPackage, globalPackage];
