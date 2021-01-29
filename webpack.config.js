@@ -19,7 +19,9 @@ let config = {
         ]
     },
     externals: {
-        moment: 'moment'
+        moment: {
+            root: 'moment', commonjs: 'moment', commonjs2: 'moment', amd: 'moment',
+        }
     },
     plugins: []
 };
@@ -45,7 +47,7 @@ module.exports = function (env, argv) {
         output:{
             filename: "pico-js.esm.js",
             path: path.resolve(__dirname, "dist"),
-            libraryTarget: "commonjs-module",
+            libraryTarget: "umd",
         },
 
     }, config);
@@ -55,7 +57,6 @@ module.exports = function (env, argv) {
         output: {
             filename: "pico-js.js",
             path: path.resolve(__dirname, "dist"),
-            library: "pi",
             libraryTarget: "var",
         }
 
