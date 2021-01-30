@@ -1,4 +1,4 @@
-import { Obj, Now } from "../index";
+import { Arr, Obj, Now } from "../index";
 
 export class Any
 {
@@ -265,6 +265,40 @@ export class Any
             }
 
         };
+    }
+
+    static form(obj)
+    {
+        let form = new FormData();
+
+        let appendField = (values, keys = []) => {
+            Obj.each(values, (value, index) => {
+
+                let inner = Arr.merge([], keys, index);
+
+                if ( Any.isPlain(value) ) {
+                    return appendField(value, inner);
+                }
+
+                if ( Any.isArray(value) ) {
+                    return appendField(value, inner);
+                }
+
+                let key = inner.splice(0, 1)[0];
+
+                Arr.each(inner, (index) => {
+                    key += '[' + index + ']';
+                });
+
+                if ( value !== null ) {
+                    form.append(key, value);
+                }
+            });
+
+            return form;
+        };
+
+        return appendField(obj);
     }
 
 }

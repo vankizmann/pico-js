@@ -1,12 +1,12 @@
 {
     "name": "@kizmann/pico-js",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "license": "MIT",
     "private": false,
     "author": "Eduard Kizmann <kizmann@protonmail.ch>",
     "repository": "https://github.com/vankizmann/pico-js",
     "main": "src/index.js",
-    "unpkg": "dist/pico-js.js",
+    "unpkg": "dist/pico-js.esm.js",
     "scripts": {
         "build": "webpack --hide-modules --mode=production",
         "watch": "webpack --watch --hide-modules --mode=development"
