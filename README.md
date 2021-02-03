@@ -18,6 +18,10 @@
 npm install @kizmann/pico-js [or] yarn add @kizmann/pico-js
 ```
 
+### Dependencies
+
+This package is dependent of [moment](https://github.com/moment/moment) (*Right now its required but will be optional or ditched soon*).
+
 ### CDN Usage
 
 ```html
@@ -58,9 +62,9 @@ Dom.ready(function () {
 - [pi.Element](#coming-soon)
 - [pi.Event](#coming-soon)
 - [pi.Locale](#coming-soon)
-- [pi.Map](#coming-soon)
 - [pi.Queue](#coming-soon)
 - [pi.Route](#coming-soon)
+- [pi.Map](#coming-soon)<br>Requires gmaps
 
 ### ES5/6 Precompile
 
@@ -71,7 +75,7 @@ Incase you are not using the babel plugins (ES6) used in *babel.config.js* you w
 module.exports = {
     resolve: {
         alias: {
-            '@kizmann/pico-js': '@kizmann/pico-js/dist/pico-js.esm.js'
+            '@kizmann/pico-js': '@kizmann/pico-js/dist/pico-js.js'
         }
     }
 }
@@ -82,7 +86,7 @@ module.exports = {
 mix.webpackConfig({
     resolve: {
         alias: {
-            '@kizmann/pico-js': '@kizmann/pico-js/dist/pico-js.esm.js'
+            '@kizmann/pico-js': '@kizmann/pico-js/dist/pico-js.js'
         }
     }
 });

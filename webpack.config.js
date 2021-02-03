@@ -45,34 +45,15 @@ module.exports = function (env, argv) {
     let bundlerPackage = Object.assign({
 
         output:{
-            filename: "pico-js.esm.js",
+            filename: "pico-js.js",
             path: path.resolve(__dirname, "dist"),
             libraryTarget: "umd",
         },
 
     }, config);
 
-    let globalPackage = Object.assign({
-
-        output: {
-            filename: "pico-js.js",
-            path: path.resolve(__dirname, "dist"),
-            library: "pi",
-            libraryTarget: "var",
-        },
-
-        externals: {
-            'moment': 'moment'
-        }
-
-    }, config);
-
-    Object.keys(globalPackage.externals).forEach((key) => {
-        globalPackage.externals[key] = globalPackage.externals[key].root;
-    });
-
     if ( argv.mode === 'development' ) {
-        return [bundlerPackage, globalPackage];
+        return [bundlerPackage];
     }
 
     let loaderOptions = new webpack.LoaderOptionsPlugin({
@@ -80,7 +61,6 @@ module.exports = function (env, argv) {
     });
 
     bundlerPackage.plugins.push(loaderOptions);
-    globalPackage.plugins.push(loaderOptions);
 
     let terserOptions = {
         mangle: true
@@ -97,7 +77,6 @@ module.exports = function (env, argv) {
     optimization.minimizer.push(terser);
 
     bundlerPackage.optimization = optimization;
-    globalPackage.optimization = optimization;
 
-    return [bundlerPackage, globalPackage];
+    return [bundlerPackage];
 }
