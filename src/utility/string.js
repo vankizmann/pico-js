@@ -15,6 +15,21 @@ export class Str
         return String(val).toLowerCase();
     }
 
+    static camelcase(val)
+    {
+        let slug = Str.slugify(val);
+
+        let slugSplits = Arr.each(slug.split('-'), (split, index) => {
+            if ( index === 0 ) {
+                return split;
+            }
+
+            return Str.ucfirst(split);
+        });
+
+        return slug.join('');
+    }
+
     static slugify(val)
     {
         val = String(val).replace(/^\s+|\s+$/g, '')
@@ -90,7 +105,6 @@ export class Str
 
         return value;
     }
-
 
     /**
      * Parse param string to object
