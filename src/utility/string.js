@@ -27,7 +27,7 @@ export class Str
             return Str.ucfirst(split);
         });
 
-        return slug.join('');
+        return slugSplits.join('');
     }
 
     static slugify(val)
