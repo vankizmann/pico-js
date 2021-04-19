@@ -57,6 +57,22 @@ export class Dom
         return this;
     }
 
+    static required(callback, globals = [], timer = 100) {
+
+        let matches = Arr.each(globals, (key) => {
+            return Obj.has(window, key);
+        });
+
+        if ( Arr.has(matches, false) ) {
+            setTimeout(() => Dom.ready(callback, globals, timer), timer);
+            return this;
+        }
+
+        callback();
+
+        return this;
+    }
+
     static find(element)
     {
         let el = typeof element !== 'string' ?

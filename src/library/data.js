@@ -4,12 +4,12 @@ export class Data
 {
     static data = Obj.get(window, '_data', {});
 
-    static has (input)
+    static has(input)
     {
         return Obj.has(this.data, Arr.first(input));
     }
 
-    static set (input, value)
+    static set(input, value)
     {
         let clone = value, key = Arr.first(input);
 

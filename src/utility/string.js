@@ -20,6 +20,7 @@ export class Str
         let slug = Str.slugify(val);
 
         let slugSplits = Arr.each(slug.split('-'), (split, index) => {
+
             if ( index === 0 ) {
                 return split;
             }
@@ -28,6 +29,17 @@ export class Str
         });
 
         return slugSplits.join('');
+    }
+
+    static humancase(val)
+    {
+        let slug = Str.slugify(val);
+
+        let slugSplits = Arr.each(slug.split('-'), (split) => {
+            return Str.ucfirst(split);
+        });
+
+        return slugSplits.join(' ');
     }
 
     static slugify(val)
