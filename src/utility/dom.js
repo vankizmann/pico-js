@@ -64,7 +64,7 @@ export class Dom
         });
 
         if ( Arr.has(matches, false) ) {
-            setTimeout(() => Dom.ready(callback, globals, timer), timer);
+            setTimeout(() => Dom.required(callback, globals, timer), timer);
             return this;
         }
 
