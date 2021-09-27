@@ -70,6 +70,11 @@ export class Str
         return val.charAt(0).toUpperCase() + val.slice(1);
     }
 
+    static lcfirst(val)
+    {
+        return val.charAt(0).toLowerCase() + val.slice(1);
+    }
+
     static has(val, search)
     {
         return this.lower(val).indexOf(this.lower(search)) !== -1;
