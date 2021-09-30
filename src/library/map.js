@@ -405,6 +405,13 @@ export default class Map
 
     setMarkerByAddress(key, address)
     {
+        return this.getLocationByAddress(key, address, (res) => {
+            this.setMarkerPosition(key, Obj.get(res, '0.geometry.location', {}));
+        });
+    }
+
+    getLocationByAddress(key, address, callback = null)
+    {
         let geocoderService = new global.google.maps.Geocoder();
 
         let geocoderPromise = (resolve, reject) => {
@@ -412,7 +419,7 @@ export default class Map
             let geocoderResult = (response, status) => {
 
                 if ( status === 'OK' ) {
-                    this.setMarkerPosition(key, Obj.get(response, '0.geometry.location', {}));
+                    callback(response);
                     resolve(response);
                 }
 
