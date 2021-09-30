@@ -405,12 +405,12 @@ export default class Map
 
     setMarkerByAddress(key, address)
     {
-        return this.getLocationByAddress(key, address, (res) => {
+        return this.getLocationByAddress(address, (res) => {
             this.setMarkerPosition(key, Obj.get(res, '0.geometry.location', {}));
         });
     }
 
-    getLocationByAddress(key, address, callback = null)
+    getLocationByAddress(address, callback = null)
     {
         let geocoderService = new global.google.maps.Geocoder();
 
