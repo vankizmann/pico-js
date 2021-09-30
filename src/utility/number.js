@@ -1,16 +1,16 @@
-import { Any, Arr } from "../index"
+import { Any, Arr, Obj } from "../index"
 
 export class Num
 {
     static int(num)
     {
-        return ! Any.isString(num) ? parseInt(num) :
+        return !Any.isString(num) ? parseInt(num) :
             parseInt(num.replace('px', ''));
     }
 
     static float(num)
     {
-        return ! Any.isString(num) ? parseFloat(num) :
+        return !Any.isString(num) ? parseFloat(num) :
             parseFloat(num.replace('px', ''));
     }
 
@@ -43,9 +43,10 @@ export class Num
     {
         let value = 0;
 
-        for ( let i = 20; i >= 0; i-- ) {
+        for ( let i = 20; i >= 0; i -- ) {
             if ( num >= (value = Math.pow(2, i)) ) {
-                base.push(value); num -= value;
+                base.push(value);
+                num -= value;
             }
         }
 
@@ -57,11 +58,42 @@ export class Num
         return Arr.reduce(arr, (acc, val) => acc + val, 0);
     }
 
+    static distance(cord1, cord2, miles = false)
+    {
+        let defaultCord = {
+            lat: 0, lng: 0
+        };
+
+        cord1 = Obj.assign(defaultCord, cord1);
+        cord2 = Obj.assign(defaultCord, cord2);
+
+        const radlat1 = (Math.PI * this.float(cord1.lat)) / 180;
+        const radlat2 = (Math.PI * this.float(cord2.lat)) / 180;
+
+        const theta = this.float(cord1.lng) - this.float(cord2.lng);
+        const radtheta = (Math.PI * theta) / 180;
+
+        let dist = Math.sin(radlat1) * Math.sin(radlat2) +
+            Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+
+        if ( dist > 1 ) {
+            dist = 1;
+        }
+
+        dist = (Math.acos(dist) * 180) / Math.PI * 60 * 1.1515;
+
+        if ( !miles ) {
+            dist = dist * 1.609344;
+        }
+
+        return dist;
+    }
+
     static format(num, decimal = '.', thousand = ',', fixed = null)
     {
         let value = num.toString();
 
-        if ( fixed !== null && fixed !== -1 ) {
+        if ( fixed !== null && fixed !== - 1 ) {
             value = num.toFixed(fixed);
         }
 
@@ -80,7 +112,7 @@ export class Num
 
         let result = splits.reverse().join(thousand);
 
-        if ( fixed !== -1 && fixed !== 0 && value.match(/\./) ) {
+        if ( fixed !== - 1 && fixed !== 0 && value.match(/\./) ) {
             result += decimal + minals;
         }
 
