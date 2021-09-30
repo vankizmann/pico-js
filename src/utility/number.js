@@ -64,14 +64,14 @@ export class Num
             lat: 0, lng: 0
         };
 
-        cord1 = Obj.assign(defaultCord, cord1);
-        cord2 = Obj.assign(defaultCord, cord2);
+        cord1 = Obj.assign({}, defaultCord, cord1);
+        cord2 = Obj.assign({}, defaultCord, cord2);
 
-        const radlat1 = (Math.PI * this.float(cord1.lat)) / 180;
-        const radlat2 = (Math.PI * this.float(cord2.lat)) / 180;
+        let radlat1 = (Math.PI * this.float(cord1.lat)) / 180;
+        let radlat2 = (Math.PI * this.float(cord2.lat)) / 180;
 
-        const theta = this.float(cord1.lng) - this.float(cord2.lng);
-        const radtheta = (Math.PI * theta) / 180;
+        let theta = this.float(cord1.lng) - this.float(cord2.lng);
+        let radtheta = (Math.PI * theta) / 180;
 
         let dist = Math.sin(radlat1) * Math.sin(radlat2) +
             Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
