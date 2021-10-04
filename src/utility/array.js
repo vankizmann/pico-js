@@ -66,7 +66,7 @@ export class Arr
 
         if ( Any.isFunction(key) ) {
             keys = keys.sort((a, b) => {
-                return key.call(obj[a], obj[b]);
+                return key.call({}, obj[a], obj[b]);
             });
         }
 
