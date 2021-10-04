@@ -300,7 +300,7 @@ export class Dom
             return Dom.find(null);
         }
 
-        return Dom.find(this.el.parentNode);
+        return Dom.find(el.parentNode);
     }
 
     child(selector)
