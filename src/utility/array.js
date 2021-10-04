@@ -66,7 +66,7 @@ export class Arr
 
         if ( Any.isFunction(key) ) {
             keys = keys.sort((a, b) => {
-                return Any.integer(Obj.get(obj[a], key)) - Any.integer(Obj.get(obj[b], key));
+                return key.call(obj[a], obj[b]);
             });
         }
 
@@ -89,16 +89,6 @@ export class Arr
     static sortString(obj, key)
     {
         let keys = Any.keys(obj);
-
-        if ( Any.isFunction(key) ) {
-            keys = keys.sort((a, b) => {
-
-                let va = Any.string(Obj.get(obj[a], key)).toLowerCase();
-                let vb = Any.string(Obj.get(obj[b], key)).toLowerCase();
-
-                return(va < vb) ? -1 : (va > vb) ? 1 : 0;
-            });
-        }
 
         if ( ! Any.isFunction(key) ) {
             keys = keys.sort((a, b) => {
