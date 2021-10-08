@@ -117,10 +117,10 @@ export default class Map
         }
 
         if ( this.cluster ) {
-            this.cluster.clearMarkers()
+            this.cluster.clearMarkers();
         }
 
-        if ( filter ) {
+        if ( Any.isFunction(filter) ) {
             this.clusterFilter = filter;
         }
 
@@ -378,7 +378,7 @@ export default class Map
 
         Obj.set(this.markers, key, item);
 
-        this.clusterMarkers(this.clusterOptions, false);
+        this.clusterMarkers(this.clusterOptions, null, false);
 
         if ( ! Obj.has(options, 'html') ) {
             return Obj.get(this.markers, key);
@@ -466,7 +466,7 @@ export default class Map
 
         Obj.each(markers, (item) => this.showMarker(item.key));
 
-        this.clusterMarkers(this.clusterOptions, false);
+        this.clusterMarkers(this.clusterOptions, null, false);
 
         return this;
     }
