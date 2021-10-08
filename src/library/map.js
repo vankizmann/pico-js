@@ -100,7 +100,7 @@ export default class Map
         return this;
     }
 
-    clusterMarkers(options = {}, allowCreate = true)
+    clusterMarkers(options = {}, filter = null, allowCreate = true)
     {
         if ( ! this.cluster && ! allowCreate ) {
             return;
@@ -119,7 +119,14 @@ export default class Map
         }
 
         let markers = Arr.filter(this.markers, (item) => {
-            return this.getMarkerVisibility(item.key);
+
+            let visible = this.getMarkerVisibility(item.key);
+
+            if ( ! Any.isFunction(filter) ) {
+                return visible;
+            }
+
+            return visible && filter.call(this, item);
         });
 
         this.cluster = new global.MarkerClusterer(this.map, Arr.each(markers, (item) => item.marker),
