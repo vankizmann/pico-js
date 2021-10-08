@@ -46,7 +46,7 @@ export default class Map
         return this;
     }
 
-    static setMarkerStyle(key, style = {})
+    static setMarkerStyle(key, style = {}, extra = {})
     {
         if ( ! Obj.has(style, 'default') ) {
             return console.error('Marker style requires default property')
@@ -90,6 +90,10 @@ export default class Map
         if ( ! Obj.has(final, 'active') ) {
             final.active = final.default;
         }
+
+        Obj.each(extra, (value, prop) => {
+            final[prop] = Obj.assign({}, final.default, { url: value });
+        });
 
         Obj.set(Map.markerStyles, key, final);
 
