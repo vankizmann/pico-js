@@ -16,6 +16,8 @@ export default class Map
 
     cluster = null;
 
+    clusterFilter = null;
+
     clusterOptions = {};
 
     static hideMarkers = true;
@@ -118,15 +120,19 @@ export default class Map
             this.cluster.clearMarkers()
         }
 
+        if ( filter ) {
+            this.clusterFilter = filter;
+        }
+
         let markers = Arr.filter(this.markers, (item) => {
 
             let visible = this.getMarkerVisibility(item.key);
 
-            if ( ! Any.isFunction(filter) ) {
+            if ( ! Any.isFunction(this.clusterFilter) ) {
                 return visible;
             }
 
-            return visible && filter.call(this, item);
+            return visible && this.clusterFilter.call(this, item);
         });
 
         this.cluster = new global.MarkerClusterer(this.map, Arr.each(markers, (item) => item.marker),
