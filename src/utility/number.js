@@ -91,6 +91,10 @@ export class Num
 
     static format(num, decimal = '.', thousand = ',', fixed = null)
     {
+        if ( num === null ) {
+            return null;
+        }
+
         let value = num.toString();
 
         if ( fixed !== null && fixed !== - 1 ) {
@@ -98,7 +102,7 @@ export class Num
         }
 
         let totals = value.replace(/\.[0-9]+$/, ''),
-            minals = value.replace(/^[0-9]+\./, '');
+            minals = value.replace(/^[0-9\-]+\./, '');
 
         let splits = Arr.reduce(totals.split('').reverse(), (result, val, key) => {
 
