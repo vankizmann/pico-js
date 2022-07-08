@@ -26,17 +26,23 @@ export class Obj
             keys = [keys];
         }
 
-        let key = keys.shift();
+        let result = [];
+
+        Arr.each(keys, (key) => {
+            result = result.concat(key.split('.'))
+        });
+
+        let key = result.shift();
 
         if ( typeof obj[key] === 'undefined' ) {
             return fallback;
         }
 
-        if ( keys.length === 0 ) {
+        if ( result.length === 0 ) {
             return obj[key];
         }
 
-        return this.get(obj[key], keys, fallback)
+        return this.get(obj[key], result, fallback);
     }
 
     static set(obj, keys, val)
@@ -86,7 +92,7 @@ export class Obj
             }
         });
 
-        if ( ! Any.isEmpty(assign) ) {
+        if ( !Any.isEmpty(assign) ) {
             result = this.assign(result, assign);
         }
 
@@ -103,7 +109,7 @@ export class Obj
             }
         });
 
-        if ( ! Any.isEmpty(assign) ) {
+        if ( !Any.isEmpty(assign) ) {
             result = this.assign(result, assign);
         }
 
@@ -148,7 +154,7 @@ export class Obj
             });
         }
 
-        if ( ! Any.isFunction(key) ) {
+        if ( !Any.isFunction(key) ) {
             keys = keys.sort((a, b) => {
                 return Any.integer(Obj.get(obj[a], key)) - Any.integer(Obj.get(obj[b], key));
             })
@@ -168,13 +174,13 @@ export class Obj
     {
         let keys = Any.keys(obj);
 
-        if ( ! Any.isFunction(key) ) {
+        if ( !Any.isFunction(key) ) {
             keys = keys.sort((a, b) => {
 
                 let va = Any.string(Obj.get(obj[a], key)).toLowerCase();
                 let vb = Any.string(Obj.get(obj[b], key)).toLowerCase();
 
-                return(va < vb) ? -1 : (va > vb) ? 1 : 0;
+                return (va < vb) ? - 1 : (va > vb) ? 1 : 0;
             })
         }
 
@@ -265,8 +271,7 @@ export class Obj
 
         if ( obj instanceof FormData ) {
 
-            for (let [key, value] of obj.entries())
-            {
+            for ( let [key, value] of obj.entries() ) {
                 result[key] = callback(value, key);
             }
 
