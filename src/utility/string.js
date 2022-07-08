@@ -10,6 +10,11 @@ export class Str
         return String(val).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
 
+    static upper(val)
+    {
+        return String(val).toUpperCase();
+    }
+
     static lower(val)
     {
         return String(val).toLowerCase();
