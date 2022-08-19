@@ -19,30 +19,31 @@ export class Obj
             return fallback;
         }
 
-        keys = (typeof keys === 'string' && keys.match(/^[^\.]+(\.[^\.]+)*$/)) ?
-            keys.split('.') : keys;
-
-        if ( Any.isArray(keys) === false ) {
-            keys = [keys];
+        if ( keys === null || keys === undefined ) {
+            return obj;
         }
 
-        let result = [];
+        if ( Any.isArray(keys) ) {
+            keys = keys.join('.');
+        }
 
-        Arr.each(keys, (key) => {
-            result = result.concat(key.split('.'))
-        });
+        if ( ! Any.isString(keys) ) {
+            keys = keys.toString();
+        }
 
-        let key = result.shift();
+        keys = keys.split('.');
 
-        if ( typeof obj[key] === 'undefined' ) {
+        let index = 0, length = keys.length;
+
+        while (obj !== undefined && index < length) {
+            obj = obj[keys[index++]];
+        }
+
+        if ( typeof obj === 'undefined' ) {
             return fallback;
         }
 
-        if ( result.length === 0 ) {
-            return obj[key];
-        }
-
-        return this.get(obj[key], result, fallback);
+        return obj;
     }
 
     static set(obj, keys, val)
