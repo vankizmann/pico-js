@@ -20,7 +20,7 @@ export class Obj
         }
 
         if ( keys === null || keys === undefined ) {
-            return obj;
+            return fallback;
         }
 
         if ( Any.isArray(keys) ) {
@@ -35,6 +35,10 @@ export class Obj
 
         let index = 0, length = keys.length;
 
+        if ( length === 0 ) {
+            return fallback;
+        }
+
         while (obj !== undefined && index < length) {
             obj = obj[keys[index++]];
         }
@@ -48,26 +52,49 @@ export class Obj
 
     static set(obj, keys, val)
     {
-        keys = (typeof keys === 'string' && keys.match(/^[^\.]+(\.[^\.]+)*$/)) ?
-            keys.split('.') : keys;
-
-        let key = keys.shift();
-
-        if ( obj[key] === undefined || obj[key] === null ) {
-            obj[key] = {};
+        if ( Any.isArray(keys) ) {
+            keys = keys.join('.');
         }
 
-        if ( keys.length === 0 ) {
-            return obj[key] = val;
+        if ( ! Any.isString(keys) ) {
+            keys = keys.toString();
         }
 
-        return this.set(obj[key], keys, val);
+        keys = keys.split('.');
+
+        let index = 0, length = keys.length, nested = obj;
+
+        if ( length === 0 ) {
+            return obj;
+        }
+
+        while (nested !== null && index < length) {
+
+            if ( nested[keys[index]] === undefined || nested[keys[index]] === null ) {
+                nested[keys[index]] = {};
+            }
+
+            if ( index == length - 1 ) {
+                nested[keys[index]] = val;
+            }
+
+            nested = nested[keys[index++]];
+        }
+
+        return obj;
     }
 
     static unset(obj, keys)
     {
-        keys = (typeof keys === 'string' && keys.match(/^[^\.]+(\.[^\.]+)*$/)) ?
-            keys.split('.') : keys;
+        if ( Any.isArray(keys) ) {
+            keys = keys.join('.');
+        }
+
+        if ( ! Any.isString(keys) ) {
+            keys = keys.toString();
+        }
+
+        keys = keys.split('.');
 
         let key = keys.shift();
 
