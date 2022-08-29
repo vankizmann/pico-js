@@ -39,11 +39,11 @@ export class Obj
             return fallback;
         }
 
-        while (obj !== undefined && index < length) {
+        while (obj !== undefined && obj !== null && index < length) {
             obj = obj[keys[index++]];
         }
 
-        if ( typeof obj === 'undefined' ) {
+        if ( obj === undefined || obj === null) {
             return fallback;
         }
 
