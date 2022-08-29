@@ -726,8 +726,12 @@ export class Dom
         }
     }
 
-    value(val)
+    value(val = undefined)
     {
+        if ( val === undefined ) {
+            return this.get(0).value;
+        }
+
         this.each((el) => el.value = val);
 
         return this;
