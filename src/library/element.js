@@ -102,7 +102,7 @@ export class Element
     /**
      * Bind callback on selector.
      */
-    static observe(key)
+    static observe(key, plain = false)
     {
         let selector = this.getPrefix(key);
 
@@ -126,6 +126,10 @@ export class Element
                     Dom.find(el).attr(selector)
                 );
 
+                if ( plain && Any.isEmpty(options) ) {
+                    options = { _plain: Dom.find(el).attr(selector) };
+                }
+
                 if ( document.body.contains(el) ) {
                     return;
                 }
@@ -138,6 +142,10 @@ export class Element
                 let options = Str.objectify(
                     Dom.find(el).attr(selector)
                 );
+
+                if ( plain && Any.isEmpty(options) ) {
+                    options = { _plain: Dom.find(el).attr(selector) };
+                }
 
                 this.bind(key, el, options);
             });
