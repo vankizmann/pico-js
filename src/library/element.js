@@ -1,4 +1,4 @@
-import { Str, Obj, Dom, Any } from "../index";
+import { Str, Obj, Dom, Any, Arr } from "../index";
 
 export class Element
 {
@@ -18,6 +18,11 @@ export class Element
     static inis = {};
 
     /**
+     * Runtime storage.
+     */
+    static runs = [];
+
+    /**
      * Bind a class on selector.
      */
     static alias(key, instance)
@@ -29,14 +34,13 @@ export class Element
 
     static bind(key, selector, options = {})
     {
-        let el = Dom.find(selector);
+        let el = Dom.find(selector), prefix = this.getPrefix(key);
 
         // Add mounted class
-        el.addClass(
-            this.getPrefix(key)
-        );
+        el.addClass(prefix);
 
-        let instance = Obj.get(this.inis, key, null);
+        let instance = Obj.get(this.inis,
+            key, null);
 
         if ( Any.isEmpty(instance) ) {
             return console.error(`Element "${key}" is not defined.`);
@@ -48,8 +52,14 @@ export class Element
                 el.get(0), options
             );
 
+            Element.runs.push({
+                el: el.get(0), prefix: prefix, deamon: cb
+            });
+
+            el.data(prefix, cb);
+
             return cb.bind !== undefined ?
-                cb.bind() : cb;
+                cb.bind(el.get(0), options) : cb;
         };
 
         // Bind option
@@ -58,29 +68,36 @@ export class Element
         return this;
     }
 
-    static unbind()
+    static unbind(key, selector, options = {})
     {
-        let el = Dom.find(selector);
+        let el = Dom.find(selector), prefix = this.getPrefix(key);
 
-        // Add mounted class
-        el.removeClass(
-            this.getPrefix(key)
-        );
-
-        let instance = Obj.get(this.inis, key, null);
+        let instance = Obj.get(this.inis,
+            key, null);
 
         if ( Any.isEmpty(instance) ) {
             return console.error(`Element "${key}" is not defined.`);
         }
 
-        let callback = (el, options) =>
-            new instance(el.get(0), options).unbind();
+        let callback = (el, options) => {
 
-        // Bind option
-        callback.call({}, el, {});
+            let cb = el.data(prefix);
+
+            if ( cb.unbind === undefined ) {
+                return;
+            }
+
+            return cb.unbind(el.get(0), options);
+        };
+
+        // Unbind option
+        callback.call({}, el, options);
+
+        Arr.remove(Element.runs, { el: el.get(0) });
 
         return this;
     }
+
 
     /**
      * Bind callback on selector.
@@ -96,20 +113,41 @@ export class Element
             attributeFilter: [selector]
         };
 
-        Dom.find(document.body).observer(() => {
+        let callback = () => {
 
             let mounted = Element.getPrefix(key);
 
-            Dom.find('[' + selector + ']:not(.' + mounted + ')').each((el) => {
+            let deamons = Arr.filter(this.runs,
+                { prefix: selector });
+
+            Arr.each(deamons, ({ el }) => {
 
                 let options = Str.objectify(
                     Dom.find(el).attr(selector)
                 );
 
-                this.bind(key, el, options)
+                if ( document.body.contains(el) ) {
+                    return;
+                }
+
+                return this.unbind(key, el, options)
             });
 
-        })(document.body, options);
+            Dom.find(`[${selector}]:not(.${mounted})`).each((el) => {
+
+                let options = Str.objectify(
+                    Dom.find(el).attr(selector)
+                );
+
+                this.bind(key, el, options);
+            });
+
+        };
+
+        Dom.find(document.body).observer(callback)
+            (document.body, options);
+
+        Dom.find(document.body).on('dom.change', callback);
 
         return this;
     }

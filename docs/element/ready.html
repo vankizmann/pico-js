@@ -14,7 +14,7 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=Element.prototype.append%2CElement.prototype.before%2CElement.prototype.classList%2CElement.prototype.closest%2CElement.prototype.matches%2CElement.prototype.prepend%2CElement.prototype.remove%2CNodeList.prototype.%40%40iterator%2CNodeList.prototype.forEach%2CNode.prototype.contains%2CMutationObserver%2CURL%2CElement%2CDocumentFragment%2CDocumentFragment.prototype.append%2CDocumentFragment.prototype.prepend%2CHTMLDocument%2Cdocument.querySelector%2Cdocument.getElementsByClassName%2Cdocument%2CgetComputedStyle%2CrequestAnimationFrame"></script>
     <![endif]-->
 
-    <script src="../../dist/pico-js.js"></script>
+    <script src="../../../dist/pico-js.js"></script>
 
 </head>
 <body>
@@ -23,33 +23,49 @@
     <div js-test="foo: 'bar';">
         <span>Hallo!</span>
     </div>
-    <div js-ready="duration: 200;">
+    <div js-test2="foo: 'bar';">
         <span>Hallo!</span>
     </div>
 </div>
 
 <script>
-    (function (Nano) {
+    (function (pi) {
 
         'use strict';
 
-        Nano.Dom.ready(function() {
+        pi.Dom.ready(function() {
 
-            Nano.Element.alias('test', function(el, options) {
-                console.log(el, options);
+            pi.Element.alias('test', function () {
+                return {
+                    bind: function(el, options) {
+                        console.log('bind', el, options);
+                    },
+                    unbind: function(el, options) {
+                        console.log('unbind', el, options);
+                    }
+                };
             });
 
-            Nano.Element.observe('test');
+            pi.Element.observe('test');
 
-            Nano.Any.delay(() => {
-                Nano.Element.bind('ready', '[js-custom]', { duration: 2500 });
-            }, 2500);
+            pi.Element.alias('test2', function (el, options) {
 
-        }, 1500);
+                console.log('bind', el, options);
+
+                this.unbind = function(el, options) {
+                    console.log('unbind', el, options);
+                };
+
+                return this;
+            });
+
+            pi.Element.observe('test2');
+
+        });
 
 
 
-    })(window.Nano);
+    })(window.pi);
 </script>
 </body>
 </html>

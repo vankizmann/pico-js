@@ -10,6 +10,8 @@ export class Dom
 
     static events = [];
 
+    static datas = [];
+
     constructor(el)
     {
         if ( el instanceof NodeList ) {
@@ -724,6 +726,25 @@ export class Dom
         return (el) => {
             observer.observe(Dom.find(el).get(0));
         }
+    }
+
+    data(key = undefined, val = undefined, fallback = null)
+    {
+        let match = Arr.find(Dom.datas, { el: this.get(0) },
+            { el: this.get(0) });
+
+        if ( key === undefined ) {
+            return match;
+        }
+
+        if ( val === undefined ) {
+            return Obj.get(match, key, fallback);
+        }
+
+        Arr.replace(Dom.datas, Obj.set(match, key, val),
+            { el: this.get(0) });
+
+        return this;
     }
 
     value(val = undefined)
