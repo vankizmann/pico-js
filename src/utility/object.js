@@ -27,6 +27,10 @@ export class Obj
             keys = keys.join('.');
         }
 
+        if ( obj[keys] !== undefined ) {
+            return obj[keys];
+        }
+
         if ( ! Any.isString(keys) ) {
             keys = keys.toString();
         }
@@ -58,6 +62,10 @@ export class Obj
 
         if ( ! Any.isString(keys) ) {
             keys = keys.toString();
+        }
+
+        if ( obj[keys] !== undefined ) {
+            obj[keys] = val; return obj;
         }
 
         keys = keys.split('.');
