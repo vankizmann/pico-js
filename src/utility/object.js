@@ -27,7 +27,10 @@ export class Obj
             keys = keys.join('.');
         }
 
-        if ( obj[keys] !== undefined && obj[keys] !== null ) {
+        let undef = typeof obj === 'object' && (obj[keys] === null ||
+            obj[keys] === undefined);
+
+        if ( ! undef ) {
             return obj[keys];
         }
 
@@ -64,7 +67,10 @@ export class Obj
             keys = keys.toString();
         }
 
-        if ( obj[keys] !== undefined ) {
+        let undef = typeof obj === 'object' && (obj[keys] !== null ||
+            obj[keys] !== undefined);
+
+        if ( ! undef ) {
             obj[keys] = val; return obj;
         }
 
