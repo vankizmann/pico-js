@@ -27,7 +27,7 @@ export class Obj
             keys = keys.join('.');
         }
 
-        if ( obj[keys] !== undefined ) {
+        if ( obj[keys] !== undefined && obj[keys] !== null ) {
             return obj[keys];
         }
 
