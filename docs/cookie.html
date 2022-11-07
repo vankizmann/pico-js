@@ -29,6 +29,7 @@
         'use strict';
 
         pi.Dom.ready(function() {
+            console.log(pi.Str.real('[1,"foo",3]'));
             pi.Cookie.set('foobar1', { foo: 'bar', pi: { nano: 'ui', kyoto: 'cms' } });
             console.log(pi.Cookie.get('foobar1', {}, 'object'));
             pi.Cookie.set('foobar2', ['foo', 'bar', 1], 60 * 60);

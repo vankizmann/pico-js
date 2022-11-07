@@ -107,8 +107,25 @@ export class Str
         return size;
     }
 
+    static array(value, fallback = null)
+    {
+        let matches = value.match(/((?<=(\[|,))(.*?)(?=(,|\])))+/g);
+
+        if ( ! Any.isArray(matches) ) {
+            return fallback;
+        }
+
+        return Arr.each(matches, (value) => {
+            return Str.real(value.replace(/(^"|^'|"$|'$)/g, ''));
+        });
+    }
+
     static real(value)
     {
+        if ( typeof value === 'string' && value.match(/^\[.*?\]$/) ) {
+            value = Str.array(value);
+        }
+
         if ( typeof value === 'string' && value.match(/^(null)$/i) ) {
             value = null;
         }
