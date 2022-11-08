@@ -109,7 +109,7 @@ export class Str
 
     static array(value, fallback = null)
     {
-        let matches = value.match(/((?<=(\[|,))(.*?)(?=(,|\])))+/g);
+        let matches = value.match(/((?<=(@\[|,))(.*?)(?=(,|\])))+/g);
 
         if ( ! Any.isArray(matches) ) {
             return fallback;
@@ -122,11 +122,11 @@ export class Str
 
     static real(value)
     {
-        if ( typeof value === 'string' && value.match(/^\[.*?\]$/) ) {
+        if ( typeof value === 'string' && value.match(/^@\[.*?\]$/) ) {
             value = Str.array(value);
         }
 
-        if ( typeof value === 'string' && value.match(/^(null)$/i) ) {
+        if ( typeof value === 'string' && value.match(/^(null|undefined)$/i) ) {
             value = null;
         }
 
