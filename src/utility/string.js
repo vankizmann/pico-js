@@ -107,16 +107,16 @@ export class Str
         return size;
     }
 
-    static array(value, fallback = null)
+    static array(value, fallback = [])
     {
-        let matches = value.match(/((?<=(@\[|,))(.*?)(?=(,|\])))+/g);
+        value = value.replace(/^@\[(.*?)?\]$/, '$1');
 
-        if ( ! Any.isArray(matches) ) {
+        if ( Any.isEmpty(value) )  {
             return fallback;
         }
 
-        return Arr.each(matches, (value) => {
-            return Str.real(value.replace(/(^"|^'|"$|'$)/g, ''));
+        return Arr.each(value.split(','), (val) => {
+            return Str.real(val.replace(/(^"|^'|"$|'$)/g, ''));
         });
     }
 
