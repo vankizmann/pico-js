@@ -3,9 +3,37 @@ import Any from "./any";
 
 export class Obj
 {
-    static has(obj, key)
+    static has(obj, keys)
     {
-        return this.get(obj, key, - 1) !== - 1;
+        if ( obj === null || obj === undefined ) {
+            return false;
+        }
+
+        if ( keys === null || keys === undefined ) {
+            return false;
+        }
+
+        if ( Any.isArray(keys) ) {
+            keys = keys.join('.');
+        }
+
+        if ( ! Any.isString(keys) ) {
+            keys = keys.toString();
+        }
+
+        keys = keys.split('.');
+
+        let lst = keys.pop(), index = 0, length = keys.length;
+
+        while (obj !== undefined && obj !== null && index < length) {
+            obj = obj[keys[index++]];
+        }
+
+        if ( obj === undefined || obj === null) {
+            return false;
+        }
+
+        return obj[lst] !== undefined;
     }
 
     static empty(obj, key)
