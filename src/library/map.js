@@ -358,8 +358,12 @@ export default class Map
 
         let item = { key };
 
+        if ( ! Obj.has(options, 'visible') ) {
+            options.visible = true;
+        }
+
         item.extras = Obj.except(options, [
-            'map', 'position', 'lat', 'lng', 'html', 'style'
+            'map', 'position', 'lat', 'lng', 'html', 'style', 'visible'
         ]);
 
         if ( ! Obj.has(options, 'map') ) {
@@ -375,6 +379,10 @@ export default class Map
         }
 
         item.marker = new global.google.maps.Marker(options);
+
+        if ( !options.visible ) {
+            item.marker.setVisible(false);
+        }
 
         Obj.set(this.markers, key, item);
 
