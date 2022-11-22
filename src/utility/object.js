@@ -379,6 +379,34 @@ export class Obj
         return result;
     }
 
+    static flatten(obj)
+    {
+        let result = {};
+
+        let callback = (val, sey = null) => {
+
+            Arr.each(Any.keys(val), (key) => {
+
+                let tey = key;
+
+                if ( ! Any.isEmpty(sey) ) {
+                    tey = `${sey}.${key}`;
+                }
+
+                if ( Any.isPlain(val[key]) ) {
+                    return callback(val[key], tey);
+                }
+
+                result[tey] = val[key];
+            });
+
+        };
+
+        callback(obj);
+
+        return result;
+    }
+
 }
 
 export default Obj;

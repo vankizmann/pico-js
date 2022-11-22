@@ -29,6 +29,13 @@
         'use strict';
 
         pi.Dom.ready(function() {
+
+            var obj = {
+                foo: { bar: 'key' }, hu: 'tem', ka: { se: { nope: 'lol' } }
+            };
+
+            console.log(pi.Obj.flatten(obj));
+
             console.log(pi.Str.real('@[\'\']'));
             console.log(pi.Str.real('@[1,"foo",3]'));
             pi.Cookie.set('foobar1', { foo: 'bar', pi: { nano: 'ui', kyoto: 'cms' } });
