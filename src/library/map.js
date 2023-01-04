@@ -29,6 +29,7 @@ export default class Map
         if ( ! global.google ) {
             return console.error('Google Maps is not loaded.');
         }
+
         let center = Obj.only(options, ['lat', 'lng']);
 
         if ( ! Obj.has(options, 'styles') ) {
@@ -50,6 +51,10 @@ export default class Map
 
     static setMarkerStyle(key, style = {}, extra = {})
     {
+        if ( ! global.google ) {
+            return console.error('Google Maps is not loaded.');
+        }
+
         if ( ! Obj.has(style, 'default') ) {
             return console.error('Marker style requires default property')
         }
