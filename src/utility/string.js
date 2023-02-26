@@ -1,7 +1,7 @@
-import Arr from "./array";
-import Obj from "./object";
-import Num from "./number";
-import Any from "./any";
+import Arr from "./array.js";
+import Obj from "./object.js";
+import Num from "./number.js";
+import Any from "./any.js";
 
 export class Str
 {

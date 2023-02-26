@@ -1,5 +1,5 @@
-import { Dom } from "../index";
-import DefaultElement from "./default";
+import { Dom } from "../index.js";
+import DefaultElement from "./default.js";
 
 export default class Example extends DefaultElement
 {

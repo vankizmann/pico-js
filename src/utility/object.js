@@ -1,5 +1,5 @@
-import Arr from "./array";
-import Any from "./any";
+import Arr from "./array.js";
+import Any from "./any.js";
 
 export class Obj
 {

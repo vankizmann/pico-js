@@ -1,4 +1,4 @@
-import { Arr } from "../index";
+import { Arr } from "../index.js";
 
 export default class Queue
 {

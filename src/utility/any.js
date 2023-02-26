@@ -1,4 +1,4 @@
-import { Arr, Obj, Now } from "../index";
+import { Arr, Obj, Now } from "../index.js";
 
 export class Any
 {

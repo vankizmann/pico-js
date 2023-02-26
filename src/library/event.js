@@ -1,4 +1,4 @@
-import { Arr, Any } from "../index";
+import { Arr, Any } from "../index.js";
 
 export class Event
 {

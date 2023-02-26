@@ -1,50 +1,50 @@
 
-import Arr from "./utility/array";
+import Arr from "./utility/array.js";
 export { Arr };
 
-import Obj from "./utility/object";
+import Obj from "./utility/object.js";
 export { Obj };
 
-import Num from "./utility/number";
+import Num from "./utility/number.js";
 export { Num };
 
-import Str from "./utility/string";
+import Str from "./utility/string.js";
 export { Str };
 
-import Now from "./utility/now";
+import Now from "./utility/now.js";
 export { Now };
 
-import Any from "./utility/any";
+import Any from "./utility/any.js";
 export { Any };
 
-import Dom from "./utility/dom";
+import Dom from "./utility/dom.js";
 export { Dom };
 
-import Cookie from "./library/cookie";
+import Cookie from "./library/cookie.js";
 export { Cookie };
 
-import Data from "./library/data";
+import Data from "./library/data.js";
 export { Data };
 
-import Element from "./library/element";
+import Element from "./library/element.js";
 export { Element };
 
-import Event from "./library/event";
+import Event from "./library/event.js";
 export { Event };
 
-import Locale from "./library/locale";
+import Locale from "./library/locale.js";
 export { Locale };
 
-import Map from "./library/map";
+import Map from "./library/map.js";
 export { Map };
 
-import Queue from "./library/queue";
+import Queue from "./library/queue.js";
 export { Queue };
 
-import Route from "./library/route";
+import Route from "./library/route.js";
 export { Route };
 
-import { v4 as UUID } from 'uuid'
+import { v4 as UUID } from "uuid"
 export { UUID };
 
 export const Pico = {
@@ -73,15 +73,15 @@ export const Pico = {
  * @const global
  */
 
-if ( typeof global.IE === 'undefined' ) {
+if ( typeof global.IE === 'undefined' && global.navigator ) {
     global.IE = !! global.navigator.userAgent.match(/Edge\/|Trident\/|MSIE /);
 }
 
-if ( typeof global.WIN === 'undefined' ) {
+if ( typeof global.WIN === 'undefined' && global.navigator ) {
     global.WIN = !! global.navigator.userAgent.match(/Windows/);
 }
 
-if ( typeof global.pi === 'undefined' ) {
+if ( typeof global.pi === 'undefined' && global.navigator ) {
     global.pi = Pico;
 }
 

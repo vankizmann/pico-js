@@ -1,4 +1,4 @@
-import { Str, Arr, Obj, Num, Any, Event } from "../index";
+import { Str, Arr, Obj, Num, Any, Event } from "../index.js";
 
 export class Cookie
 {

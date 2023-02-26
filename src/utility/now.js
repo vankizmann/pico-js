@@ -1,4 +1,4 @@
-import { Num, Arr, Any } from "../index";
+import { Num, Arr, Any } from "../index.js";
 import moment from "moment";
 
 export class Now

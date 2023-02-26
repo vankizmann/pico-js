@@ -1,4 +1,4 @@
-import { Obj } from "../index";
+import { Obj } from "../index.js";
 
 export class Locale
 {

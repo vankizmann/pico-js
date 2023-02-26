@@ -1,4 +1,4 @@
-import { Obj, UUID } from "../index";
+import { Obj, UUID } from "../index.js";
 
 export default class DefaultElement
 {

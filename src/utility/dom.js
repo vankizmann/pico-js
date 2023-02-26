@@ -1,8 +1,8 @@
-import Arr from './array';
-import Obj from './object';
-import Str from './string';
-import Num from './number';
-import Any from './any';
+import Arr from './array.js';
+import Obj from './object.js';
+import Str from './string.js';
+import Num from './number.js';
+import Any from './any.js';
 
 export class Dom
 {

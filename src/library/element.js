@@ -1,4 +1,4 @@
-import { Str, Obj, Dom, Any, Arr } from "../index";
+import { Str, Obj, Dom, Any, Arr } from "../index.js";
 
 export class Element
 {
