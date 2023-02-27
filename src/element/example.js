@@ -16,7 +16,7 @@ export default class Example extends DefaultElement
 
     bind()
     {
-        if ( window.$ === undefined ) {
+        if ( global.$ === undefined ) {
             return console.error('Element ready function requires jquery.')
         }
 

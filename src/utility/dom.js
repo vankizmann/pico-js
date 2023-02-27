@@ -110,8 +110,8 @@ export class Dom
 
     static title(text = null, glue = ' - ')
     {
-        document.title = window.baseTitle !== undefined ?
-            text + glue + window.baseTitle : text;
+        document.title = global.baseTitle !== undefined ?
+            text + glue + global.baseTitle : text;
 
         return this;
     }
