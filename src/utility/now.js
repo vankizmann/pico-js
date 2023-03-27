@@ -507,6 +507,33 @@ export class Now
         });
     }
 
+    resetTime()
+    {
+        this.hour(0);
+        this.minute(0);
+        this.second(0);
+
+        return this;
+    }
+
+    applyDate(now, format = 'YYYY-MM-DD hh:mm:ss')
+    {
+        now = Now.make(now, format);
+
+        this.year(now.year());
+        this.month(now.month());
+        this.date(now.date());
+    }
+
+    applyTime(now, format = 'YYYY-MM-DD hh:mm:ss')
+    {
+        now = Now.make(now, format);
+
+        this.hour(now.hour());
+        this.minute(now.minute());
+        this.second(now.second());
+    }
+
 }
 
 export default Now;
