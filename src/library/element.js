@@ -1,15 +1,5 @@
 import { Str, Obj, Dom, Any, Arr } from "../index.js";
 
-
-Dom.ready(() => {
-
-    document.addEventListener("scroll",
-        Element.scroll);
-
-    Element.scroll();
-});
-
-
 export class Element
 {
     /**

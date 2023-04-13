@@ -85,4 +85,14 @@ if ( typeof global.pi === 'undefined' && global.navigator ) {
     global.pi = Pico;
 }
 
+global.pi.Dom.ready(function () {
+
+    // Apply dom scroll event
+    document.addEventListener("scroll",
+        global.pi.Element.scroll);
+
+    // Apply initial scroll event
+    global.pi.Element.scroll();
+});
+
 export default Pico;
