@@ -158,6 +158,15 @@ export class Obj
         return this.unset(obj[key], keys);
     }
 
+    static pluck(obj, keys, fallback = null)
+    {
+        let value = this.get(obj, keys, fallback);
+
+        this.unset(obj, keys);
+
+        return value;
+    }
+
     static only(obj, keys, assign = null)
     {
         let result = {};

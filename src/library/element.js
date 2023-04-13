@@ -1,5 +1,15 @@
 import { Str, Obj, Dom, Any, Arr } from "../index.js";
 
+
+Dom.ready(() => {
+
+    document.addEventListener("scroll",
+        Element.scroll);
+
+    Element.scroll();
+});
+
+
 export class Element
 {
     /**
@@ -21,6 +31,25 @@ export class Element
      * Runtime storage.
      */
     static runs = [];
+
+    /**
+     * Instance storage.
+     */
+    static invi = [];
+
+    static scroll()
+    {
+        Arr.each(this.invi, (item, index) => {
+
+            if ( ! Dom.find(item.el).inviewY() ) {
+                return;
+            }
+
+            Arr.removeIndex(this.invi, index);
+
+            item.cb();
+        });
+    }
 
     /**
      * Bind a class on selector.
@@ -55,6 +84,7 @@ export class Element
             Element.runs.push({
                 el: el.get(0), prefix: prefix, deamon: cb
             });
+
 
             el.data(prefix, cb);
 
@@ -130,6 +160,12 @@ export class Element
                     options = { _plain: Dom.find(el).attr(selector) };
                 }
 
+                let inview = Obj.pluck(options, 'inview', false);
+
+                if ( inview ) {
+                    Arr.remove(this.invi, { el });
+                }
+
                 if ( document.body.contains(el) ) {
                     return;
                 }
@@ -147,7 +183,13 @@ export class Element
                     options = { _plain: Dom.find(el).attr(selector) };
                 }
 
-                this.bind(key, el, options);
+                let inview = Obj.pluck(options, 'inview', false);
+
+                let bindCb = () => {
+                    this.bind(key, el, options);
+                };
+
+                inview ? this.bindInview(el, bindCb) : bindCb();
             });
 
         };
@@ -158,6 +200,16 @@ export class Element
         Dom.find(document.body).on('dom.change', callback);
 
         return this;
+    }
+
+    static bindInview(el, cb)
+    {
+        Arr.add(this.invi, { el, cb }, { el });
+    }
+
+    static unbindInview(el, cb)
+    {
+        Arr.remove(this.invi, { el, cb }, { el });
     }
 
 

@@ -31,7 +31,7 @@ export class Dom
         }
 
         if ( delay !== 0 && (ready === false || count <= delay) ) {
-            setTimeout(() => Dom.ready(callback, delay, count + 100), 100);
+            setTimeout(() => Dom.ready(callback, delay, count + 50), 50);
             return this;
         }
 
@@ -42,15 +42,16 @@ export class Dom
 
     static complete(callback, delay = 0, count = 0)
     {
-        let ready = document.readyState === 'complete';
+        let ready = document.readyState === 'complete' ||
+            document.readyState === 'interactive';
 
         if ( delay === 0 && (ready === false || count < delay) ) {
-            Dom.find(document).on('DOMContentLoaded', callback);
+            Dom.find(document).on('load', callback);
             return this;
         }
 
         if ( delay !== 0 && (ready === false || count < delay) ) {
-            setTimeout(() => Dom.ready(callback, delay, count + 100), 100);
+            setTimeout(() => Dom.ready(callback, delay, count + 50), 50);
             return this;
         }
 
