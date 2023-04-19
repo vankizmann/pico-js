@@ -27,7 +27,7 @@ export default class Map
     constructor(el, options = {})
     {
         if ( ! global.google ) {
-            return console.error('Google Maps is not loaded.');
+            throw new Error('Google Maps is required for pi.Map');
         }
 
         let center = Obj.only(options, ['lat', 'lng']);
@@ -52,7 +52,7 @@ export default class Map
     static setMarkerStyle(key, style = {}, extra = {})
     {
         if ( ! global.google ) {
-            return console.error('Google Maps is not loaded.');
+            throw new Error('Google Maps is required for pi.Map');
         }
 
         if ( ! Obj.has(style, 'default') ) {

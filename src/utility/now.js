@@ -1,5 +1,4 @@
 import { Num, Arr, Any } from "../index.js";
-import moment from "moment";
 
 export class Now
 {
@@ -8,6 +7,10 @@ export class Now
 
     constructor(date = null, format = 'YYYY-MM-DD hh:mm:ss')
     {
+        if ( ! global.moment ) {
+            throw new Error('Moment.js is required for pi.Now');
+        }
+
         if ( date instanceof Now ) {
             date = date.get().toDate();
         }
@@ -15,14 +18,14 @@ export class Now
         this.initialDate = date;
 
         if ( ! Any.isString(date) ) {
-            this.moment = moment(date || new Date, format);
+            this.moment = global.moment(date || new Date, format);
         }
 
         if ( this.moment !== null ) {
             return this;
         }
 
-        this.moment = moment(date.match(/^now/) ?
+        this.moment = global.moment(date.match(/^now/) ?
             new Date : date, format);
 
         let second = this.initialDate.match(/(\+|-)([0-9]+)seconds?/);
@@ -89,7 +92,7 @@ export class Now
     valid()
     {
         return ! Any.isEmpty(this.initialDate) &&
-            moment(this.initialDate).isValid();
+            global.moment(this.initialDate).isValid();
     }
 
     clone()

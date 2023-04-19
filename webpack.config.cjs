@@ -18,11 +18,11 @@ let config = {
             }
         ]
     },
-    externals: {
-        'moment': {
-            root: 'moment', commonjs2: 'moment', commonjs: 'moment', amd: 'moment'
-        },
-    },
+    // externals: {
+    //     'moment': {
+    //         root: 'moment', commonjs2: 'moment', commonjs: 'moment', amd: 'moment'
+    //     },
+    // },
     plugins: []
 };
 
