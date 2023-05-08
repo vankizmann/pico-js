@@ -5,7 +5,7 @@ export class Now
     initialDate = null;
     moment = null;
 
-    constructor(date = null, format = 'YYYY-MM-DD hh:mm:ss')
+    constructor(date = null, format = 'YYYY-MM-DD HH:mm:ss')
     {
         if ( ! global.moment ) {
             throw new Error('Moment.js is required for pi.Now');
@@ -79,7 +79,7 @@ export class Now
         return this;
     }
 
-    static make(date = null, format = 'YYYY-MM-DD hh:mm:ss')
+    static make(date = null, format = 'YYYY-MM-DD HH:mm:ss')
     {
         return new Now(date, format);
     }
@@ -105,7 +105,7 @@ export class Now
         return Num.int(this.format(format, true));
     }
 
-    format(format = 'YYYY-MM-DD hh:mm:ss', force = false)
+    format(format = 'YYYY-MM-DD HH:mm:ss', force = false)
     {
         if ( ! this.valid() && ! force ) {
             return '';
@@ -127,8 +127,8 @@ export class Now
 
     beforeTime(before = null)
     {
-        return this.code('hhmmss') <
-            Now.make(before).code('hhmmss');
+        return this.code('HHmmss') <
+            Now.make(before).code('HHmmss');
     }
 
     after(after = null)
@@ -144,8 +144,8 @@ export class Now
 
     afterTime(after = null)
     {
-        return this.code('hhmmss') >
-            Now.make(after).code('hhmmss');
+        return this.code('HHmmss') >
+            Now.make(after).code('HHmmss');
     }
 
     equal(equal = null, format = 'X')
@@ -159,7 +159,7 @@ export class Now
         return this.equal(equal, format);
     }
 
-    equalTime(equal = null, format = 'hhmmss')
+    equalTime(equal = null, format = 'HHmmss')
     {
         return this.equal(equal, format);
     }
@@ -519,7 +519,7 @@ export class Now
         return this;
     }
 
-    applyDate(now, format = 'YYYY-MM-DD hh:mm:ss')
+    applyDate(now, format = 'YYYY-MM-DD HH:mm:ss')
     {
         now = Now.make(now, format);
 
@@ -528,7 +528,7 @@ export class Now
         this.date(now.date());
     }
 
-    applyTime(now, format = 'YYYY-MM-DD hh:mm:ss')
+    applyTime(now, format = 'YYYY-MM-DD HH:mm:ss')
     {
         now = Now.make(now, format);
 
