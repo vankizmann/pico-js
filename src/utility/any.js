@@ -226,7 +226,15 @@ export class Any
             throttle = ref();
         }
 
+        let timer = null;
+
         return (...args) => {
+
+            clearTimeout(timer);
+
+            timer = setTimeout(() => {
+                throttle = null;
+            }, delay);
 
             if ( throttle === true ) {
                 return;
