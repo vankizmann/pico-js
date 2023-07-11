@@ -1,4 +1,4 @@
-import { Obj, Arr, Any, Dom, UUID } from "../index.js";
+import { Obj, Arr, Any, Dom, Event, UUID } from "../index.js";
 
 /**
  * @const {object} google
