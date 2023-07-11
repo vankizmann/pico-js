@@ -417,6 +417,9 @@ export default class Map
         item.marker.addListener('click', () => this.toggleInfo(key));
         item.info.addListener('closeclick', () => this.closeInfo(key));
 
+        // Dom change event
+        item.info.addListener('domready', () => Event.fire('MapsDomReady'));
+
         Obj.set(this.markers, key, item);
 
         return Obj.get(this.markers, key);
