@@ -227,6 +227,17 @@ export class Arr
         return arr.splice(Num.int(key), count);
     }
 
+    static equal(arr1, arr2)
+    {
+        let complete = this.merge(arr1, arr2);
+
+        let rainbow = this.each(complete, (value) => {
+            return this.has(arr1, value) && this.has(arr2, value);
+        });
+
+        return ! this.has(rainbow, false);
+    }
+
     static includes(arr, val)
     {
         let result = false;
