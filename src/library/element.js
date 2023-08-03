@@ -27,6 +27,15 @@ export class Element
      */
     static invi = [];
 
+    static listen()
+    {
+        // Apply dom scroll event
+        document.addEventListener("scroll", Element.scroll);
+
+        // Apply initial scroll event
+        Element.scroll();
+    }
+
     static scroll()
     {
         Arr.each(this.invi, (item, index) => {
