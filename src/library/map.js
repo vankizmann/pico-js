@@ -506,7 +506,7 @@ export default class Map
         return boundry;
     }
 
-    focusMarkers(filter = null, maxZoom = 14)
+    focusMarkers(filter = null, maxZoom = 14, boundSpace = 15)
     {
         let boundry = this.getMarkerBoundry(filter);
 
@@ -514,7 +514,7 @@ export default class Map
         this.map.setCenter(boundry.getCenter());
 
         // Adapt viewport to boundry
-        this.map.fitBounds(boundry, 15);
+        this.map.fitBounds(boundry, boundSpace);
 
         if ( this.map.getZoom() > maxZoom ) {
             this.map.setZoom(maxZoom);
