@@ -98,7 +98,7 @@ export class Num
         let value = num.toString();
 
         if ( fixed !== null && fixed !== - 1 ) {
-            value = num.toFixed(fixed);
+            value = Any.float(num).toFixed(fixed);
         }
 
         let totals = value.replace(/\.[0-9]+$/, ''),

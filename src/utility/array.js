@@ -240,6 +240,10 @@ export class Arr
 
     static includes(arr, val)
     {
+        if ( Any.isString(val) ) {
+            val = [val];
+        }
+
         let result = false;
 
         for ( let key of Any.vals(arr) ) {
