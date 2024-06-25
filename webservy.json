@@ -1,0 +1,6 @@
+{
+    "hostname": "pico-js.local",
+    "webroot": "/",
+    "engine": "apache",
+    "version": "php-8.2.8"
+}

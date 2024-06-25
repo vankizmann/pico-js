@@ -8,6 +8,7 @@
     "repository": "https://github.com/vankizmann/pico-js",
     "main": "src/index.js",
     "unpkg": "dist/pico-js.js",
+    "types": "types/index.d.ts",
     "scripts": {
         "build": "webpack --hide-modules --mode=production --config webpack.config.cjs",
         "watch": "webpack --watch --hide-modules --mode=development --config webpack.config.cjs"
