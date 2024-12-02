@@ -101,14 +101,56 @@ export class Any
         return this.isEmpty(val) ? empty : this.string(val);
     }
 
+    static number(val, fallback = NaN)
+    {
+        let res = typeof val.toString === 'undefined' ?
+            String(val) : val.toString();
+
+        if ( ! Any.isString(res) ) {
+            return fallback;
+        }
+
+        if ( res.match(/^[0-9]+$/) ) {
+            return this.integer(val);
+        }
+
+        if ( res.match(/^[0-9.,]+$/) ) {
+            return this.float(val);
+        }
+
+        if ( ! this.isNumber(res) || Number.isNaN(res) ) {
+            return fallback;
+        }
+
+        return res;
+    }
+
     static integer(val)
     {
+        let res = typeof val.toString === 'undefined' ?
+            String(val) : val.toString();
+
+        if ( ! Any.isString(res) ) {
+            return NaN;
+        }
+
         return parseInt(val);
     }
 
     static float(val)
     {
-        return parseFloat(val);
+        let res = typeof val.toString === 'undefined' ?
+            String(val) : val.toString();
+
+        if ( ! Any.isString(res) ) {
+            return NaN;
+        }
+
+        if ( res.match(/^[0-9,]+$/) ) {
+            res = res.replace(/,/g, '.');
+        }
+
+        return parseFloat(res);
     }
 
     static bool(val)
