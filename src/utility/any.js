@@ -103,7 +103,7 @@ export class Any
 
     static number(val, fallback = NaN)
     {
-        let res = typeof val.toString === 'undefined' ?
+        let res = ! val || typeof val.toString === 'undefined' ?
             String(val) : val.toString();
 
         if ( ! Any.isString(res) ) {
@@ -127,7 +127,7 @@ export class Any
 
     static integer(val)
     {
-        let res = typeof val.toString === 'undefined' ?
+        let res = ! val || typeof val.toString === 'undefined' ?
             String(val) : val.toString();
 
         if ( ! Any.isString(res) ) {
