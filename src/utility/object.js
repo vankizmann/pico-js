@@ -281,14 +281,22 @@ export class Obj
 
     static filter(obj, filter)
     {
-        return Obj.each(Obj.filterIndex(obj, filter), (key) => {
-            return obj[key];
+        let result = {};
+
+        Obj.each(Obj.filterIndex(obj, filter), (key) => {
+            result[key] = obj[key];
         });
+
+        return result;
     }
 
     static filterIndex(obj, filter)
     {
         return Any.keys(obj).filter((key) => {
+
+            if ( typeof filter === "undefined" ) {
+                return Any.isEmpty(obj[key]);
+            }
 
             if ( Any.isFunction(filter) ) {
                 return filter.call({}, obj[key], key);

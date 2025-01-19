@@ -122,6 +122,10 @@ export class Arr
     {
         return Any.keys(arr).filter((key) => {
 
+            if ( typeof filter === "undefined" ) {
+                return ! Any.isEmpty(arr[key]);
+            }
+
             if ( Any.isFunction(filter) ) {
                 return filter.call({}, arr[key], key);
             }
