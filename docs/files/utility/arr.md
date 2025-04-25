@@ -1,7 +1,6 @@
+# Arr Class
 
-# pi.Arr Class
-
-A lightweight utility class for working with arrays.
+A utility class for working with arrays.
 
 ```js
 import { Arr } from "@kizmann/pico-js";
@@ -9,7 +8,7 @@ import { Arr } from "@kizmann/pico-js";
 
 <hr>
 
-### make
+### Arr.make
 Creates an array of a given count filled with incrementing integers starting from 1.
 
 ```js
@@ -27,7 +26,7 @@ count `Number`: The number of elements in the new array.
 
 <hr>
 
-### all
+### Arr.all
 Ensures the input is always returned as an array.
 
 ```js
@@ -48,7 +47,7 @@ arr `Any`: The value to wrap in an array if it isn't already.
 
 <hr>
 
-### get
+### Arr.get
 Returns the value at a given index or a fallback if it doesn't exist.
 
 ```js
@@ -64,14 +63,14 @@ Arr.get([1, 2, 3], 5, null);
 **Arguments:**  
 arr `Array`: The array to query.  
 index `Number`: The index to access.  
-fallback `Any`: Value returned if the index is out of bounds.  
+fallback `Any`: Value returned if the index is out of bounds.
 
 **Returns:**  
 `Any`: The element at the index or the fallback.
 
 <hr>
 
-### set
+### Arr.set
 Sets a value at the specified index of the array.
 
 ```js
@@ -84,14 +83,14 @@ Arr.set([0, 2, 44], 1, 42);
 **Arguments:**  
 arr `Array`: The array to modify.  
 index `Number`: The index to set.  
-value `Any`: The value to assign.  
+value `Any`: The value to assign.
 
 **Returns:**  
 `Any`: The assigned value.
 
 <hr>
 
-### first
+### Arr.first
 Gets the first element of the array or a fallback.
 
 ```js
@@ -106,14 +105,14 @@ Arr.first([], null);
 
 **Arguments:**  
 arr `Array`: The array to query.  
-fallback `Any`: Returned if array is empty or invalid.  
+fallback `Any`: Returned if array is empty or invalid.
 
 **Returns:**  
 `Any`: First element or fallback.
 
 <hr>
 
-### second
+### Arr.second
 Gets the second element of the array, falling back to the first or a fallback.
 
 ```js
@@ -135,7 +134,7 @@ fallback `Any`: Returned if array is empty or invalid.
 
 <hr>
 
-### third
+### Arr.third
 Gets the third element, or falls back to second, first, or fallback.
 
 ```js
@@ -157,7 +156,7 @@ fallback `Any`: Returned if array is empty or invalid.
 
 <hr>
 
-### last
+### Arr.last
 Gets the last element of the array.
 
 ```js
@@ -169,14 +168,14 @@ Arr.last([5, 6, 7]);
 
 **Arguments:**  
 arr `Array`: The array to query.  
-fallback `Any`: Returned if array is empty or invalid.  
+fallback `Any`: Returned if array is empty or invalid.
 
 **Returns:**  
 `Any`: Last element or fallback.
 
 <hr>
 
-### prepend
+### Arr.prepend
 Adds a value to the beginning of an array.
 
 ```js
@@ -188,14 +187,14 @@ Arr.prepend([2, 3], 1);
 
 **Arguments:**  
 arr `Array`: The array to modify.  
-val `Any`: The value to prepend.  
+val `Any`: The value to prepend.
 
 **Returns:**  
 `Array`: The updated array.
 
 <hr>
 
-### append
+### Arr.append
 Adds a value to the end of an array.
 
 ```js
@@ -207,14 +206,14 @@ Arr.append([1, 2], 3);
 
 **Arguments:**  
 arr `Array`: The array to modify.  
-val `Any`: The value to append.  
+val `Any`: The value to append.
 
 **Returns:**  
 `Array`: The updated array.
 
 <hr>
 
-### sort
+### Arr.sort
 Sorts an object of keyed values by a key or a custom function.
 
 ```js
@@ -226,15 +225,15 @@ Arr.sort([{ val: 2 }, { val: 1 }], 'val');
 
 **Arguments:**  
 obj `Object`: The object to sort.  
-key `String|Function`: A key to sort by or a custom comparison function.  
+key `String|Function`: A key to sort by or a custom comparison function.
 
 **Returns:**  
 `Array`: Sorted array of values, each augmented with `_key`.
 
 <hr>
 
-### sortString
-Sorts an object’s values alphabetically by a string key.
+### Arr.sortString
+Sorts an object's values alphabetically by a string key.
 
 ```js
 // Arr.sortString(obj, key)
@@ -245,14 +244,14 @@ Arr.sortString([{ name: "Zoe" }, { name: "Anna" }], 'name');
 
 **Arguments:**  
 obj `Object`: The object to sort.  
-key `String`: Key to sort values by (case-insensitive).  
+key `String`: Key to sort values by (case-insensitive).
 
 **Returns:**  
 `Array`: Alphabetically sorted values.
 
 <hr>
 
-### filter
+### Arr.filter
 Filters array values by a function, object, or array.
 
 ```js
@@ -264,14 +263,14 @@ Arr.filter([1, 2, 3, 4], n => n > 2);
 
 **Arguments:**  
 arr `Array`: The array to filter.  
-filter `Function|Object|Array`: Filter logic.  
+filter `Function|Object|Array`: Filter logic.
 
 **Returns:**  
 `Array`: Filtered array.
 
 <hr>
 
-### filterIndex
+### Arr.filterIndex
 Gets indexes of values matching a filter.
 
 ```js
@@ -283,12 +282,14 @@ Arr.filterIndex([1, 2, 3, 4], n => n > 2);
 
 **Arguments:**  
 arr `Array`: The array to filter.  
-filter `Function|Object|Array`: Filter logic.  
+filter `Function|Object|Array`: Filter logic.
 
 **Returns:**  
 `Array<Number>`: Array of indexes matching the condition.
 
-### find
+<hr>
+
+### Arr.find
 Finds the first matching value in an array.
 
 ```js
@@ -308,7 +309,7 @@ fallback `Any`: Value returned if nothing is found (default: `null`).
 
 <hr>
 
-### findIndex
+### Arr.findIndex
 Finds the index of the first matching value.
 
 ```js
@@ -328,7 +329,7 @@ fallback `Number`: Index returned if not found (default: `-1`).
 
 <hr>
 
-### has
+### Arr.has
 Checks if a value exists in an array.
 
 ```js
@@ -347,7 +348,7 @@ val `Any`: Value to check.
 
 <hr>
 
-### add
+### Arr.add
 Adds a value to the array if it doesn't exist.
 
 ```js
@@ -367,7 +368,7 @@ finder `Function|Object|Array`: Optional match logic.
 
 <hr>
 
-### replace
+### Arr.replace
 Replaces an existing value or adds it if not found.
 
 ```js
@@ -387,7 +388,7 @@ finder `Function|Object|Array`: Optional match logic.
 
 <hr>
 
-### remove
+### Arr.remove
 Removes the first matching value from the array.
 
 ```js
@@ -406,7 +407,7 @@ val `Function|Object|Array`: Match logic.
 
 <hr>
 
-### toggle
+### Arr.toggle
 Adds or removes a value from the array depending on its presence.
 
 ```js
@@ -425,7 +426,7 @@ val `Any`: Value to toggle.
 
 <hr>
 
-### removeIndex
+### Arr.removeIndex
 Removes an element at a specific index.
 
 ```js
@@ -444,7 +445,7 @@ val `Number`: Index to remove.
 
 <hr>
 
-### insert
+### Arr.insert
 Inserts a value at a specific index.
 
 ```js
@@ -464,7 +465,7 @@ val `Any`: Value to insert.
 
 <hr>
 
-### slice
+### Arr.slice
 Returns a shallow slice of the array.
 
 ```js
@@ -484,7 +485,7 @@ count `Number`: Number of elements (default: `1`).
 
 <hr>
 
-### splice
+### Arr.splice
 Modifies the array by removing elements.
 
 ```js
@@ -504,7 +505,7 @@ count `Number`: Number of elements to remove (default: `1`).
 
 <hr>
 
-### equal
+### Arr.equal
 Checks if two arrays have the same elements, order-independent.
 
 ```js
@@ -523,7 +524,7 @@ arr2 `Array`: Second array.
 
 <hr>
 
-### includes
+### Arr.includes
 Checks if an array includes any of the provided values.
 
 ```js
@@ -542,7 +543,7 @@ val `String|Array`: Value or values to check.
 
 <hr>
 
-### contains
+### Arr.contains
 Checks if all values are present in the array.
 
 ```js
@@ -561,7 +562,7 @@ val `Array`: Values to be contained.
 
 <hr>
 
-### concat
+### Arr.concat
 Concatenates arrays into one.
 
 ```js
@@ -580,7 +581,7 @@ args `Array[]`: Arrays to concatenate.
 
 <hr>
 
-### clone
+### Arr.clone
 Creates a deep clone of the array or object.
 
 ```js
@@ -598,7 +599,7 @@ arr `Array|Object`: Data to clone.
 
 <hr>
 
-### merge
+### Arr.merge
 Merges multiple arrays.
 
 ```js
@@ -617,7 +618,7 @@ args `Array[]`: Arrays to merge.
 
 <hr>
 
-### push
+### Arr.push
 Pushes elements to the array.
 
 ```js
@@ -636,7 +637,7 @@ args `any[]`: Values to push.
 
 <hr>
 
-### diff
+### Arr.diff
 Returns values from the first array not in the second.
 
 ```js
@@ -655,7 +656,7 @@ val `Array`: Values to exclude.
 
 <hr>
 
-### intersect
+### Arr.intersect
 Finds the intersection of multiple arrays.
 
 ```js
@@ -673,7 +674,7 @@ args `Array[]`: Arrays to intersect.
 
 <hr>
 
-### chunk
+### Arr.chunk
 Splits an array into chunks.
 
 ```js
@@ -692,7 +693,7 @@ chunk `Number`: Chunk size (default: `10`).
 
 <hr>
 
-### reduce
+### Arr.reduce
 Reduces array to a value using a callback.
 
 ```js
@@ -712,7 +713,7 @@ accumulator `Any`: Initial value.
 
 <hr>
 
-### extract
+### Arr.extract
 Extracts nested values from objects in an array.
 
 ```js
@@ -731,7 +732,7 @@ path `String`: Dot-notated path.
 
 <hr>
 
-### each
+### Arr.each
 Applies a callback to each value.
 
 ```js
@@ -750,7 +751,7 @@ callback `Function`: Applied to each value.
 
 <hr>
 
-### map
+### Arr.map
 Maps each value using a callback.
 
 ```js
@@ -769,7 +770,7 @@ callback `Function`: Transformation logic.
 
 <hr>
 
-### recursive
+### Arr.recursive
 Recursively applies a callback to nested values.
 
 ```js
@@ -787,5 +788,3 @@ cascade `Array`: Track of parent objects (default: `[]`).
 
 **Returns:**  
 `Array|Object`: Recursively processed data.
-
-

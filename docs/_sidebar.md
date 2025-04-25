@@ -4,21 +4,23 @@
 
 - Utility
 
-  - [Array](files/utility/array.md)
-  - [Object](files/utility/array.md)
-  - [String](files/utility/array.md)
-  - [Number](files/utility/array.md)
-  - [Any](files/utility/array.md)
+  - [Dom](files/utility/dom.md)
+  - [Now](files/utility/now.md)
+  - [Arr](files/utility/arr.md)
+  - [Obj](files/utility/obj.md)
+  - [Str](files/utility/str.md)
+  - [Num](files/utility/num.md)
+  - [Any](files/utility/any.md)
 
 - Library
 
-    - [Cookie](files/utility/array.md)
-    - [Event](files/utility/array.md)
-    - [Locale](files/utility/array.md)
-    - [Data](files/utility/array.md)
-    - [Route](files/utility/array.md)
-    - [Queue](files/utility/array.md)
-    - [Map](files/utility/array.md)
+    - [Cookie](files/library/cookie.md)
+    - [Event](files/library/event.md)
+    - [Locale](files/library/locale.md)
+    - [Data](files/library/array.md)
+    - [Route](files/library/array.md)
+    - [Queue](files/library/array.md)
+    - [Map](files/library/array.md)
 
 - Element
 

@@ -17,6 +17,14 @@
     }
 }
 
+.search .search-keyword {
+    display: inline-block;
+    padding: 2px 4px;
+    border-radius: $md-radius;
+    color: $color-white;
+    background: rgba($color-secondary, 0.15);
+}
+
 .search .input-wrap {
     position: relative;
     border-radius: 500px;
