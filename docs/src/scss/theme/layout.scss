@@ -160,6 +160,7 @@ body.close main .sidebar-toggle .sidebar-toggle-button:after {
 .content > article {
     position: relative;
     padding: 30px;
+    min-height: 400px;
 
     @include media('md') {
         padding: 30px 40px;

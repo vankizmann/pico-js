@@ -45,27 +45,6 @@ Dom.ready(function () {
 });
 ```
 
-### Included utilities
-
-- [pi.Arr](#coming-soon)
-- [pi.Obj](#coming-soon)
-- [pi.Str](#coming-soon)
-- [pi.Num](#coming-soon)
-- [pi.Any](#coming-soon)
-- [pi.Dom](#coming-soon)
-- [pi.Now](#coming-soon)<br>Requires moment
-
-### Included libraries
-
-- [pi.Cookie](#coming-soon)
-- [pi.Data](#coming-soon)
-- [pi.Element](#coming-soon)
-- [pi.Event](#coming-soon)
-- [pi.Locale](#coming-soon)
-- [pi.Queue](#coming-soon)
-- [pi.Route](#coming-soon)
-- [pi.Map](#coming-soon)<br>Requires gmaps
-
 ### ES5/6 Precompile
 
 Incase you are not using the babel plugins (ES6) used in *babel.config.js* you will encounter errors while compiling. To prevent that its required to add an alias to your *webpack.config.js*.
