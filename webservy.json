@@ -1,0 +1,8 @@
+{
+    "hostname": "pico-js.local",
+    "webroot": "",
+    "engine": "httpd",
+    "type": "default",
+    "proxy": "",
+    "version": "php-8.2.8"
+}
