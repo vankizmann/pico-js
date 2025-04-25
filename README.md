@@ -1,4 +1,4 @@
-<p align="center"><img width="170" src="https://github.com/vankizmann/pico-js/blob/master/pico.svg?raw=true" alt="pico-ui"></p>
+<p align="center"><img width="170" src="https://github.com/vankizmann/pico-js/blob/master/assets/pico-js-dark.svg?raw=true" alt="pico-ui"></p>
 
 <p align="center">
   <a href="https://www.npmjs.org/package/@kizmann/pico-js">

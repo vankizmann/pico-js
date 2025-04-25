@@ -1,0 +1,73 @@
+name: compile-deploy-publish
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  compile-deploy-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build package
+        run: yarn build
+
+      - name: Get current version
+        id: get_version
+        run: |
+          version=$(node -p "require('./package.json').version")
+          echo "PACKAGE_VERSION=$version" >> $GITHUB_ENV
+
+      - name: Fetch all tags
+        run: git fetch --tags
+
+      - name: Check if tag already exists
+        id: check_tag
+        run: |
+          if git rev-parse "v$PACKAGE_VERSION" >/dev/null 2>&1; then
+            echo "Tag v$PACKAGE_VERSION already exists."
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Tag v$PACKAGE_VERSION does not exist yet."
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create and push tag
+        if: steps.check_tag.outputs.exists == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag v$PACKAGE_VERSION
+          git push origin v$PACKAGE_VERSION
+
+      - name: Set up .npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
+      - name: Create and push tag
+        if: steps.check_tag.outputs.exists == 'false'
+        run: yarn publish --new-version $(node -p "require('./package.json').version") --non-interactive
+
+      - name: Remove /dist and /docs/dist from .gitignore
+        run: |
+          sed -i '/^\/dist$/d' .gitignore
+          sed -i '/^\/docs\/dist$/d' .gitignore
+          sed -i '/^\/docs\/index\.html$/d' .gitignore
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          exclude_assets: '.github,node_modules'
