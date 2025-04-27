@@ -124,6 +124,18 @@ module.exports = function (env, argv) {
             path: path.resolve(__dirname, "dist"),
             library: 'Pico',
             libraryTarget: "umd",
+        },
+
+        plugins: [
+            new webpack.ProvidePlugin({
+                global: 'global'
+            })
+        ],
+
+        resolve: {
+            fallback: {
+                "global": require.resolve("global")
+            }
         }
 
     }, libJs);
