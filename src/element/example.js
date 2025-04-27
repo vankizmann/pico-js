@@ -16,7 +16,7 @@ export default class Example extends DefaultElement
 
     bind()
     {
-        if ( global.$ === undefined ) {
+        if ( window.$ === undefined ) {
             return console.error('Element ready function requires jquery.')
         }
 
@@ -47,7 +47,7 @@ export default class Example extends DefaultElement
             opacity: 1
         });
 
-        $(this.el).animate({ opacity: 0 }, options);
+        window.$(this.el).animate({ opacity: 0 }, options);
     }
 
     getReadyClass()

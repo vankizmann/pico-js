@@ -1,3 +1,4 @@
+import PagetitlePlugin from "../plugin/title-plugin.js";
 
 let search = {
     namespace: 'pico-js-docs', maxAge: 86400000, depth: 6
@@ -8,7 +9,7 @@ let options = {
 };
 
 options.plugins = [
-    //
-]
+    PagetitlePlugin
+];
 
 window.$docsify = options;

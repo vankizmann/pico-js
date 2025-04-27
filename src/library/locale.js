@@ -5,7 +5,7 @@ export class Locale
     /**
      * Get locales from window if present.
      */
-    static locales = Obj.get(global, '_locales', {});
+    static locales = Obj.get(window, '_locales', {});
 
     static pickByCount(splits, count)
     {

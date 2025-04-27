@@ -70,23 +70,23 @@ export const Pico = {
 }
 
 /**
- * @const global
+ * @const window
  */
 
-if ( typeof global.IE === 'undefined' && global.navigator ) {
-    global.IE = !! global.navigator.userAgent.match(/Edge\/|Trident\/|MSIE /);
+if ( typeof window.IE === 'undefined' && window.navigator ) {
+    window.IE = !! window.navigator.userAgent.match(/Edge\/|Trident\/|MSIE /);
 }
 
-if ( typeof global.WIN === 'undefined' && global.navigator ) {
-    global.WIN = !! global.navigator.userAgent.match(/Windows/);
+if ( typeof window.WIN === 'undefined' && window.navigator ) {
+    window.WIN = !! window.navigator.userAgent.match(/Windows/);
 }
 
-if ( typeof global.pi === 'undefined' && global.navigator ) {
-    global.pi = Pico;
+if ( typeof window.pi === 'undefined' && window.navigator ) {
+    window.pi = Pico;
 }
 
-if ( typeof global.pi !== 'undefined' && global.document ) {
-    global.pi.Dom.ready(global.pi.Element.listen);
+if ( typeof window.pi !== 'undefined' && window.document ) {
+    window.pi.Dom.ready(window.pi.Element.listen);
 }
 
 export default Pico;
