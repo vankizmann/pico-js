@@ -26,7 +26,7 @@ export default class Map
 
     constructor(el, options = {})
     {
-        if ( ! global.google ) {
+        if ( ! window.google ) {
             throw new Error('Google Maps is required for pi.Map');
         }
 
@@ -39,7 +39,7 @@ export default class Map
         options = Obj.assign({ gestureHandling: 'cooperative', scrollwheel: null, zoom: 12, center },
             Obj.except(options, ['lat', 'lng']));
 
-        this.map = new global.google.maps.Map(Dom.find(el).get(0), options)
+        this.map = new window.google.maps.Map(Dom.find(el).get(0), options)
     }
 
     static setMapStyle(style = [])
@@ -51,7 +51,7 @@ export default class Map
 
     static setMarkerStyle(key, style = {}, extra = {})
     {
-        if ( ! global.google ) {
+        if ( ! window.google ) {
             throw new Error('Google Maps is required for pi.Map');
         }
 
@@ -70,13 +70,13 @@ export default class Map
         let final = {};
 
         // Marker size
-        let size = new global.google.maps.Size(style.width, style.height);
+        let size = new window.google.maps.Size(style.width, style.height);
 
         // Point position
-        let origin = new global.google.maps.Point(0, 0);
+        let origin = new window.google.maps.Point(0, 0);
 
         // Point position
-        let anchor = new global.google.maps.Point(style.width / 2, style.height);
+        let anchor = new window.google.maps.Point(style.width / 2, style.height);
 
         final.default = {
             url: style.default, size: size, origin: origin, anchor: anchor, scaledSize: size
@@ -113,7 +113,7 @@ export default class Map
             return;
         }
 
-        if ( typeof global.MarkerClusterer === "undefined" ) {
+        if ( typeof window.MarkerClusterer === "undefined" ) {
             return console.error('Google Maps Cluster library not laoded!');
         }
 
@@ -140,7 +140,7 @@ export default class Map
             return visible && this.clusterFilter.call(this, item);
         });
 
-        this.cluster = new global.MarkerClusterer(this.map, Arr.each(markers, (item) => item.marker),
+        this.cluster = new window.MarkerClusterer(this.map, Arr.each(markers, (item) => item.marker),
             this.clusterOptions = options);
     }
 
@@ -383,7 +383,7 @@ export default class Map
             item.style = options.style;
         }
 
-        item.marker = new global.google.maps.Marker(options);
+        item.marker = new window.google.maps.Marker(options);
 
         if ( !options.visible ) {
             item.marker.setVisible(false);
@@ -410,7 +410,7 @@ export default class Map
         // Add marker default style
         item.marker.addListener('mouseout', () => this.leaveMarker(key));
 
-        item.info = new global.google.maps.InfoWindow({
+        item.info = new window.google.maps.InfoWindow({
             content: '<div class="gw-i-html">' + Obj.get(options, 'html') + '</div>'
         });
 
@@ -445,7 +445,7 @@ export default class Map
 
     getLocationByAddress(address, callback = null)
     {
-        let geocoderService = new global.google.maps.Geocoder();
+        let geocoderService = new window.google.maps.Geocoder();
 
         let geocoderPromise = (resolve, reject) => {
 
@@ -495,7 +495,7 @@ export default class Map
             markers = Obj.filter(this.markers, filter);
         }
 
-        let boundry = new global.google.maps.LatLngBounds();
+        let boundry = new window.google.maps.LatLngBounds();
 
         Obj.each(markers, (item) => {
             if ( item.marker.getVisible() ) {
@@ -526,10 +526,10 @@ export default class Map
     renderDirections(options)
     {
         // Get directions service
-        let directionsService = new global.google.maps.DirectionsService();
+        let directionsService = new window.google.maps.DirectionsService();
 
         // Get directions renderer
-        let directionsRenderer = new global.google.maps.DirectionsRenderer();
+        let directionsRenderer = new window.google.maps.DirectionsRenderer();
 
         if ( ! Obj.has(options, 'map') ) {
             options.map = this.map;

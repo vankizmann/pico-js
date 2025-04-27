@@ -7,7 +7,7 @@ export class Now
 
     constructor(date = null, format = 'YYYY-MM-DD HH:mm:ss')
     {
-        if ( ! global.moment ) {
+        if ( ! window.moment ) {
             throw new Error('Moment.js is required for pi.Now');
         }
 
@@ -18,14 +18,14 @@ export class Now
         this.initialDate = date;
 
         if ( ! Any.isString(date) ) {
-            this.moment = global.moment(date || new Date, format);
+            this.moment = window.moment(date || new Date, format);
         }
 
         if ( this.moment !== null ) {
             return this;
         }
 
-        this.moment = global.moment(date.match(/^now/) ?
+        this.moment = window.moment(date.match(/^now/) ?
             new Date : date, format);
 
         let second = this.initialDate.match(/(\+|-)([0-9]+)seconds?/);
@@ -92,7 +92,7 @@ export class Now
     valid()
     {
         return ! Any.isEmpty(this.initialDate) &&
-            global.moment(this.initialDate).isValid();
+            window.moment(this.initialDate).isValid();
     }
 
     clone()

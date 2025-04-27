@@ -2,7 +2,7 @@ import { Obj, Str, Any } from "../index.js";
 
 export default class Route
 {
-    static routes = Obj.get(global, '_routes', {});
+    static routes = Obj.get(window, '_routes', {});
 
     static set (key, value)
     {
@@ -22,7 +22,7 @@ export default class Route
 
     static goto (key, values = null, params = null)
     {
-        global.location.href = this.get(key, values, params);
+        window.location.href = this.get(key, values, params);
     }
 
 }

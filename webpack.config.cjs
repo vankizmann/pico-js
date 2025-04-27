@@ -124,18 +124,6 @@ module.exports = function (env, argv) {
             path: path.resolve(__dirname, "dist"),
             library: 'Pico',
             libraryTarget: "umd",
-        },
-
-        plugins: [
-            new webpack.ProvidePlugin({
-                global: 'global'
-            })
-        ],
-
-        resolve: {
-            fallback: {
-                "global": require.resolve("global")
-            }
         }
 
     }, libJs);
@@ -148,19 +136,10 @@ module.exports = function (env, argv) {
         },
 
         plugins: [
-            new webpack.ProvidePlugin({
-                global: 'global'
-            }),
             new HtmlWebpackPlugin(Object.assign({
                 template: path.resolve('./docs/index.template.html'),
             }, docConfig))
-        ],
-
-        resolve: {
-            fallback: {
-                "global": require.resolve("global")
-            }
-        }
+        ]
 
     }, docJs);
 
