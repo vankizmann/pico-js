@@ -1,6 +1,6 @@
 {
     "name": "@kizmann/pico-js",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "license": "MIT",
     "type": "module",
     "private": false,
@@ -43,7 +43,7 @@
     },
     "dependencies": {
         "docsify": "^4.13.1",
-        "moment": "^2.30.1",
-        "global": "^4.4.0"
+        "global": "^4.4.0",
+        "moment": "^2.30.1"
     }
 }
