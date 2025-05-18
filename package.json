@@ -1,6 +1,6 @@
 {
     "name": "@kizmann/pico-js",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "license": "MIT",
     "type": "module",
     "private": false,
@@ -12,6 +12,7 @@
     "files": [
         "dist/",
         "src/",
+        "types/",
         "package.json"
     ],
     "scripts": {
