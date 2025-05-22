@@ -20,22 +20,22 @@ export declare module "@kizmann/pico-js" {
 
     function UUID(): string;
 
-    const Cookie: Cookie;
-    const Data: Data;
-    const Element: Element;
-    const Event: Event;
-    const Locale: Locale;
-    const Map: Map;
-    const Queue: Queue;
-    const Route: Route;
+    const Cookie: typeof Cookie;
+    const Data: typeof Data;
+    const Element: typeof Element;
+    const Event: typeof Event;
+    const Locale: typeof Locale;
+    const Map: typeof Map;
+    const Queue: typeof Queue;
+    const Route: typeof Route;
 
-    const Dom: Dom;
-    const Arr: Arr;
-    const Obj: Obj;
-    const Any: Any;
-    const Str: Str;
-    const Num: Num;
-    const Now: Now;
+    const Dom: typeof Dom;
+    const Arr: typeof Arr;
+    const Obj: typeof Obj;
+    const Any: typeof Any;
+    const Str: typeof Str;
+    const Num: typeof Num;
+    const Now: typeof Now;
 
     export {
         UUID,
