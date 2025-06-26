@@ -327,6 +327,10 @@ export default class Map
             item.info.open(this.map, item.marker);
         }
 
+        if ( Any.isFunction(item.onOpen) ) {
+            item.onOpen(item);
+        }
+
         this.styleMarker(key, 'active');
 
         return hidden;
@@ -350,6 +354,10 @@ export default class Map
             item.info.close();
         }
 
+        if ( Any.isFunction(item.onClose) ) {
+            item.onClose(item);
+        }
+
         this.styleMarker(key, 'default');
 
         return visible;
@@ -368,14 +376,14 @@ export default class Map
         }
 
         item.extras = Obj.except(options, [
-            'map', 'position', 'lat', 'lng', 'html', 'style', 'visible'
+            'map', 'position', 'lat', 'lng', 'html', 'style', 'visible', 'onOpen', 'onClose'
         ]);
 
         if ( ! Obj.has(options, 'map') ) {
             options.map = this.map;
         }
 
-        if ( ! Obj.has(options, 'positon') ) {
+        if ( ! Obj.has(options, 'position') ) {
             options.position = Obj.only(options, ['lat', 'lng']);
         }
 
@@ -388,6 +396,10 @@ export default class Map
         if ( !options.visible ) {
             item.marker.setVisible(false);
         }
+
+        Obj.assign(item, {
+            onOpen: Obj.get(options, 'onOpen'), onClose: Obj.get(options, 'onClose'),
+        })
 
         Obj.set(this.markers, key, item);
 

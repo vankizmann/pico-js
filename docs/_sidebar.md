@@ -17,11 +17,11 @@
     - [Cookie](files/library/cookie.md)
     - [Event](files/library/event.md)
     - [Locale](files/library/locale.md)
-    - [Data](files/library/array.md)
-    - [Route](files/library/array.md)
-    - [Queue](files/library/array.md)
-    - [Map](files/library/array.md)
+    - [Data](files/library/data.md)
+    - [Route](files/library/route.md)
+    - [Queue](files/library/queue.md)
+    - [Map](files/library/map.md)
 
 - Element
 
-    - [How to use](files/utility/array.md)
+    - [How to use](files/utility/element.md)
