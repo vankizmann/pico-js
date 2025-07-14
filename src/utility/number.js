@@ -101,8 +101,9 @@ export class Num
             value = Any.float(num).toFixed(fixed);
         }
 
-        let totals = value.replace(/\.[0-9]+$/, ''),
-            minals = value.replace(/^[0-9\-]+\./, '');
+        let [totals, minals] = [
+            value.replace(/\.[0-9]+$/, ''), value.replace(/^[0-9\-]+\./, '')
+        ];
 
         let splits = Arr.reduce(totals.split('').reverse(), (result, val, key) => {
 

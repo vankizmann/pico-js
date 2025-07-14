@@ -903,6 +903,17 @@ export class Dom
         return this;
     }
 
+    stateClass(vals, state = true)
+    {
+        if ( this.length() > 1 ) {
+            return this.each((el) => Dom.find(el).stateClass(vals, state));
+        }
+
+        state ? this.addClass(vals) : this.removeClass(vals);
+
+        return this;
+    }
+
     attr(attr, val = undefined)
     {
         if ( this.empty() ) {
