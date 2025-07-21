@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../dist/nano-ui.css">
+    <link id="theme" rel="stylesheet" href="../dist/themes/light.css">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+
+        div {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
+            font-size: 14px;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        #app {
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px 30px 40px 30px;
+        }
+
+        .app-options {
+            border-bottom: 1px solid rgba(110, 110, 110, 0.15);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            margin: 50px 0 15px;
+            border-bottom: 1px solid rgba(110, 110, 110, 0.15);
+        }
+
+        .is-there {
+            background: black !important;
+        }
+
+    </style>
+
+    <script src="https://unpkg.com/moment"></script>
+    <script src="../dist/pico-js.js"></script>
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+
+</head>
+<body class="n-demo">
+
+<div id="app">
+    <div class="app-container">
+        <div style="background: yellow; width: 100%; height: 80vh;" data-inview></div>
+        <div style="background: red; width: 100%; height: 80vh;" data-inview></div>
+        <div style="background: blue; width: 100%; height: 80vh;" data-inview></div>
+        <div style="background: green; width: 100%; height: 80vh;" data-inview></div>
+    </div>
+</div>
+
+<script>
+    pi.Dom.ready(() => {
+        pi.Dom.find(window).on('scroll', () => {
+
+            pi.Dom.find('[data-inview]').each((el) => {
+                pi.Dom.find(el).removeClass('is-there');
+            });
+
+            pi.Dom.inviewMaxY('[data-inview]', (el) => {
+                pi.Dom.find(el).addClass('is-there');
+            });
+
+        })
+
+    })
+</script>
+
+</body>
+</html>

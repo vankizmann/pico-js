@@ -133,6 +133,27 @@ export class Dom
         return this.get(0) && this.get(0).is(':visible');
     }
 
+    inviewHeight()
+    {
+        let viewport = {
+            width: Dom.find(window).width(),
+            height: Dom.find(window).height(),
+        };
+
+        let element = {
+            width: this.width(),
+            height: this.height(),
+        };
+
+        let scroll = this.scroll(),
+            offset = this.offset();
+
+        let bottom = offset.top + element.height;
+
+        return Math.max(0, Math.min(bottom, viewport.height + scroll.top) -
+            Math.max(offset.top, scroll.top))
+    }
+
     inviewX(ratio = 0)
     {
         let viewport = {
@@ -179,6 +200,27 @@ export class Dom
             (ratio * element.height);
 
         return top <= scroll.top && scroll.top <= bottom;
+    }
+
+    static inviewMaxY(selector, cb = null)
+    {
+        let items = [];
+
+        Dom.find(selector).each((el) => {
+            items.push({ el, height: Dom.find(el).inviewHeight() });
+        });
+
+        let heights = Arr.extract(items, 'height');
+
+        let el = Arr.find(items, (item) => {
+            return item.height === Math.max(...heights);
+        });
+
+        if ( ! Any.isEmpty(el) && Any.isFunction(cb) ) {
+            cb.call({}, el.el);
+        }
+
+        return el.el;
     }
 
     is(selector)
