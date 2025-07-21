@@ -202,11 +202,19 @@ export class Dom
         return top <= scroll.top && scroll.top <= bottom;
     }
 
-    static inviewMaxY(selector, cb = null)
+    static inviewMaxY(selector, callback = null, context = null)
     {
-        let items = [];
+        let [items, attr] = [
+            [], selector.replace(/^\[([^="]+)]$/, '$1')
+        ];
 
-        Dom.find(selector).each((el) => {
+        let parent = Dom.find(selector);
+
+        if ( ! Any.isNull(context) ) {
+            parent = Dom.find(context);
+        }
+
+        parent.each((el) => {
             items.push({ el, height: Dom.find(el).inviewHeight() });
         });
 
@@ -216,8 +224,8 @@ export class Dom
             return item.height === Math.max(...heights);
         });
 
-        if ( ! Any.isEmpty(el) && Any.isFunction(cb) ) {
-            cb.call({}, el.el);
+        if ( ! Any.isEmpty(el) && Any.isFunction(callback) ) {
+            callback.call({}, el.el, el.el.getAttribute(attr));
         }
 
         return el.el;
