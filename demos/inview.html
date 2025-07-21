@@ -67,9 +67,9 @@
 <div id="app">
     <div class="app-container">
         <div style="background: yellow; width: 100%; height: 80vh;" data-inview></div>
-        <div style="background: red; width: 100%; height: 80vh;" data-inview></div>
-        <div style="background: blue; width: 100%; height: 80vh;" data-inview></div>
-        <div style="background: green; width: 100%; height: 80vh;" data-inview></div>
+        <div style="background: red; width: 100%; height: 80vh;" data-inview="red"></div>
+        <div style="background: blue; width: 100%; height: 80vh;" data-inview="blue"></div>
+        <div style="background: green; width: 100%; height: 80vh;" data-inview="green"></div>
     </div>
 </div>
 
@@ -81,7 +81,8 @@
                 pi.Dom.find(el).removeClass('is-there');
             });
 
-            pi.Dom.inviewMaxY('[data-inview]', (el) => {
+            pi.Dom.inviewMaxY('[data-inview]', (el, attr) => {
+                console.log(attr);
                 pi.Dom.find(el).addClass('is-there');
             });
 
