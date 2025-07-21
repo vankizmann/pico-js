@@ -211,7 +211,7 @@ export class Dom
         let parent = Dom.find(selector);
 
         if ( ! Any.isNull(context) ) {
-            parent = Dom.find(context);
+            parent = Dom.find(context).find(selector);
         }
 
         parent.each((el) => {
