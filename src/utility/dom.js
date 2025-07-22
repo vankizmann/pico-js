@@ -133,11 +133,13 @@ export class Dom
         return this.get(0) && this.get(0).is(':visible');
     }
 
-    inviewHeight()
+    inviewHeight(boundry = window)
     {
+        let parent = Dom.find(boundry);
+
         let viewport = {
-            width: Dom.find(window).width(),
-            height: Dom.find(window).height(),
+            width: parent.width(),
+            height: parent.height(),
         };
 
         let element = {
@@ -148,10 +150,12 @@ export class Dom
         let scroll = this.scroll(),
             offset = this.offset();
 
-        let bottom = offset.top + element.height;
+        let [top, bottom] = [
+            scroll.top + parent.offset('top'), offset.top + element.height
+        ];
 
-        return Math.max(0, Math.min(bottom, viewport.height + scroll.top) -
-            Math.max(offset.top, scroll.top))
+        return Math.max(0, Math.min(bottom, viewport.height + top) -
+            Math.max(offset.top, top))
     }
 
     inviewX(ratio = 0)
@@ -212,10 +216,13 @@ export class Dom
             options = { el: options };
         }
 
+        let boundry = Dom.find(options.parent)
+            .closestScrollable(window);
+
         options = Obj.assign({}, defaults, options);
 
         let safeback = (item) => {
-            return Math.min(Dom.find(item.el).height() * 0.5, Dom.find(window).height() * 0.2);
+            return Math.min(Dom.find(item.el).height() * 0.5, Dom.find(boundry).height() * 0.2);
         };
 
         let safezone = options.safezone;
@@ -236,7 +243,7 @@ export class Dom
 
         parent.each((el) => {
             items.push({
-                el, attr: Dom.find(el).attr(attr), height: Dom.find(el).inviewHeight()
+                el, attr: Dom.find(el).attr(attr), height: Dom.find(el).inviewHeight(boundry)
             });
         });
 
@@ -245,7 +252,7 @@ export class Dom
         });
 
         results = Arr.sort(results, (a, b) => {
-            return a.height > b.height ? -1 : 1;
+            return a.height >= b.height ? -1 : 1;
         });
 
         Arr.each(results, (item, index) => {
@@ -436,6 +443,10 @@ export class Dom
 
         if ( Any.isEmpty(el) === true ) {
             return Dom.find(null);
+        }
+
+        if ( el instanceof Window ) {
+            el = document;
         }
 
         let nodes = el.querySelectorAll(selector);
