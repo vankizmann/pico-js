@@ -51,6 +51,18 @@
         }
 
         .is-there {
+            position: relative;
+        }
+
+        .is-there:before {
+            content: '\00a0';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: block;
+            height: calc(100% - 20px);
+            width: calc(100% - 20px);
+            opacity: 0.6;
             background: black !important;
         }
 
@@ -66,9 +78,10 @@
 
 <div id="app">
     <div class="app-container">
-        <div style="background: yellow; width: 100%; height: 80vh;" data-inview></div>
-        <div style="background: red; width: 100%; height: 80vh;" data-inview="red"></div>
-        <div style="background: blue; width: 100%; height: 80vh;" data-inview="blue"></div>
+        <div style="background: yellow; width: 100%; height: 80vh;" data-inview="yellow"></div>
+        <div style="background: red; width: 100%; height: 200vh;" data-inview="red"></div>
+        <div style="background: orange; width: 100%; height: 100px;" data-inview="orange"></div>
+        <div style="background: blue; width: 100%; height: 400px;" data-inview="blue"></div>
         <div style="background: green; width: 100%; height: 80vh;" data-inview="green"></div>
     </div>
 </div>
@@ -81,12 +94,16 @@
                 pi.Dom.find(el).removeClass('is-there');
             });
 
-            pi.Dom.inviewMaxY('[data-inview]', (el, attr) => {
-                console.log(attr);
-                pi.Dom.find(el).addClass('is-there');
+            let options = {
+                el: '[data-inview]'
+            }
+
+            let first = pi.Dom.inviewMaxY(options, (el) => {
+                pi.Dom.find(el.el).addClass('is-there');
             });
 
-        })
+            console.log(first);
+        });
 
     })
 </script>

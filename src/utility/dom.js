@@ -202,33 +202,58 @@ export class Dom
         return top <= scroll.top && scroll.top <= bottom;
     }
 
-    static inviewMaxY(selector, callback = null, context = null)
+    static inviewMaxY(options, callback = null)
     {
+        let defaults = {
+            el: '[data-inview]', parent: document.body, multiple: false, safezone: null,
+        };
+
+        if ( Any.isString(options) ) {
+            options = { el: options };
+        }
+
+        options = Obj.assign({}, defaults, options);
+
+        let safeback = (item) => {
+            return Math.min(Dom.find(item.el).height() * 0.5, Dom.find(window).height() * 0.2);
+        };
+
+        let safezone = options.safezone;
+
+        if ( Any.isNull(safezone) ) {
+            safezone = safeback;
+        }
+
+        if ( ! Any.isFunction(safezone) ) {
+            safezone = () => options.safezone;
+        }
+
         let [items, attr] = [
-            [], selector.replace(/^\[([^="]+)]$/, '$1')
+            [], options.el.replace(/^\[([^="]+)]$/, '$1')
         ];
 
-        let parent = Dom.find(selector);
-
-        if ( ! Any.isNull(context) ) {
-            parent = Dom.find(context).find(selector);
-        }
+        let parent = Dom.find(options.parent).find(options.el);
 
         parent.each((el) => {
-            items.push({ el, height: Dom.find(el).inviewHeight() });
+            items.push({
+                el, attr: Dom.find(el).attr(attr), height: Dom.find(el).inviewHeight()
+            });
         });
 
-        let heights = Arr.extract(items, 'height');
-
-        let el = Arr.find(items, (item) => {
-            return item.height === Math.max(...heights);
+        let results = Arr.filter(items, (item) => {
+            return Math.max(0, item.height - safezone(item)) !== 0;
         });
 
-        if ( ! Any.isEmpty(el) && Any.isFunction(callback) ) {
-            callback.call({}, el.el, el.el.getAttribute(attr));
-        }
+        results = Arr.sort(results, (a, b) => {
+            return a.height > b.height ? -1 : 1;
+        });
 
-        return el.el;
+        Arr.each(results, (item, index) => {
+            Any.isFunction(callback) && callback.call({}, item, index);
+        });
+
+        return options.multiple ? Arr.extract(results, 'el') :
+            Obj.get(results, '0.el');
     }
 
     is(selector)
@@ -331,7 +356,6 @@ export class Dom
         if ( Any.isString(selector) === true ) {
             return this.find(selector).get(0) !== null;
         }
-
 
         if ( selector instanceof Element === false ) {
             return false;
