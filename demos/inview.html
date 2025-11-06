@@ -76,8 +76,8 @@
 </head>
 <body class="n-demo">
 
-<div id="app" style="margin: 20vh auto;">
-    <div data-boundry style="height: 60vh; overflow: auto;">
+<div id="app" style="margin: 200px auto;">
+    <div data-boundry style="height: 600px; overflow: auto;">
         <div class="app-container">
             <div style="background: yellow; width: 100%; height: 80vh;" data-inview="yellow"></div>
             <div style="background: red; width: 100%; height: 200vh;" data-inview="red"></div>
@@ -104,10 +104,11 @@
             }
 
             let first = pi.Dom.inviewMaxY(options, (el) => {
+                console.log(el.attr, el.height);
                 pi.Dom.find(el.el).addClass('is-there');
             });
 
-            console.log(first && first.getAttribute('data-inview'));
+            // console.log(first && first.getAttribute('data-inview'));
         });
 
     });
