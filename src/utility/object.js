@@ -362,7 +362,7 @@ export class Obj
     {
         let result = {};
 
-        if ( window.FormData && obj instanceof FormData ) {
+        if ( FormData && obj instanceof FormData ) {
 
             for ( let [key, value] of obj.entries() ) {
                 result[key] = callback(value, key);

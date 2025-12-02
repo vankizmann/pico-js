@@ -2,6 +2,19 @@ import { Arr, Obj, Now } from "../index.js";
 
 export class Any
 {
+    static global(fallback = {})
+    {
+        if ( window !== undefined ) {
+            return window;
+        }
+
+        if ( global !== undefined ) {
+            return global;
+        }
+
+        return fallback;
+    }
+
     static isEmpty(val)
     {
         if ( this.isNumber(val) ) {
