@@ -4,11 +4,11 @@ export class Any
 {
     static global(fallback = {})
     {
-        if ( window !== undefined ) {
+        if ( typeof window !== 'undefined' ) {
             return window;
         }
 
-        if ( global !== undefined ) {
+        if ( typeof global !== 'undefined' ) {
             return global;
         }
 
