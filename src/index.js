@@ -69,24 +69,22 @@ export const Pico = {
     Route: Route,
 }
 
-/**
- * @const window
- */
+let win = Any.global();
 
-if ( typeof window.IE === 'undefined' && window.navigator ) {
-    window.IE = !! window.navigator.userAgent.match(/Edge\/|Trident\/|MSIE /);
+if ( typeof win.IE === 'undefined' && win.navigator ) {
+    win.IE = !! win.navigator.userAgent.match(/Edge\/|Trident\/|MSIE /);
 }
 
-if ( typeof window.WIN === 'undefined' && window.navigator ) {
-    window.WIN = !! window.navigator.userAgent.match(/Windows/);
+if ( typeof win.WIN === 'undefined' && win.navigator ) {
+    win.WIN = !! win.navigator.userAgent.match(/Windows/);
 }
 
-if ( typeof window.pi === 'undefined' && window.navigator ) {
-    window.pi = Pico;
+if ( typeof win.pi === 'undefined' && win.navigator ) {
+    win.pi = Pico;
 }
 
-if ( typeof window.pi !== 'undefined' && window.document ) {
-    window.pi.Dom.ready(window.pi.Element.listen);
+if ( typeof win.pi !== 'undefined' && win.document ) {
+    win.pi.Dom.ready(win.pi.Element.listen);
 }
 
 export default Pico;

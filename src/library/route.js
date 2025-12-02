@@ -2,7 +2,7 @@ import { Obj, Str, Any } from "../index.js";
 
 export default class Route
 {
-    static routes = Obj.get(window, '_routes', {});
+    static routes = Obj.get(Any.global(), '_routes', {});
 
     static set (key, value)
     {

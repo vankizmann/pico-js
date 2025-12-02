@@ -1,11 +1,11 @@
-import { Obj } from "../index.js";
+import { Obj, Any } from "../index.js";
 
 export class Locale
 {
     /**
      * Get locales from window if present.
      */
-    static locales = Obj.get(window, '_locales', {});
+    static locales = Obj.get(Any.global(), '_locales', {});
 
     static pickByCount(splits, count)
     {
