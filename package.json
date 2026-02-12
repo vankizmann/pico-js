@@ -1,20 +1,14 @@
 {
     "name": "@kizmann/pico-js",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "license": "MIT",
     "type": "module",
     "private": false,
     "author": "Eduard Kizmann <kizmann@protonmail.ch>",
     "repository": "https://github.com/vankizmann/pico-js",
-    "main": "src/index.esm.js",
-    "unpkg": "dist/pico-js.browser.js",
-    "types": "types/index.d.ts",
-    "exports": {
-        ".": {
-            "types": "./types/index.d.ts",
-            "import": "./src/index.esm.js"
-        }
-    },
+    "main": "./src/index.esm.js",
+    "jsnext:main": "./src/index.esm.js",
+    "typings": "./types/index.esm.d.ts",
     "imports": {
         "#src/*": "./src/*"
     },
