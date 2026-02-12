@@ -1,0 +1,618 @@
+import { Arr, For, Locale, Mix, Now, Str } from "#src/index.esm.js";
+
+export class PicoString
+{
+    /**
+     * Get character at index
+     *
+     * @example Str.get("abc", 1) // => "b"
+     *
+     * @param {any} value Input string
+     * @param {any} index Char index
+     * @returns {string} Single char
+     */
+    static get(value, index)
+    {
+        if ( ! Mix.isStr(value) ) {
+            value = Mix.str(value);
+        }
+
+        if ( Mix.isInt(index) ) {
+            index = Mix.int(index);
+        }
+
+        return value.charAt(index);
+    }
+
+    /**
+     * Replace substring at index
+     *
+     * @example Str.set("abc", 1, "X") // => "aXc"
+     *
+     * @param {any} value Input string
+     * @param {any} index Start index
+     * @param {string} [replace] Replace value
+     * @returns {string} Updated string
+     */
+    static set(value, index, replace = '')
+    {
+        if ( ! Mix.isStr(value) ) {
+            value = Mix.str(value);
+        }
+
+        if ( Mix.isInt(index) ) {
+            index = Mix.int(index);
+        }
+
+        return value.substring(0, index) + replace +
+            value.substring(index + replace.length);
+    }
+
+    /**
+     * Replace first occurrence
+     *
+     * @example Str.replace("abc", "X", "b") // => "aXc"
+     *
+     * @param {any} value Input string
+     * @param {string} replace Replace value
+     * @param {any} [search] Search value
+     * @returns {string} Updated string
+     */
+    static replace(value, replace, search = null)
+    {
+        if ( Mix.isNull(search) ) {
+            search = value;
+        }
+
+        let index = search.indexOf(replace);
+
+        if ( index === -1 ) {
+            return value;
+        }
+
+        return this.set(value, index, replace);
+    }
+
+    /**
+     * Extract substring by range
+     *
+     * @example Str.extract("abc", "b") // => "b"
+     *
+     * @param {any} value Input string
+     * @param {string} replace Search value
+     * @param {any} [search] Match source
+     * @returns {string|null} Extracted string
+     */
+    static extract(value, replace, search = null)
+    {
+        if ( Mix.isNull(search) ) {
+            search = value;
+        }
+
+        let index = this.range(search, replace);
+
+        if ( index === null ) {
+            return null;
+        }
+
+        return this.slice(value, ...index);
+    }
+
+    /**
+     * Match pattern in string
+     *
+     * @example Str.match("abc", /b/) // => ["b"]
+     *
+     * @param {any} value Input string
+     * @param {RegExp|string} pattern Match pattern
+     * @param {any} [cb] Callback fn
+     * @returns {any} Match result
+     */
+    static match(value, pattern, cb = null)
+    {
+        let result = Mix.str(value).match(pattern);
+
+        if ( Mix.isEmpty(result) ) {
+            return [];
+        }
+
+        return Mix.isFunc(cb) ? cb(result) : result;
+    }
+
+    /**
+     * Escape regex characters
+     *
+     * @example Str.regex("a.b") // => "a\\.b"
+     *
+     * @param {any} val Input string
+     * @returns {string} Escaped string
+     */
+    static regex(val)
+    {
+        return Mix.str(val).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    /**
+     * Convert to uppercase
+     *
+     * @example Str.uc("abc") // => "ABC"
+     *
+     * @param {any} value Input string
+     * @returns {string} Uppercase string
+     */
+    static uc(value)
+    {
+        return Mix.str(value).toUpperCase();
+    }
+
+    /**
+     * @see PicoString.uc
+     */
+    static upper = PicoString.uc;
+
+    /**
+     * Uppercase first character
+     *
+     * @example Str.ucfirst("abc") // => "Abc"
+     *
+     * @param {string} value Input string
+     * @returns {string} Updated string
+     */
+    static ucfirst(value)
+    {
+        return value.charAt(0).toUpperCase() + value.slice(1);
+    }
+
+    /**
+     * Convert to lowercase
+     *
+     * @example Str.lc("ABC") // => "abc"
+     *
+     * @param {any} value Input string
+     * @returns {string} Lowercase string
+     */
+    static lc(value)
+    {
+        return Mix.str(value).toLowerCase();
+    }
+
+    /**
+     * @see PicoString.lc
+     */
+    static lower = PicoString.lc;
+
+    /**
+     * Lowercase first character
+     *
+     * @example Str.lcfirst("ABC") // => "aBC"
+     *
+     * @param {string} value Input string
+     * @returns {string} Updated string
+     */
+    static lcfirst(value)
+    {
+        return value.charAt(0).toLowerCase() + value.slice(1);
+    }
+
+    /**
+     * Convert to camelCase
+     *
+     * @example Str.cc("hello-world") // => "helloWorld"
+     *
+     * @param {string} value Input string
+     * @returns {string} camelCase string
+     */
+    static cc(value)
+    {
+        let splits = Arr.each(For.slugify(value).split('-'), (v, i) => {
+            return i ? this.ucfirst(v) : v;
+        });
+
+        return splits.join('');
+    }
+
+    /**
+     * @see PicoString.cc
+     */
+    static camelcase = PicoString.cc;
+
+    /**
+     * Convert to kebab-case
+     *
+     * @example Str.kc("helloWorld") // => "hello-world"
+     *
+     * @param {string} value Input string
+     * @returns {string} kebab-case string
+     */
+    static kc(value)
+    {
+        return For.slugify(value);
+    }
+
+    /**
+     * @see PicoString.kc
+     */
+    static kebabcase = PicoString.kc;
+
+    /**
+     * Convert to snake_case
+     *
+     * @example Str.sc("helloWorld") // => "hello_world"
+     *
+     * @param {string} value Input string
+     * @returns {string} snake_case string
+     */
+    static sc(value)
+    {
+        return For.slugify(value).replace('-', '_');
+    }
+
+    /**
+     * @see PicoString.sc
+     */
+    static snakecase = PicoString.sc;
+
+    /**
+     * Convert to PascalCase
+     *
+     * @example Str.pc("hello-world") // => "HelloWorld"
+     *
+     * @param {string} value Input string
+     * @returns {string} PascalCase string
+     */
+    static pc(value)
+    {
+        let splits = Arr.each(For.slugify(value).split('-'), (v) => {
+            return this.ucfirst(v);
+        });
+
+        return splits.join('');
+    }
+
+    /**
+     * @see PicoString.pc
+     */
+    static pascalcase = PicoString.pc;
+
+    /**
+     * Check if string contains value
+     *
+     * @example Str.has("abc", "b") // => true
+     *
+     * @param {string} value Input string
+     * @param {string} search Search string
+     * @returns {boolean} True if found
+     */
+    static has(value, search)
+    {
+        return this.lc(value).indexOf(this.lc(search)) !== -1;
+    }
+
+    /**
+     * Get index range of search
+     *
+     * @example Str.range("abc", "b") // => [1, 2]
+     *
+     * @param {any} value Input string
+     * @param {string} search Search string
+     * @param {any} [fallback] Fallback value
+     * @returns {Array<number>|any} Index range
+     */
+    static range(value, search, fallback = null)
+    {
+        let index = Mix.str(value).indexOf(search);
+
+        if ( index === -1 ) {
+            return fallback;
+        }
+
+        return [index, index + search.length];
+    }
+
+    /**
+     * Extract substring by range
+     *
+     * @example Str.slice("abc", 1, 2) // => "b"
+     *
+     * @param {any} value Input string
+     * @param {number} start Start index
+     * @param {number} limit End index
+     * @returns {string} Sliced string
+     */
+    static slice(value, start, limit)
+    {
+        return Mix.str(value).slice(start, limit);
+    }
+
+    /**
+     * Get string representation
+     *
+     * @example Str.string("<b>a</b>") // => "a"
+     *
+     * @param {any} value Input value
+     * @param {any} [empty] Empty fallback
+     * @param {boolean} [html] Keep HTML
+     * @returns {string} String value
+     */
+    static string(value, empty = '-', html = false)
+    {
+        if ( Mix.isEmpty(value) ) {
+            return empty;
+        }
+
+        value = Mix.str(value);
+
+        if ( html ) {
+            return value;
+        }
+
+        return value.replace(/<[^>]*>?/gm, '');
+    }
+
+    /**
+     * Get boolean representation
+     *
+     * @example Str.boolean(true) // => "Yes"
+     *
+     * @param {any} value Input value
+     * @param {string} [yes] True string
+     * @param {string} [no] False string
+     * @param {any} [empty] Empty fallback
+     * @returns {string|any} Boolean string
+     */
+    static boolean(value, yes = 'Yes', no = 'No', empty = '-')
+    {
+        if ( Mix.isEmpty(value) ) {
+            return empty;
+        }
+
+        return Mix.bool(value) ? yes : no;
+    }
+
+    /**
+     * Get formatted number
+     *
+     * @example Str.number(1234.56, 1) // => "1,234.6"
+     *
+     * @param {any} value Input value
+     * @param {number} [fixed] Decimal points
+     * @param {string} [locale] Locale code
+     * @param {any} [config] Format config
+     * @returns {string|any} Formatted string
+     */
+    static number(value, fixed = null, locale = null, config = {})
+    {
+        if ( ! Mix.isNum(value) ) {
+            return value;
+        }
+
+        if ( locale == null ) {
+            locale = Locale.code();
+        }
+
+        config = {
+            maximumFractionDigits: 12, ...config
+        };
+
+        if ( fixed != null ) {
+            config.minimumFractionDigits = fixed;
+            config.maximumFractionDigits = fixed;
+        }
+
+        return Mix.num(value).toLocaleString(locale, config);
+    }
+
+    /**
+     * Get formatted integer
+     *
+     * @example Str.integer(1, 2) // => "01"
+     *
+     * @param {any} value Input value
+     * @param {number} [leading] Leading zeros
+     * @param {string} [padding] Padding char
+     * @returns {string|any} Formatted string
+     */
+    static integer(value, leading = 0, padding = '0')
+    {
+        if ( ! Mix.isNum(value) ) {
+            return value;
+        }
+
+        if ( ! Mix.isInt(value) ) {
+            value = Mix.int(value);
+        }
+
+        value = Mix.int(value);
+
+        if ( ! leading ) {
+            return Mix.str(value);
+        }
+
+        return Mix.str(value).padStart(leading, padding);
+    }
+
+    /**
+     * Get formatted datetime
+     *
+     * @example Str.datetime("2026-01-01", "DD.MM.YYYY")
+     *
+     * @param {any} value Input value
+     * @param {string} [format] Output format
+     * @param {any} [empty] Empty fallback
+     * @returns {string} Formatted string
+     */
+    static datetime(value, format = 'YYYY-MM-DD HH:mm:ss', empty = '-')
+    {
+        if ( ! Mix.isDate(value) ) {
+            value = Now.make(value);
+        }
+
+        if ( ! value.valid() ) {
+            return empty;
+        }
+
+        return value.format(format);
+    }
+
+    /**
+     * Get formatted date
+     *
+     * @example Str.date("2026-01-01", "DD.MM.YYYY")
+     *
+     * @param {any} value Input value
+     * @param {string} [format] Output format
+     * @param {any} [empty] Empty fallback
+     * @returns {string} Formatted string
+     */
+    static date(value, format = 'YYYY-MM-DD', empty = '-')
+    {
+        return this.datetime(value, format, empty);
+    }
+
+    /**
+     * Get formatted time
+     *
+     * @example Str.time("12:00:00", "HH:mm")
+     *
+     * @param {any} value Input value
+     * @param {string} [format] Output format
+     * @param {any} [empty] Empty fallback
+     * @returns {string} Formatted string
+     */
+    static time(value, format = 'HH:mm:ss', empty = '-')
+    {
+        return this.datetime(value, format, empty);
+    }
+
+    /**
+     * Parse string to object
+     *
+     * @example Str.objectify("a: 1;") // => { a: 1 }
+     *
+     * @param {any} value Input string
+     * @param {string} [mode] Parse mode
+     * @param {boolean} [toarray] Return array
+     * @returns {any} Parsed value
+     */
+    static objectify(value, mode = 'options', toarray = false)
+    {
+        if ( Mix.isRef(value) ) {
+            return value;
+        }
+
+        if ( mode === 'params' ) {
+            value = For.parseParams(value);
+        }
+
+        if ( mode === 'options' ) {
+            value = For.parseOptions(value);
+        }
+
+        if ( ! Mix.isRef(value) ) {
+            value = JSON.parse(value)
+        }
+
+        return toarray ? Mix.vals(value) : value;
+    }
+
+    /**
+     * Cast object to string
+     *
+     * @example Str.stringify({ a: 1 }) // => "a: 1;"
+     *
+     * @param {any} value Input value
+     * @param {string} [mode] Cast mode
+     * @returns {string} Casted string
+     */
+    static stringify(value, mode = 'options')
+    {
+        if ( Mix.isStr(value) ) {
+            return value;
+        }
+
+        if ( mode === 'params' ) {
+            return For.castParams(value);
+        }
+
+        if ( mode === 'options' ) {
+            return For.castOptions(value);
+        }
+
+        return JSON.stringify(value);
+    }
+
+}
+
+/**
+ * @see PicoStr.regex
+ */
+PicoString.regexEscape = (...args) => {
+    console.warn('Str.regexEscape() is deprecated, use Str.regex() instead.');
+    return Str.regex(...args);
+};
+
+/**
+ * @see PicoStr.pascalcase
+ */
+PicoString.humancase = (...args) => {
+    console.warn('Str.humancase() is deprecated, use Str.pascalcase() instead.');
+    return Str.pascalcase(...args);
+};
+
+/**
+ * @see PicoFormat.slugify
+ */
+PicoString.slugify = (...args) => {
+    console.warn('Str.slugify() is deprecated, use For.slugify() instead.');
+    return For.slugify(...args);
+};
+
+/**
+ * @see PicoFormat.castOptions
+ */
+PicoString.options = (...args) => {
+    console.warn('Str.options() is deprecated, use For.castOptions() instead.');
+    return For.castOptions(...args);
+};
+
+/**
+ * @see PicoFormat.parseOptions
+ */
+PicoString.fromOptions = (...args) => {
+    console.warn('Str.fromOptions() is deprecated, use For.parseOptions() instead.');
+    return For.parseOptions(...args);
+};
+
+/**
+ * @see PicoFormat.castParams
+ */
+PicoString.params = (...args) => {
+    console.warn('Str.params() is deprecated, use For.castParams() instead.');
+    return For.castParams(...args);
+};
+
+/**
+ * @see PicoFormat.parseParams
+ */
+PicoString.fromParams = (...args) => {
+    console.warn('Str.fromParams() is deprecated, use For.parseParams() instead.');
+    return For.parseParams(...args);
+};
+
+/**
+ * @see PicoFormat.filesize
+ */
+PicoString.filesize = (...args) => {
+    console.warn('Str.filesize() is deprecated, use For.filesize() instead.');
+    return For.filesize(...args);
+};
+
+PicoString.real = () => {
+    console.error('Str.real() is not implemented anymore.');
+};
+
+PicoString.array = () => {
+    console.error('Str.array() is not implemented anymore.');
+};
+
+export default PicoString;

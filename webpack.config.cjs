@@ -6,13 +6,25 @@ const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let themes = {
-    './docs/src/scss/index-light.scss': '../docs/dist/light.css',
-    './docs/src/scss/index-dark.scss': '../docs/dist/dark.css',
+    // './docs/src/scss/index-light.scss': '../docs/dist/light.css',
+    // './docs/src/scss/index-dark.scss': '../docs/dist/dark.css',
+};
+
+let scripts = {
+    './src/speedcheck.js': './dist/speedcheck.js',
+    './src/index.js': './dist/pico-js.js'
 };
 
 let libJs = {
-    entry: ["./src/index.js"],
+    optimization: {
+        splitChunks: false,
+    },
     module: {
+        parser: {
+            javascript: {
+                dynamicImportMode: 'eager'
+            }
+        },
         rules: [
             {
                 test: /.c?js$/,
@@ -31,6 +43,7 @@ let libJs = {
     },
     plugins: []
 };
+
 
 let docJs = {
     entry: ["./docs/src/js/index.cjs"],
@@ -117,14 +130,28 @@ module.exports = function (env, argv) {
      * @const __dirname
      */
 
-    let libJsBundle = Object.assign({
+    let browserJsBundle = Object.assign({
+
+        entry: ["./src/index.browser.js"],
 
         output: {
-            filename: "pico-js.js",
+            filename: "pico-js.browser.js",
             path: path.resolve(__dirname, "dist"),
-            library: 'Pico',
+            libraryTarget: 'window'
+        },
+
+    }, libJs);
+
+    let moduleJsBundle = Object.assign({
+
+        entry: ["./src/index.esm.js"],
+
+        output: {
+            filename: "pico-js.esm.js",
+            path: path.resolve(__dirname, "dist"),
+            library: 'pi',
             libraryTarget: "umd",
-        }
+        },
 
     }, libJs);
 
@@ -149,17 +176,18 @@ module.exports = function (env, argv) {
         themeList[index] = themeFn(key, themes[key]);
     });
 
-    if ( argv.mode === 'development' ) {
-        return [
-            libJsBundle, docJsBundle, ...themeList
-        ];
-    }
-
     let loaderOptions = new webpack.LoaderOptionsPlugin({
         minimize: true
     });
 
-    libJsBundle.plugins.push(loaderOptions);
+    if ( argv.mode === 'development' ) {
+        return [
+            browserJsBundle, moduleJsBundle, //docJsBundle, ...themeList
+        ];
+    }
+
+    browserJsBundle.plugins.push(loaderOptions);
+    moduleJsBundle.plugins.push(loaderOptions);
     docJsBundle.plugins.push(loaderOptions);
 
     themeList.forEach((cfg) => {
@@ -180,7 +208,8 @@ module.exports = function (env, argv) {
 
     optimization.minimizer.push(terser);
 
-    libJsBundle.optimization = optimization;
+    browserJsBundle.optimization = optimization;
+    moduleJsBundle.optimization = optimization;
     docJsBundle.optimization = optimization;
 
     themeList.forEach((cfg) => {
@@ -188,6 +217,6 @@ module.exports = function (env, argv) {
     });
 
     return [
-        libJsBundle, docJsBundle, ...themeList
+        browserJsBundle, moduleJsBundle, //docJsBundle, ...themeList
     ];
 }

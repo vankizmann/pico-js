@@ -14,7 +14,7 @@ Creates an array of a given count filled with incrementing integers starting fro
 ```js
 // Arr.make(count)
 
-Arr.make(3);
+Array.make(3);
 // => [1, 2, 3]
 ```
 
@@ -32,10 +32,10 @@ Ensures the input is always returned as an array.
 ```js
 // Arr.all(arr)
 
-Arr.all(5);
+Array.all(5);
 // => [5]
 
-Arr.all([1, 2]);
+Array.all([1, 2]);
 // => [1, 2]
 ```
 
@@ -53,10 +53,10 @@ Returns the value at a given index or a fallback if it doesn't exist.
 ```js
 // Arr.get(arr, index, fallback = null)
 
-Arr.get([1, 2, 3], 1);
+Array.get([1, 2, 3], 1);
 // => 2
 
-Arr.get([1, 2, 3], 5, null);
+Array.get([1, 2, 3], 5, null);
 // => null
 ```
 
@@ -76,7 +76,7 @@ Sets a value at the specified index of the array.
 ```js
 // Arr.set(arr, index, value)
 
-Arr.set([0, 2, 44], 1, 42);
+Array.set([0, 2, 44], 1, 42);
 // => [0, 42, 44]
 ```
 
@@ -96,10 +96,10 @@ Gets the first element of the array or a fallback.
 ```js
 // Arr.first(arr, fallback = null)
 
-Arr.first([10, 20]);
+Array.first([10, 20]);
 // => 10
 
-Arr.first([], null);
+Array.first([], null);
 // => null
 ```
 
@@ -118,10 +118,10 @@ Gets the second element of the array, falling back to the first or a fallback.
 ```js
 // Arr.second(arr, fallback = null)
 
-Arr.second([10, 20]);
+Array.second([10, 20]);
 // => 20
 
-Arr.second([10], 'none');
+Array.second([10], 'none');
 // => 10
 ```
 
@@ -140,10 +140,10 @@ Gets the third element, or falls back to second, first, or fallback.
 ```js
 // Arr.third(arr, fallback = null)
 
-Arr.third([1, 2, 3]);
+Array.third([1, 2, 3]);
 // => 3
 
-Arr.third([1], 'none');
+Array.third([1], 'none');
 // => 1
 ```
 
@@ -162,7 +162,7 @@ Gets the last element of the array.
 ```js
 // Arr.last(arr, fallback = null)
 
-Arr.last([5, 6, 7]);
+Array.last([5, 6, 7]);
 // => 7
 ```
 
@@ -181,7 +181,7 @@ Adds a value to the beginning of an array.
 ```js
 // Arr.prepend(arr, val)
 
-Arr.prepend([2, 3], 1);
+Array.prepend([2, 3], 1);
 // => [1, 2, 3]
 ```
 
@@ -200,7 +200,7 @@ Adds a value to the end of an array.
 ```js
 // Arr.append(arr, val)
 
-Arr.append([1, 2], 3);
+Array.append([1, 2], 3);
 // => [1, 2, 3]
 ```
 
@@ -219,7 +219,7 @@ Sorts an object of keyed values by a key or a custom function.
 ```js
 // Arr.sort(obj, key)
 
-Arr.sort([{ val: 2 }, { val: 1 }], 'val');
+Array.sort([{ val: 2 }, { val: 1 }], 'val');
 // => [{ val: 1, _key: 1 }, { val: 2, _key: 0 }]
 ```
 
@@ -238,7 +238,7 @@ Sorts an object's values alphabetically by a string key.
 ```js
 // Arr.sortString(obj, key)
 
-Arr.sortString([{ name: "Zoe" }, { name: "Anna" }], 'name');
+Array.sortString([{ name: "Zoe" }, { name: "Anna" }], 'name');
 // => [{ name: "Anna", _key: 1 }, { name: "Zoe", _key: 0 }]
 ```
 
@@ -257,7 +257,7 @@ Filters array values by a function, object, or array.
 ```js
 // Arr.filter(arr, filter)
 
-Arr.filter([1, 2, 3, 4], n => n > 2);
+Array.filter([1, 2, 3, 4], n => n > 2);
 // => [3, 4]
 ```
 
@@ -276,7 +276,7 @@ Gets indexes of values matching a filter.
 ```js
 // Arr.filterIndex(arr, filter)
 
-Arr.filterIndex([1, 2, 3, 4], n => n > 2);
+Array.filterIndex([1, 2, 3, 4], n => n > 2);
 // => ['2', '3']
 ```
 
@@ -295,7 +295,7 @@ Finds the first matching value in an array.
 ```js
 // Arr.find(arr, val, fallback)
 
-Arr.find([1, 2, 3], 2);
+Array.find([1, 2, 3], 2);
 // => 2
 ```
 
@@ -315,7 +315,7 @@ Finds the index of the first matching value.
 ```js
 // Arr.findIndex(arr, val, fallback)
 
-Arr.findIndex([1, 2, 3], 2);
+Array.findIndex([1, 2, 3], 2);
 // => 1
 ```
 
@@ -335,7 +335,7 @@ Checks if a value exists in an array.
 ```js
 // Arr.has(arr, val)
 
-Arr.has([1, 2, 3], 2);
+Array.has([1, 2, 3], 2);
 // => true
 ```
 
@@ -354,7 +354,7 @@ Adds a value to the array if it doesn't exist.
 ```js
 // Arr.add(arr, val, finder)
 
-Arr.add([1, 2], 3);
+Array.add([1, 2], 3);
 // => [1, 2, 3]
 ```
 
@@ -374,7 +374,7 @@ Replaces an existing value or adds it if not found.
 ```js
 // Arr.replace(arr, val, finder)
 
-Arr.replace([1, 2], 2);
+Array.replace([1, 2], 2);
 // => [1, 2]
 ```
 
@@ -394,7 +394,7 @@ Removes the first matching value from the array.
 ```js
 // Arr.remove(arr, val)
 
-Arr.remove([1, 2, 3], 2);
+Array.remove([1, 2, 3], 2);
 // => [1, 3]
 ```
 
@@ -413,7 +413,7 @@ Adds or removes a value from the array depending on its presence.
 ```js
 // Arr.toggle(arr, val)
 
-Arr.toggle([1, 2], 2);
+Array.toggle([1, 2], 2);
 // => [1]
 ```
 
@@ -432,7 +432,7 @@ Removes an element at a specific index.
 ```js
 // Arr.removeIndex(arr, index)
 
-Arr.removeIndex([1, 2, 3], 1);
+Array.removeIndex([1, 2, 3], 1);
 // => [1, 3]
 ```
 
@@ -451,7 +451,7 @@ Inserts a value at a specific index.
 ```js
 // Arr.insert(arr, index, val)
 
-Arr.insert([1, 3], 1, 2);
+Array.insert([1, 3], 1, 2);
 // => [1, 2, 3]
 ```
 
@@ -471,7 +471,7 @@ Returns a shallow slice of the array.
 ```js
 // Arr.slice(arr, index, count)
 
-Arr.slice([1, 2, 3, 4], 1, 3);
+Array.slice([1, 2, 3, 4], 1, 3);
 // => [2, 3, 4]
 ```
 
@@ -491,7 +491,7 @@ Modifies the array by removing elements.
 ```js
 // Arr.splice(arr, index, count)
 
-Arr.splice([1, 2, 3, 4], 1, 2);
+Array.splice([1, 2, 3, 4], 1, 2);
 // => [2, 3]
 ```
 
@@ -511,7 +511,7 @@ Checks if two arrays have the same elements, order-independent.
 ```js
 // Arr.equal(arr1, arr2)
 
-Arr.equal([1, 2], [2, 1]);
+Array.equal([1, 2], [2, 1]);
 // => true
 ```
 
@@ -530,7 +530,7 @@ Checks if an array includes any of the provided values.
 ```js
 // Arr.includes(arr, val)
 
-Arr.includes(["a", "b", "c"], "b");
+Array.includes(["a", "b", "c"], "b");
 // => true
 ```
 
@@ -549,7 +549,7 @@ Checks if all values are present in the array.
 ```js
 // Arr.contains(arr, val)
 
-Arr.contains(["a", "b", "c"], ["a", "b"]);
+Array.contains(["a", "b", "c"], ["a", "b"]);
 // => true
 ```
 
@@ -568,7 +568,7 @@ Concatenates arrays into one.
 ```js
 // Arr.concat(arr, ...args)
 
-Arr.concat([1], [2, 3]);
+Array.concat([1], [2, 3]);
 // => [1, 2, 3]
 ```
 
@@ -587,7 +587,7 @@ Creates a deep clone of the array or object.
 ```js
 // Arr.clone(arr)
 
-Arr.clone([1, 2, { a: 3 }]);
+Array.clone([1, 2, { a: 3 }]);
 // => [1, 2, { a: 3 }]
 ```
 
@@ -605,7 +605,7 @@ Merges multiple arrays.
 ```js
 // Arr.merge(arr, ...args)
 
-Arr.merge([1], [2, 3]);
+Array.merge([1], [2, 3]);
 // => [1, 2, 3]
 ```
 
@@ -624,7 +624,7 @@ Pushes elements to the array.
 ```js
 // Arr.push(arr, ...args)
 
-Arr.push([1, 2], 3, 4);
+Array.push([1, 2], 3, 4);
 // => [1, 2, 3, 4]
 ```
 
@@ -643,7 +643,7 @@ Returns values from the first array not in the second.
 ```js
 // Arr.diff(arr, val)
 
-Arr.diff([1, 2, 3], [2, 3]);
+Array.diff([1, 2, 3], [2, 3]);
 // => [1]
 ```
 
@@ -662,7 +662,7 @@ Finds the intersection of multiple arrays.
 ```js
 // Arr.intersect(...args)
 
-Arr.intersect([1, 2], [2, 3]);
+Array.intersect([1, 2], [2, 3]);
 // => [2]
 ```
 
@@ -680,7 +680,7 @@ Splits an array into chunks.
 ```js
 // Arr.chunk(arr, chunk)
 
-Arr.chunk([1, 2, 3, 4], 2);
+Array.chunk([1, 2, 3, 4], 2);
 // => [[1, 2], [3, 4]]
 ```
 
@@ -699,7 +699,7 @@ Reduces array to a value using a callback.
 ```js
 // Arr.reduce(arr, callback, accumulator)
 
-Arr.reduce([1, 2, 3], (a, b) => a + b, 0);
+Array.reduce([1, 2, 3], (a, b) => a + b, 0);
 // => 6
 ```
 
@@ -719,7 +719,7 @@ Extracts nested values from objects in an array.
 ```js
 // Arr.extract(arr, path)
 
-Arr.extract([{ user: { id: 1 } }], 'user.id');
+Array.extract([{ user: { id: 1 } }], 'user.id');
 // => [1]
 ```
 
@@ -738,7 +738,7 @@ Applies a callback to each value.
 ```js
 // Arr.each(arr, callback)
 
-Arr.each([1, 2], n => n * 2);
+Array.each([1, 2], n => n * 2);
 // => [2, 4]
 ```
 
@@ -757,7 +757,7 @@ Maps each value using a callback.
 ```js
 // Arr.map(arr, callback)
 
-Arr.map([1, 2], n => n + 1);
+Array.map([1, 2], n => n + 1);
 // => [2, 3]
 ```
 
@@ -776,7 +776,7 @@ Recursively applies a callback to nested values.
 ```js
 // Arr.recursive(arr, key, callback)
 
-Arr.recursive([{ items: [{ val: 1 }] }], 'items', v => v);
+Array.recursive([{ items: [{ val: 1 }] }], 'items', v => v);
 // => [{ items: [{ val: 1 }] }]
 ```
 

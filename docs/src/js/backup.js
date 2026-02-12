@@ -1,6 +1,6 @@
 
 var GenerateItems = function (count, loop) {
-    return pi.Arr.each(pi.Arr.make(count), (index) => {
+    return pi.Array.each(pi.Array.make(count), (index) => {
 
         var item = {
             id: 'item-' + pi.UUID(), label: 'Item ' + index, image: 'https://picsum.photos/260/160.jpg?' + pi.UUID(), date: new Date,
@@ -65,7 +65,7 @@ let DemoPlugin = function (hook, vm) {
 
         let pattern = /```js\s\[demo]([^`]*)```/gm;
 
-        let globaljs = pi.Arr.each(markdown.match(pattern) || [], (text) => {
+        let globaljs = pi.Array.each(markdown.match(pattern) || [], (text) => {
             return text.replace(pattern, "$1");
         });
 

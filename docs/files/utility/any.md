@@ -14,13 +14,13 @@ Checks if a value is empty based on its type.
 ```js
 // Any.isEmpty(val)
 
-Any.isEmpty('');
+Mixed.isEmpty('');
 // => true
 
-Any.isEmpty([]);
+Mixed.isEmpty([]);
 // => true
 
-Any.isEmpty(0);
+Mixed.isEmpty(0);
 // => false
 ```
 
@@ -38,10 +38,10 @@ Checks if a value is strictly null.
 ```js
 // Any.isNull(val)
 
-Any.isNull(null);
+Mixed.isNull(null);
 // => true
 
-Any.isNull(undefined);
+Mixed.isNull(undefined);
 // => false
 ```
 
@@ -59,7 +59,7 @@ Checks if two values are equal with special handling for objects and DOM nodes.
 ```js
 // Any.isEqual(obj, val)
 
-Any.isEqual('test', 'test');
+Mixed.isEqual('test', 'test');
 // => true
 ```
 
@@ -78,7 +78,7 @@ Checks if a value is a string.
 ```js
 // Any.isString(val)
 
-Any.isString('test');
+Mixed.isString('test');
 // => true
 ```
 
@@ -96,10 +96,10 @@ Checks if a value is a number or numeric string.
 ```js
 // Any.isNumber(val)
 
-Any.isNumber(5);
+Mixed.isNumber(5);
 // => true
 
-Any.isNumber('123');
+Mixed.isNumber('123');
 // => true
 ```
 
@@ -117,10 +117,10 @@ Checks if a value is a boolean or boolean string.
 ```js
 // Any.isBool(val)
 
-Any.isBool(true);
+Mixed.isBool(true);
 // => true
 
-Any.isBool('false');
+Mixed.isBool('false');
 // => true
 ```
 
@@ -138,7 +138,8 @@ Checks if a value is a function.
 ```js
 // Any.isFunction(val)
 
-Any.isFunction(() => {});
+Mixed.isFunction(() => {
+});
 // => true
 ```
 
@@ -156,10 +157,10 @@ Checks if a value is an object.
 ```js
 // Any.isObject(val)
 
-Any.isObject({});
+Mixed.isObject({});
 // => true
 
-Any.isObject(null);
+Mixed.isObject(null);
 // => false
 ```
 
@@ -177,10 +178,10 @@ Checks if a value is a plain JavaScript object.
 ```js
 // Any.isPlain(val)
 
-Any.isPlain({});
+Mixed.isPlain({});
 // => true
 
-Any.isPlain([]);
+Mixed.isPlain([]);
 // => false
 ```
 
@@ -198,7 +199,7 @@ Checks if a value is an array.
 ```js
 // Any.isArray(val)
 
-Any.isArray([]);
+Mixed.isArray([]);
 // => true
 ```
 
@@ -216,7 +217,7 @@ Checks if a value is a Date object.
 ```js
 // Any.isDate(val)
 
-Any.isDate(new Date());
+Mixed.isDate(new Date());
 // => true
 ```
 
@@ -234,7 +235,7 @@ Converts a value to a string.
 ```js
 // Any.string(val)
 
-Any.string(123);
+Mixed.string(123);
 // => '123'
 ```
 
@@ -252,10 +253,10 @@ Converts a value to a number with fallback for invalid values.
 ```js
 // Any.number(val, fallback = NaN)
 
-Any.number('123');
+Mixed.number('123');
 // => 123
 
-Any.number('abc', 0);
+Mixed.number('abc', 0);
 // => 0
 ```
 
@@ -274,7 +275,7 @@ Converts a value to an integer.
 ```js
 // Any.integer(val)
 
-Any.integer('123');
+Mixed.integer('123');
 // => 123
 ```
 
@@ -292,10 +293,10 @@ Converts a value to a floating point number.
 ```js
 // Any.float(val)
 
-Any.float('12.5');
+Mixed.float('12.5');
 // => 12.5
 
-Any.float('12,5');
+Mixed.float('12,5');
 // => 12.5
 ```
 
@@ -313,10 +314,10 @@ Converts a value to a boolean.
 ```js
 // Any.bool(val)
 
-Any.bool('yes');
+Mixed.bool('yes');
 // => true
 
-Any.bool(0);
+Mixed.bool(0);
 // => false
 ```
 
@@ -334,7 +335,7 @@ Alias for bool method. Converts a value to a boolean.
 ```js
 // Any.boolean(val)
 
-Any.boolean('true');
+Mixed.boolean('true');
 // => true
 ```
 
@@ -352,7 +353,7 @@ Converts a value to a string or returns a fallback for empty values.
 ```js
 // Any.convertString(val, empty = '-')
 
-Any.convertString('', '-');
+Mixed.convertString('', '-');
 // => '-'
 ```
 
@@ -371,7 +372,7 @@ Converts a boolean value to a string representation.
 ```js
 // Any.convertBool(val, yes = 'Yes', no = 'No')
 
-Any.convertBool(true, 'Yes', 'No');
+Mixed.convertBool(true, 'Yes', 'No');
 // => 'Yes'
 ```
 
@@ -391,7 +392,7 @@ Alias for convertBool. Converts a boolean value to a string representation.
 ```js
 // Any.convertBoolean(val, yes = 'Yes', no = 'No')
 
-Any.convertBoolean(false, 'Yes', 'No');
+Mixed.convertBoolean(false, 'Yes', 'No');
 // => 'No'
 ```
 
@@ -411,7 +412,7 @@ Formats a date value with a specified format.
 ```js
 // Any.convertDatetime(val, format = 'YYYY-MM-DD hh:mm:ss', empty = '-')
 
-Any.convertDatetime(new Date(2023, 0, 1), 'MM/DD/YYYY');
+Mixed.convertDatetime(new Date(2023, 0, 1), 'MM/DD/YYYY');
 // => '01/01/2023'
 ```
 
@@ -431,7 +432,7 @@ Gets all values from an object.
 ```js
 // Any.vals(obj)
 
-Any.vals({ a: 1, b: 2 });
+Mixed.vals({ a: 1, b: 2 });
 // => [1, 2]
 ```
 
@@ -449,7 +450,7 @@ Gets all keys from an object.
 ```js
 // Any.keys(obj)
 
-Any.keys({ a: 1, b: 2 });
+Mixed.keys({ a: 1, b: 2 });
 // => ['a', 'b']
 ```
 
@@ -467,7 +468,7 @@ Executes a callback asynchronously on the next tick.
 ```js
 // Any.async(callback, ...args)
 
-Any.async(console.log, 'Hello');
+Mixed.async(console.log, 'Hello');
 // => Logs 'Hello' asynchronously
 ```
 
@@ -486,7 +487,7 @@ Executes a callback after a specified delay.
 ```js
 // Any.delay(callback, delay = 100, ...args)
 
-Any.delay(console.log, 500, 'Delayed');
+Mixed.delay(console.log, 500, 'Delayed');
 // => Logs 'Delayed' after 500ms
 ```
 
@@ -506,7 +507,7 @@ Creates a debounced version of a function.
 ```js
 // Any.debounce(callback, delay = 100, ref = null)
 
-const debouncedSearch = Any.debounce(searchFn, 300);
+const debouncedSearch = Mixed.debounce(searchFn, 300);
 ```
 
 **Arguments:**  
@@ -525,7 +526,7 @@ Creates a throttled version of a function.
 ```js
 // Any.throttle(callback, delay = 100, ref = null)
 
-const throttledScroll = Any.throttle(scrollHandler, 200);
+const throttledScroll = Mixed.throttle(scrollHandler, 200);
 ```
 
 **Arguments:**  
@@ -544,7 +545,7 @@ Limits a function to execute at a specific frame rate.
 ```js
 // Any.framerate(callback, rate = 30, ref = null)
 
-const animationFn = Any.framerate(updateAnimation, 60);
+const animationFn = Mixed.framerate(updateAnimation, 60);
 ```
 
 **Arguments:**  
@@ -563,7 +564,7 @@ Converts an object to FormData, handling nested objects and arrays.
 ```js
 // Any.form(obj)
 
-Any.form({ user: { name: 'John' } });
+Mixed.form({ user: { name: 'John' } });
 // => FormData with 'user[name]' field
 ```
 
