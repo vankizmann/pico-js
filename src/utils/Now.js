@@ -1,11 +1,11 @@
-import { Arr, Dom, Mix, Now, Num } from "#src/index.esm.js";
-import { PicoNowDefaultPlugin } from "#src/now/NowDefault.js";
-import { PicoNowFormatPlugin } from "#src/now/NowFormat.js";
-import { PicoNowMatchPlugin } from "#src/now/NowMatch.js";
-import { PicoNowGridPlugin } from "#src/now/NowGrid.js";
-import { PicoNowWalkerPlugin } from "#src/now/NowWalker.js";
-import { PicoNowRangePlugin } from "#src/now/NowRange.js";
-import { PicoNowHumanPlugin } from "#src/now/NowHuman.js";
+import { Arr, Dom, Mix, Now, Num } from "../index.esm.js";
+import { PicoNowDefaultPlugin } from "../now/NowDefault.js";
+import { PicoNowFormatPlugin } from "../now/NowFormat.js";
+import { PicoNowMatchPlugin } from "../now/NowMatch.js";
+import { PicoNowGridPlugin } from "../now/NowGrid.js";
+import { PicoNowWalkerPlugin } from "../now/NowWalker.js";
+import { PicoNowRangePlugin } from "../now/NowRange.js";
+import { PicoNowHumanPlugin } from "../now/NowHuman.js";
 
 export const PicoNowPlugins = [
     PicoNowDefaultPlugin,
@@ -20,13 +20,13 @@ export const PicoNowPlugins = [
 /**
  * @class PicoNow
  *
- * @typedef {import('#src/now/NowMatch.js').PicoNowMatchInstance} PicoNowMatchInstance
- * @typedef {import('#src/now/NowFormat.js').PicoNowFormatInstance} PicoNowFormatInstance
- * @typedef {import('#src/now/NowMatch.js').PicoNowMatchInstance} PicoNowMatchInstance
- * @typedef {import('#src/now/NowGrid.js').PicoNowGridInstance} PicoNowGridInstance
- * @typedef {import('#src/now/NowWalker.js').PicoNowWalkerInstance} PicoNowWalkerInstance
- * @typedef {import('#src/now/NowRange.js').PicoNowRangeInstance} PicoNowRangeInstance
- * @typedef {import('#src/now/NowHuman.js').PicoNowHumanInstance} PicoNowHumanInstance
+ * @typedef {import('../now/NowMatch.js').PicoNowMatchInstance} PicoNowMatchInstance
+ * @typedef {import('../now/NowFormat.js').PicoNowFormatInstance} PicoNowFormatInstance
+ * @typedef {import('../now/NowMatch.js').PicoNowMatchInstance} PicoNowMatchInstance
+ * @typedef {import('../now/NowGrid.js').PicoNowGridInstance} PicoNowGridInstance
+ * @typedef {import('../now/NowWalker.js').PicoNowWalkerInstance} PicoNowWalkerInstance
+ * @typedef {import('../now/NowRange.js').PicoNowRangeInstance} PicoNowRangeInstance
+ * @typedef {import('../now/NowHuman.js').PicoNowHumanInstance} PicoNowHumanInstance
  *
  * @extends PicoNowDefaultInstance
  * @extends PicoNowFormatInstance

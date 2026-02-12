@@ -1,4 +1,5 @@
-import { Mix, Now, Obj } from "#src/index.esm.js";
+import { Mix, Now, Obj } from "../index.esm.js";
+import { PicoNow } from "../utils/Now.js";
 
 /**
  * @memberof PicoNow
@@ -163,7 +164,8 @@ export class PicoNowMatchInstance
 }
 
 /**
- * @returns {typeof import('#src/utils/Now.js').PicoNow}
+ * @param {typeof PicoNow} self
+ * @returns {typeof PicoNow}
  */
 export const PicoNowMatchPlugin = function (self) {
 

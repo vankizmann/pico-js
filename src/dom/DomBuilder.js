@@ -1,4 +1,5 @@
-import { Arr, Dom, Mix, Obj } from "#src/index.esm.js";
+import { Arr, Dom, Mix, Obj } from "../index.esm.js";
+import { PicoDom } from "../utils/Dom.js";
 
 /**
  * @memberof PicoDom
@@ -52,7 +53,7 @@ export class PicoDomBuilderInstance
      * @example Dom.find("div").prepend("<span></span>")
      *
      * @param {any} value Prepend value
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     prepend(value)
     {
@@ -69,7 +70,7 @@ export class PicoDomBuilderInstance
      * @example Dom.find("span").prependTo("div")
      *
      * @param {any} value Target element
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     prependTo(value)
     {
@@ -86,7 +87,7 @@ export class PicoDomBuilderInstance
      * @example Dom.find("div").append("<span></span>")
      *
      * @param {any} value Append value
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     append(value)
     {
@@ -103,7 +104,7 @@ export class PicoDomBuilderInstance
      * @example Dom.find("span").appendTo("div")
      *
      * @param {any} value Target element
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     appendTo(value)
     {
@@ -120,7 +121,7 @@ export class PicoDomBuilderInstance
      * @example Dom.find("div").replace("<span></span>")
      *
      * @param {any} value Replacement value
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     replace(value)
     {
@@ -134,7 +135,8 @@ export class PicoDomBuilderInstance
 }
 
 /**
- * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ * @param {typeof PicoDom} self
+ * @returns {typeof PicoDom}
  */
 export const PicoDomBuilderPlugin = function (self) {
 

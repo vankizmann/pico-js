@@ -1,4 +1,4 @@
-import { Arr, For, Locale, Mix, Now, Str } from "#src/index.esm.js";
+import { Arr, For, Locale, Mix, Now, Str } from "../index.esm.js";
 
 export class PicoString
 {

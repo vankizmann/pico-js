@@ -1,4 +1,5 @@
-import { Arr, Mix, Num, Obj, Str } from "#src/index.esm.js";
+import { Arr, Mix, Num, Obj, Str } from "../index.esm.js";
+import { PicoNow } from "../utils/Now.js";
 
 /**
  * @memberof PicoNow
@@ -239,7 +240,8 @@ PicoNowGridInstance.prototype.getSeconds = function () {
 }
 
 /**
- * @returns {typeof import('#src/utils/Now.js').PicoNow}
+ * @param {typeof PicoNow} self
+ * @returns {typeof PicoNow}
  */
 export const PicoNowGridPlugin = function (self) {
 

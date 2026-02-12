@@ -1,4 +1,5 @@
-import { Arr, Mix, Obj } from "#src/index.esm.js";
+import { Arr, Mix, Obj } from "../index.esm.js";
+import { PicoFormat } from "../utils/Format.js";
 
 export const SLUG_CONVERT = [
     ['à', 'a'],
@@ -63,7 +64,8 @@ export class PicoFormatUrlStatic
 }
 
 /**
- * @returns {typeof import('#src/utils/Format.js').PicoFormat}
+ * @param {typeof PicoFormat} self
+ * @returns {typeof PicoFormat}
  */
 export const PicoFormatUrlPlugin = function (self) {
 

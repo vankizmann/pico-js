@@ -1,4 +1,4 @@
-import { Str, Event, For, Mix, Arr } from "#src/index.esm.js";
+import { Str, Event, For, Mix, Arr } from "../index.esm.js";
 export class PicoEvent
 {
     static $events = [];
@@ -65,7 +65,7 @@ export class PicoEvent
      * @example Event.fire("x", 1) // => Event
      *
      * @param {string} event Event name
-     * @param {...any} [args] Event args
+     * @param {...any} args Event args
      * @returns {typeof PicoEvent} Event class
      */
     static fire(event, ...args)

@@ -1,4 +1,4 @@
-import { Arr, For, Locale, Mix, Obj } from "#src/index.esm.js";
+import { Arr, For, Locale, Mix, Obj } from "../index.esm.js";
 
 export class PicoRoute
 {

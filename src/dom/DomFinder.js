@@ -1,4 +1,5 @@
-import { Arr, Mix, Obj, Dom } from "#src/index.esm.js";
+import { Arr, Mix, Obj, Dom } from "../index.esm.js";
+import { PicoDom } from "../utils/Dom.js";
 
 /**
  * @memberof PicoDom
@@ -209,7 +210,7 @@ export class PicoDomFinderInstance
      * @example Dom.find("div").sanatize(1)
      *
      * @param {number} [filter] Node type
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     sanatize(filter = 1)
     {
@@ -332,7 +333,7 @@ export class PicoDomFinderInstance
      * @example Dom.find("div").each((el) => console.log(el))
      *
      * @param {function} cb Callback fn
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     each(cb)
     {
@@ -346,7 +347,7 @@ export class PicoDomFinderInstance
      *
      * @param {function} cb Callback fn
      * @param {any} [boundry] Loop limit
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     loopParent(cb, boundry = null)
     {
@@ -651,7 +652,8 @@ PicoDomFinderInstance.prototype.getNot = () => {
 };
 
 /**
- * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ * @param {typeof PicoDom} self
+ * @returns {typeof PicoDom}
  */
 export const PicoDomFinderPlugin = function (self) {
 

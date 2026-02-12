@@ -1,4 +1,5 @@
-import { Arr, Dom, Mix, Obj } from "#src/index.esm.js";
+import { Arr, Dom, Mix, Obj } from "../index.esm.js";
+import { PicoDom } from "../utils/Dom.js";
 
 /**
  * @memberof PicoDom
@@ -314,7 +315,8 @@ PicoDomInviewInstance.prototype.inviewWidth = function (...args) {
 }
 
 /**
- * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ * @param {typeof PicoDom} self
+ * @returns {typeof PicoDom}
  */
 export const PicoDomInviewPlugin = function (self) {
 

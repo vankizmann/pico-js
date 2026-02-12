@@ -1,5 +1,5 @@
-import { Arr, Dom, Mix, Obj } from "#src/index.esm.js";
-
+import { Arr, Dom, Mix, Obj } from "../index.esm.js";
+import { PicoDom } from "../utils/Dom.js";
 
 /**
  * @memberof PicoDom
@@ -409,7 +409,7 @@ export class PicoDomRectangleInstance
      *
      * @param {function} cb Callback fn
      * @param {any} [boundry] Loop limit
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     loopOffset(cb, boundry = null)
     {
@@ -529,7 +529,7 @@ export class PicoDomRectangleInstance
      *
      * @param {any} [value] Scroll value
      * @param {any} [boundry] View boundry
-     * @returns {number|this} Value or instance
+     * @returns {number|PicoDom} Value or instance
      */
     scrollTop(value = null, boundry = null)
     {
@@ -551,7 +551,7 @@ export class PicoDomRectangleInstance
      *
      * @param {any} [value] Scroll value
      * @param {any} [boundry] View boundry
-     * @returns {number|this} Value or instance
+     * @returns {number|PicoDom} Value or instance
      */
     scrollLeft(value = null, boundry = null)
     {
@@ -639,7 +639,8 @@ PicoDomRectangleInstance.prototype.scrollLeftGlobal = function () {
 };
 
 /**
- * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ * @param {typeof PicoDom} self
+ * @returns {typeof PicoDom}
  */
 export const PicoDomRectanglePlugin = function (self) {
 

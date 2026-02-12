@@ -1,4 +1,5 @@
-import { Arr, Dom, For, Mix, Obj } from "#src/index.esm.js";
+import { Arr, Dom, For, Mix, Obj } from "../index.esm.js";
+import { PicoDom } from "../utils/Dom.js";
 
 /**
  * @memberof PicoDom
@@ -22,7 +23,7 @@ export class PicoDomAttributeInstance
      * @param {string} key Attr key
      * @param {any} [value] Attr value
      * @param {any} [fallback] Fallback value
-     * @returns {any|this} Attr value or instance
+     * @returns {any|PicoDom} Attr value or instance
      */
     attr(key, value = undefined, fallback = null)
     {
@@ -61,7 +62,7 @@ export class PicoDomAttributeInstance
      * @param {string} key Data key
      * @param {any} [value] Data value
      * @param {any} [fallback] Fallback value
-     * @returns {any|this} Data value or instance
+     * @returns {any|PicoDom} Data value or instance
      */
     data(key, value = undefined, fallback = null)
     {
@@ -103,7 +104,7 @@ export class PicoDomAttributeInstance
      *
      * @param {any} [value] Style value
      * @param {boolean} [combine] Combine style
-     * @returns {any|this} Style or instance
+     * @returns {any|PicoDom} Style or instance
      */
     style(value = undefined, combine = true)
     {
@@ -141,7 +142,7 @@ export class PicoDomAttributeInstance
      *
      * @param {any} [value] Class value
      * @param {boolean} [combine] Combine classes
-     * @returns {any|this} Classes or instance
+     * @returns {any|PicoDom} Classes or instance
      */
     class(value = undefined, combine = false)
     {
@@ -178,7 +179,7 @@ export class PicoDomAttributeInstance
      * @example Dom.find("div").html("<span></span>")
      *
      * @param {any} [html] HTML content
-     * @returns {string|this} HTML or instance
+     * @returns {string|PicoDom} HTML or instance
      */
     html(html = undefined)
     {
@@ -238,7 +239,7 @@ export class PicoDomAttributeInstance
      * @example Dom.find("div").addClass("active")
      *
      * @param {any} cls Class name
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     addClass(cls)
     {
@@ -269,7 +270,7 @@ export class PicoDomAttributeInstance
      * @example Dom.find("div").remClass("active")
      *
      * @param {any} cls Class name
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     remClass(cls)
     {
@@ -300,7 +301,7 @@ export class PicoDomAttributeInstance
      * @example Dom.find("div").toggleClass("active")
      *
      * @param {any} cls Class name
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     toggleClass(cls)
     {
@@ -322,7 +323,7 @@ export class PicoDomAttributeInstance
      *
      * @param {any} cls Class name
      * @param {boolean} [state] Target state
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     stateClass(cls, state = true)
     {
@@ -356,7 +357,8 @@ PicoDomAttributeInstance.prototype.removeClass = function (...args) {
 };
 
 /**
- * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ * @param {typeof PicoDom} self
+ * @returns {typeof PicoDom}
  */
 export const PicoDomAttributePlugin = function (self) {
 

@@ -1,4 +1,4 @@
-import { Arr, Num, Event, Mix, Obj } from "#src/index.esm.js";
+import { Arr, Num, Event, Mix, Obj } from "../index.esm.js";
 
 export class PicoData
 {

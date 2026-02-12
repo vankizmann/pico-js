@@ -1,4 +1,5 @@
-import { Mix, Obj } from "#src/index.esm.js";
+import { Mix, Obj } from "../index.esm.js";
+import { PicoFormat } from "../utils/Format.js";
 
 export const TYPE_PARSERS = [
     { // null
@@ -144,7 +145,8 @@ export class PicoFormatParserStatic
 }
 
 /**
- * @returns {typeof import('#src/utils/Format.js').PicoFormat}
+ * @param {typeof PicoFormat} self
+ * @returns {typeof PicoFormat}
  */
 export const PicoFormatParserPlugin = function (self) {
 

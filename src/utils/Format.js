@@ -1,8 +1,8 @@
-import { PicoFormatParserPlugin } from "#src/format/FormatParser.js";
-import { PicoFormatParamPlugin } from "#src/format/FormatParam.js";
-import { PicoFormatOptionPlugin } from "#src/format/FormatOption.js";
-import { PicoFormatUrlPlugin } from "#src/format/FormatUrl.js";
-import { PicoFormatFilePlugin } from "#src/format/FormatFile.js";
+import { PicoFormatParserPlugin } from "../format/FormatParser.js";
+import { PicoFormatParamPlugin } from "../format/FormatParam.js";
+import { PicoFormatOptionPlugin } from "../format/FormatOption.js";
+import { PicoFormatUrlPlugin } from "../format/FormatUrl.js";
+import { PicoFormatFilePlugin } from "../format/FormatFile.js";
 
 export const PicoFormatPlugins = [
     PicoFormatParserPlugin,
@@ -15,11 +15,11 @@ export const PicoFormatPlugins = [
 /**
  * @class PicoFormat
  *
- * @typedef {import('#src/format/FormatParser.js').PicoFormatParserStatic} PicoFormatParserStatic
- * @typedef {import('#src/format/FormatParam.js').PicoFormatParamStatic} PicoFormatParamStatic
- * @typedef {import('#src/format/FormatOption.js').PicoFormatOptionStatic} PicoFormatOptionStatic
- * @typedef {import('#src/format/FormatUrl.js').PicoFormatUrlStatic} PicoFormatUrlStatic
- * @typedef {import('#src/format/FormatFile.js').PicoFormatFileStatic} PicoFormatFileStatic
+ * @typedef {import('../format/FormatParser.js').PicoFormatParserStatic} PicoFormatParserStatic
+ * @typedef {import('../format/FormatParam.js').PicoFormatParamStatic} PicoFormatParamStatic
+ * @typedef {import('../format/FormatOption.js').PicoFormatOptionStatic} PicoFormatOptionStatic
+ * @typedef {import('../format/FormatUrl.js').PicoFormatUrlStatic} PicoFormatUrlStatic
+ * @typedef {import('../format/FormatFile.js').PicoFormatFileStatic} PicoFormatFileStatic
  *
  * @mixes PicoFormatParserStatic
  * @mixes PicoFormatParamStatic

@@ -1,4 +1,4 @@
-import { For, Arr, Now, Mix } from "#src/index.esm.js";
+import { For, Arr, Now, Mix } from "../index.esm.js";
 
 export const COOKIE_REGEX = {
     entry: /(?<=^|;)\s*(?<key>.*?)\s*=\s*(?<value>[^;$]+)/g

@@ -1,4 +1,5 @@
-import { Arr, Hash, Mix, Obj, Dom } from "#src/index.esm.js";
+import { Arr, Hash, Mix, Obj, Dom } from "../index.esm.js";
+import { PicoDom } from "../utils/Dom.js";
 
 /**
  * @memberof PicoDom
@@ -26,7 +27,7 @@ export class PicoDomEventInstance
      * @param {string} [selector] Event selector
      * @param {boolean} [pause] Pause listener
      * @param {any} [options] Listener options
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     bind(el, event, cb, selector = null, pause = false, options = {})
     {
@@ -52,7 +53,7 @@ export class PicoDomEventInstance
      * @param {string} event Event name
      * @param {string} [selector] Event selector
      * @param {any} [options] Listener options
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     unbind(el, event, selector = null, options = {})
     {
@@ -91,7 +92,7 @@ export class PicoDomEventInstance
      * @param {any} [options] Listener options
      * @param {boolean} [pause] Pause listener
      * @param {string} [selector] Event selector
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     on(event, cb, options = {}, pause = false, selector = null)
     {
@@ -122,7 +123,7 @@ export class PicoDomEventInstance
      * @param {any} event Event name
      * @param {string} [selector] Event selector
      * @param {any} [options] Listener options
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     off(event, selector = null, options = {})
     {
@@ -149,7 +150,7 @@ export class PicoDomEventInstance
      * @param {any} event Event name
      * @param {function} cb Callback fn
      * @param {any} [options] Listener options
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     once(event, cb, options = {})
     {
@@ -172,7 +173,7 @@ export class PicoDomEventInstance
      * @param {function} cb Callback fn
      * @param {any} [options] Listener options
      * @param {boolean} [pause] Pause listener
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     live(event, selector, cb, options = {}, pause = false)
     {
@@ -198,7 +199,7 @@ export class PicoDomEventInstance
      * @example Dom.find("div").fire("click")
      *
      * @param {string} event Event name
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     fire(event)
     {
@@ -235,7 +236,8 @@ PicoDomEventInstance.prototype.unpause = function () {
 };
 
 /**
- * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ * @param {typeof PicoDom} self
+ * @returns {typeof PicoDom}
  */
 export const PicoDomEventPlugin = function (self) {
 
