@@ -1,4 +1,4 @@
-import { Str, Hash } from "../index.esm.js";
+import { Str } from "../index.esm.js";
 
 /**
  * @var {Array<string>} RADIX_NUMBER Radix from 0 to 9
@@ -96,7 +96,7 @@ export class PicoHash
         let hash = '';
 
         for ( let i = 0; i < length; i ++ ) {
-            hash += Hash.radix(radix);
+            hash += this.radix(radix);
         }
 
         for ( const k of Object.keys(map) ) {
@@ -121,9 +121,9 @@ export class PicoHash
         // Use only selected chars from the radix store
         for ( let i = 0; i < 31; i ++ ) {
             if ( i === 15 ) {
-                hash += Hash.radix(RADIX_UP19.length, RADIX_UP19);
+                hash += this.radix(RADIX_UP19.length, RADIX_UP19);
             } else {
-                hash += Hash.radix(RADIX_UUID.length, RADIX_UUID);
+                hash += this.radix(RADIX_UUID.length, RADIX_UUID);
             }
         }
 
@@ -153,7 +153,7 @@ export class PicoHash
         let hash = '';
 
         for ( let i = 0; i < length; i ++ ) {
-            hash += Hash.radix(radix.length, radix);
+            hash += this.radix(radix.length, radix);
         }
 
         return hash;

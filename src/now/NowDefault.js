@@ -396,7 +396,7 @@ export class PicoNowDefaultInstance
 /**
  * @see PicoNow.add
  */
-PicoNowGridInstance.prototype.addSecond = function (value) {
+PicoNowDefaultInstance.prototype.addSecond = function (value) {
     console.warn('Now.addSecond() is deprecated, use Now.add(value, \'second\') instead.');
     return this.add(value, 'second');
 }
@@ -404,7 +404,7 @@ PicoNowGridInstance.prototype.addSecond = function (value) {
 /**
  * @see PicoNow.sub
  */
-PicoNowGridInstance.prototype.subSecond = function (value) {
+PicoNowDefaultInstance.prototype.subSecond = function (value) {
     console.warn('Now.subSecond() is deprecated, use Now.sub(value, \'second\') instead.');
     return this.sub(value, 'second');
 }
@@ -412,7 +412,7 @@ PicoNowGridInstance.prototype.subSecond = function (value) {
 /**
  * @see PicoNow.add
  */
-PicoNowGridInstance.prototype.addMinute = function (value) {
+PicoNowDefaultInstance.prototype.addMinute = function (value) {
     console.warn('Now.addMinute() is deprecated, use Now.add(value, \'minute\') instead.');
     return this.add(value, 'minute');
 }
@@ -420,7 +420,7 @@ PicoNowGridInstance.prototype.addMinute = function (value) {
 /**
  * @see PicoNow.sub
  */
-PicoNowGridInstance.prototype.subMinute = function (value) {
+PicoNowDefaultInstance.prototype.subMinute = function (value) {
     console.warn('Now.subMinute() is deprecated, use Now.sub(value, \'minute\') instead.');
     return this.sub(value, 'minute');
 }
@@ -428,7 +428,7 @@ PicoNowGridInstance.prototype.subMinute = function (value) {
 /**
  * @see PicoNow.add
  */
-PicoNowGridInstance.prototype.addHour = function (value) {
+PicoNowDefaultInstance.prototype.addHour = function (value) {
     console.warn('Now.addHour() is deprecated, use Now.add(value, \'hour\') instead.');
     return this.add(value, 'hour');
 }
@@ -436,7 +436,7 @@ PicoNowGridInstance.prototype.addHour = function (value) {
 /**
  * @see PicoNow.sub
  */
-PicoNowGridInstance.prototype.subHour = function (value) {
+PicoNowDefaultInstance.prototype.subHour = function (value) {
     console.warn('Now.subHour() is deprecated, use Now.sub(value, \'hour\') instead.');
     return this.sub(value, 'hour');
 }
@@ -444,7 +444,7 @@ PicoNowGridInstance.prototype.subHour = function (value) {
 /**
  * @see PicoNow.add
  */
-PicoNowGridInstance.prototype.addDates = function (value) {
+PicoNowDefaultInstance.prototype.addDates = function (value) {
     console.warn('Now.addDates() is deprecated, use Now.add(value, \'date\') instead.');
     return this.add(value, 'date');
 }
@@ -452,7 +452,7 @@ PicoNowGridInstance.prototype.addDates = function (value) {
 /**
  * @see PicoNow.sub
  */
-PicoNowGridInstance.prototype.subDates = function (value) {
+PicoNowDefaultInstance.prototype.subDates = function (value) {
     console.warn('Now.subDates() is deprecated, use Now.sub(value, \'date\') instead.');
     return this.sub(value, 'date');
 }
@@ -460,7 +460,7 @@ PicoNowGridInstance.prototype.subDates = function (value) {
 /**
  * @see PicoNow.add
  */
-PicoNowGridInstance.prototype.addMonths = function (value) {
+PicoNowDefaultInstance.prototype.addMonths = function (value) {
     console.warn('Now.addMonths() is deprecated, use Now.add(value, \'month\') instead.');
     return this.add(value, 'month');
 }
@@ -468,7 +468,7 @@ PicoNowGridInstance.prototype.addMonths = function (value) {
 /**
  * @see PicoNow.sub
  */
-PicoNowGridInstance.prototype.subMonths = function (value) {
+PicoNowDefaultInstance.prototype.subMonths = function (value) {
     console.warn('Now.subMonths() is deprecated, use Now.sub(value, \'month\') instead.');
     return this.sub(value, 'month');
 }
@@ -476,7 +476,7 @@ PicoNowGridInstance.prototype.subMonths = function (value) {
 /**
  * @see PicoNow.add
  */
-PicoNowGridInstance.prototype.addYears = function (value) {
+PicoNowDefaultInstance.prototype.addYears = function (value) {
     console.warn('Now.addYears() is deprecated, use Now.add(value, \'year\') instead.');
     return this.add(value, 'year');
 }
@@ -484,7 +484,7 @@ PicoNowGridInstance.prototype.addYears = function (value) {
 /**
  * @see PicoNow.sub
  */
-PicoNowGridInstance.prototype.subYears = function (value) {
+PicoNowDefaultInstance.prototype.subYears = function (value) {
     console.warn('Now.subYears() is deprecated, use Now.sub(value, \'year\') instead.');
     return this.sub(value, 'year');
 }
@@ -492,7 +492,7 @@ PicoNowGridInstance.prototype.subYears = function (value) {
 /**
  * @see PicoNow.add
  */
-PicoNowGridInstance.prototype.addDecades = function (value) {
+PicoNowDefaultInstance.prototype.addDecades = function (value) {
     console.warn('Now.addDecades() is deprecated, use Now.grid(10 * value, \'year\') instead.');
     return this.add(10 * value, 'year');
 }
@@ -500,7 +500,7 @@ PicoNowGridInstance.prototype.addDecades = function (value) {
 /**
  * @see PicoNow.sub
  */
-PicoNowGridInstance.prototype.subDecades = function (value) {
+PicoNowDefaultInstance.prototype.subDecades = function (value) {
     console.warn('Now.subDecades() is deprecated, use Now.grid(10 * value, \'year\') instead.');
     return this.sub(10 * value, 'year');
 }
@@ -508,7 +508,7 @@ PicoNowGridInstance.prototype.subDecades = function (value) {
 /**
  * @see PicoNow.day
  */
-PicoNowGridInstance.prototype.humanDay = function () {
+PicoNowDefaultInstance.prototype.humanDay = function () {
     console.warn('Now.humanDay() is deprecated, use Now.day() instead.');
     return this.day();
 }
@@ -516,7 +516,7 @@ PicoNowGridInstance.prototype.humanDay = function () {
 /**
  * @see PicoNow.month
  */
-PicoNowGridInstance.prototype.humanMonth = function () {
+PicoNowDefaultInstance.prototype.humanMonth = function () {
     console.warn('Now.humanMonth() is deprecated, use Now.month() instead.');
     return this.month();
 }

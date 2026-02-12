@@ -1,13 +1,33 @@
-import { default as PicoRunner } from "./utils/Runner.js";
-import { default as PicoString } from "./utils/String.js";
-import { default as PicoNumber } from "./utils/Number.js";
-import { default as PicoArray } from "./utils/Array.js";
-import { default as PicoObject } from "./utils/Object.js";
-import { default as PicoMixed } from "./utils/Mixed.js";
-import { default as PicoHash } from "./utils/Hash.js";
-import { default as PicoEvent } from "./utils/Event.js";
-import { default as PicoLocale } from "./utils/Locale.js";
-import { default as PicoCookie } from "./utils/Cookie.js";
+import { PicoRunner, default as Run } from "./utils/Runner.js";
+import { PicoString, default as Str } from "./utils/String.js";
+import { PicoNumber, default as Num } from "./utils/Number.js";
+import { PicoArray, default as Arr } from "./utils/Array.js";
+import { PicoObject, default as Obj } from "./utils/Object.js";
+import { PicoMixed, default as Mix } from "./utils/Mixed.js";
+import { PicoHash, default as Hash } from "./utils/Hash.js";
+import { PicoEvent, default as Event } from "./utils/Event.js";
+import { PicoLocale, default as Locale } from "./utils/Locale.js";
+import { PicoCookie, default as Cookie } from "./utils/Cookie.js";
+
+/**
+ * @type {typeof PicoDom}
+ */
+const Dom = DomBuilder();
+
+/**
+ * @type {typeof PicoNow}
+ */
+const Now = NowBuilder();
+
+/**
+ * @type {typeof PicoFormat}
+ */
+const For = ForBuilder();
+
+export {
+    Dom, Now, For, Run, Str, Num, Arr, Obj, Mix, Hash, Event, Locale, Cookie
+}
+
 import { PicoDom, default as DomBuilder } from "./utils/Dom.js";
 import { PicoNow, default as NowBuilder } from "./utils/Now.js";
 import { PicoFormat, default as ForBuilder } from "./utils/Format.js";
@@ -32,72 +52,6 @@ export {
 }
 
 /**
- * @type {typeof PicoDom}
- */
-export const Dom = DomBuilder();
-
-/**
- * @type {typeof PicoNow}
- */
-export const Now = NowBuilder();
-
-/**
- * @type {typeof PicoFormat}
- */
-export const For = ForBuilder();
-
-/**
- * @type {typeof PicoRunner}
- */
-export const Run = PicoRunner;
-
-/**
- * @type {typeof PicoString}
- */
-export const Str = PicoString;
-
-/**
- * @type {typeof PicoNumber}
- */
-export const Num = PicoNumber;
-
-/**
- * @type {typeof PicoArray}
- */
-export const Arr = PicoArray;
-
-/**
- * @type {typeof PicoObject}
- */
-export const Obj = PicoObject;
-
-/**
- * @type {typeof PicoMixed}
- */
-export const Mix = PicoMixed;
-
-/**
- * @type {typeof PicoHash}
- */
-export const Hash = PicoHash;
-
-/**
- * @type {typeof PicoEvent}
- */
-export const Event = PicoEvent;
-
-/**
- * @type {typeof PicoLocale}
- */
-export const Locale = PicoLocale;
-
-/**
- * @type {typeof PicoCookie}
- */
-export const Cookie = PicoCookie;
-
-
-/**
  * @type {typeof PicoMixed}
  */
 export const Any = new Proxy({}, {
@@ -112,5 +66,5 @@ export const Any = new Proxy({}, {
  */
 export const UUID = function () {
     console.warn('UUID() is deprecated, use Hash.make() instead.');
-    return PicoHash.make();
+    return Hash.make();
 };

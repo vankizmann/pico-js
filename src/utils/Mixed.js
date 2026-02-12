@@ -1,4 +1,4 @@
-import { Arr, go, Mix, Run, Now, Locale, Str, Obj } from "../index.esm.js";
+import { go, Arr, Mix, Run, Now, Locale, Str, Obj } from "../index.esm.js";
 
 export const MIX_REGEX = {
     'iso': /^\d{4}-\d{2}-\d{2}[T\s]\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/,
