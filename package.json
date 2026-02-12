@@ -1,6 +1,6 @@
 {
     "name": "@kizmann/pico-js",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "license": "MIT",
     "type": "module",
     "private": false,
@@ -9,6 +9,12 @@
     "main": "src/index.esm.js",
     "unpkg": "dist/pico-js.browser.js",
     "types": "types/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./types/index.d.ts",
+            "import": "./src/index.esm.js"
+        }
+    },
     "imports": {
         "#src/*": "./src/*"
     },

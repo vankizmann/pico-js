@@ -3,6 +3,8 @@
         "target": "ESNext",
         "module": "NodeNext",
         "moduleResolution": "nodenext",
+        "removeComments": false,
+        "stripInternal": false,
         "allowJs": true,
         "declaration": true,
         "emitDeclarationOnly": true,
