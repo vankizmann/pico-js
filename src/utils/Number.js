@@ -1,4 +1,4 @@
-import { Mix, Num, Arr, Hash, Str, Obj } from "#src/index.esm.js";
+import { Mix, Num, Arr, Hash, Str, Obj } from "../index.esm.js";
 
 export class PicoNumber
 {

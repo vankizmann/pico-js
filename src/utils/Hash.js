@@ -1,4 +1,4 @@
-import { Str, Hash } from "#src/index.esm.js";
+import { Str, Hash } from "../index.esm.js";
 
 /**
  * @var {Array<string>} RADIX_NUMBER Radix from 0 to 9

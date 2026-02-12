@@ -1,4 +1,5 @@
-import { Run, Mix, Obj, Dom } from "#src/index.esm.js";
+import { Run, Mix, Obj, Dom } from "../index.esm.js";
+import { PicoDom } from "../utils/Dom.js";
 
 /**
  * @memberof PicoDom
@@ -55,7 +56,7 @@ export class PicoDomGlobalStatic
      * @param {function} cb Callback fn
      * @param {number} [delay] Execution delay
      * @param {number} [limit] Wait limit
-     * @returns {this} Static class
+     * @returns {PicoDom} Static class
      */
     static ready(cb, delay = 0, limit = 6000)
     {
@@ -88,7 +89,7 @@ export class PicoDomGlobalStatic
      * @param {function} cb Callback fn
      * @param {number} [delay] Execution delay
      * @param {number} [limit] Wait limit
-     * @returns {this} Static class
+     * @returns {PicoDom} Static class
      */
     static complete(cb, delay = 0, limit = 6000)
     {
@@ -156,7 +157,7 @@ export class PicoDomGlobalInstance
      *
      * @param {function} cb Callback fn
      * @param {number} [limit] Wait limit
-     * @returns {this} Current instance
+     * @returns {PicoDom} Current instance
      */
     loaded(cb, limit = 6000)
     {
@@ -175,7 +176,8 @@ export class PicoDomGlobalInstance
 }
 
 /**
- * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ * @param {typeof PicoDom} self
+ * @returns {typeof PicoDom}
  */
 export const PicoDomGlobalPlugin = function (self) {
 

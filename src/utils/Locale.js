@@ -1,4 +1,4 @@
-import { Mix, Obj, Locale } from "#src/index.esm.js";
+import { Mix, Obj, Locale } from "../index.esm.js";
 
 export class PicoLocale
 {

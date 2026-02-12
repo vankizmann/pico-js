@@ -1,4 +1,5 @@
-import { Mix, Obj, Num } from "#src/index.esm.js";
+import { Mix, Obj, Num } from "../index.esm.js";
+import { PicoFormat } from "../utils/Format.js";
 
 export const FILE_UNITS = [
     'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'
@@ -42,7 +43,8 @@ export class PicoFormatFileStatic
 }
 
 /**
- * @returns {typeof import('#src/utils/Format.js').PicoFormat}
+ * @param {typeof PicoFormat} self
+ * @returns {typeof PicoFormat}
  */
 export const PicoFormatFilePlugin = function (self) {
 

@@ -1,14 +1,14 @@
-import { Arr, Mix, Dom } from "#src/index.esm.js";
-import { PicoDomFinderPlugin } from "#src/dom/DomFinder.js";
-import { PicoDomFormPlugin } from "#src/dom/DomForm.js";
-import { PicoDomEventPlugin } from "#src/dom/DomEvent.js";
-import { PicoDomBuilderPlugin } from "#src/dom/DomBuilder.js";
-import { PicoDomGlobalPlugin } from "#src/dom/DomGlobal.js";
-import { PicoDomRectanglePlugin } from "#src/dom/DomRectangle.js";
-import { PicoDomAttributePlugin } from "#src/dom/DomAttribute.js";
-import { PicoDomInviewPlugin } from "#src/dom/DomInview.js";
-import { PicoDomMetaPlugin } from "#src/dom/DomMeta.js";
-import { PicoDomObserverPlugin } from "#src/dom/DomObserver.js";
+import { Arr, Mix, Dom } from "../index.esm.js";
+import { PicoDomFinderPlugin } from "../dom/DomFinder.js";
+import { PicoDomFormPlugin } from "../dom/DomForm.js";
+import { PicoDomEventPlugin } from "../dom/DomEvent.js";
+import { PicoDomBuilderPlugin } from "../dom/DomBuilder.js";
+import { PicoDomGlobalPlugin } from "../dom/DomGlobal.js";
+import { PicoDomRectanglePlugin } from "../dom/DomRectangle.js";
+import { PicoDomAttributePlugin } from "../dom/DomAttribute.js";
+import { PicoDomInviewPlugin } from "../dom/DomInview.js";
+import { PicoDomMetaPlugin } from "../dom/DomMeta.js";
+import { PicoDomObserverPlugin } from "../dom/DomObserver.js";
 
 export const PicoDomPlugins = [
     PicoDomFinderPlugin,
@@ -26,23 +26,23 @@ export const PicoDomPlugins = [
 /**
  * @class PicoDom
  *
- * @typedef {import('#src/dom/DomFinder.js').PicoDomFinderInstance} PicoDomFinderInstance
- * @typedef {import('#src/dom/DomGlobal.js').PicoDomGlobalStatic} PicoDomGlobalStatic
- * @typedef {import('#src/dom/DomGlobal.js').PicoDomGlobalInstance} PicoDomGlobalInstance
- * @typedef {import('#src/dom/DomEvent.js').PicoDomEventStatic} PicoDomEventStatic
- * @typedef {import('#src/dom/DomEvent.js').PicoDomEventInstance} PicoDomEventInstance
- * @typedef {import('#src/dom/DomBuilder.js').PicoDomBuilderStatic} PicoDomBuilderStatic
- * @typedef {import('#src/dom/DomBuilder.js').PicoDomBuilderInstance} PicoDomBuilderInstance
- * @typedef {import('#src/dom/DomRectangle.js').PicoDomRectangleStatic} PicoDomRectangleStatic
- * @typedef {import('#src/dom/DomRectangle.js').PicoDomRectangleInstance} PicoDomRectangleInstance
- * @typedef {import('#src/dom/DomAttribute.js').PicoDomAttributeStatic} PicoDomAttributeStatic
- * @typedef {import('#src/dom/DomAttribute.js').PicoDomAttributeInstance} PicoDomAttributeInstance
- * @typedef {import('#src/dom/DomInview.js').PicoDomInviewStatic} PicoDomInviewStatic
- * @typedef {import('#src/dom/DomInview.js').PicoDomInviewInstance} PicoDomInviewInstance
- * @typedef {import('#src/dom/DomMeta.js').PicoDomMetaStatic} PicoDomMetaStatic
- * @typedef {import('#src/dom/DomMeta.js').PicoDomMetaInstance} PicoDomMetaInstance
- * @typedef {import('#src/dom/DomObserver.js').PicoDomObserverStatic} PicoDomObserverStatic
- * @typedef {import('#src/dom/DomObserver.js').PicoDomObserverInstance} PicoDomObserverInstance
+ * @typedef {import('../dom/DomFinder.js').PicoDomFinderInstance} PicoDomFinderInstance
+ * @typedef {import('../dom/DomGlobal.js').PicoDomGlobalStatic} PicoDomGlobalStatic
+ * @typedef {import('../dom/DomGlobal.js').PicoDomGlobalInstance} PicoDomGlobalInstance
+ * @typedef {import('../dom/DomEvent.js').PicoDomEventStatic} PicoDomEventStatic
+ * @typedef {import('../dom/DomEvent.js').PicoDomEventInstance} PicoDomEventInstance
+ * @typedef {import('../dom/DomBuilder.js').PicoDomBuilderStatic} PicoDomBuilderStatic
+ * @typedef {import('../dom/DomBuilder.js').PicoDomBuilderInstance} PicoDomBuilderInstance
+ * @typedef {import('../dom/DomRectangle.js').PicoDomRectangleStatic} PicoDomRectangleStatic
+ * @typedef {import('../dom/DomRectangle.js').PicoDomRectangleInstance} PicoDomRectangleInstance
+ * @typedef {import('../dom/DomAttribute.js').PicoDomAttributeStatic} PicoDomAttributeStatic
+ * @typedef {import('../dom/DomAttribute.js').PicoDomAttributeInstance} PicoDomAttributeInstance
+ * @typedef {import('../dom/DomInview.js').PicoDomInviewStatic} PicoDomInviewStatic
+ * @typedef {import('../dom/DomInview.js').PicoDomInviewInstance} PicoDomInviewInstance
+ * @typedef {import('../dom/DomMeta.js').PicoDomMetaStatic} PicoDomMetaStatic
+ * @typedef {import('../dom/DomMeta.js').PicoDomMetaInstance} PicoDomMetaInstance
+ * @typedef {import('../dom/DomObserver.js').PicoDomObserverStatic} PicoDomObserverStatic
+ * @typedef {import('../dom/DomObserver.js').PicoDomObserverInstance} PicoDomObserverInstance
  *
  * @mixes PicoDomFinderStatic
  * @mixes PicoDomGlobalStatic

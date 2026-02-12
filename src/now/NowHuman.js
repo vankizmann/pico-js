@@ -1,4 +1,5 @@
-import { Arr, Locale, Mix, Num, Obj, Str } from "#src/index.esm.js";
+import { Arr, Locale, Mix, Num, Obj, Str } from "../index.esm.js";
+import { PicoNow } from "../utils/Now.js";
 
 export const NOW_HUMAN_DAYS = [
     'Sunday',
@@ -106,7 +107,8 @@ export class PicoNowHumanInstance
 }
 
 /**
- * @returns {typeof import('#src/utils/Now.js').PicoNow}
+ * @param {typeof PicoNow} self
+ * @returns {typeof PicoNow}
  */
 export const PicoNowHumanPlugin = function (self) {
 

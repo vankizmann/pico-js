@@ -71,7 +71,7 @@ export class PicoElement
      *
      * @param {string} key Alias key
      * @param {any} instance Class instance
-     * @returns {this} Current class
+     * @returns {PicoElement} Current class
      */
     static alias(key, instance)
     {
@@ -88,7 +88,7 @@ export class PicoElement
      * @param {string} key Alias key
      * @param {any} selector Dom selector
      * @param {any} [options] Init options
-     * @returns {this} Current class
+     * @returns {PicoElement} Current class
      */
     static bind(key, selector, options = {})
     {
@@ -135,7 +135,7 @@ export class PicoElement
      * @param {string} key Alias key
      * @param {any} selector Dom selector
      * @param {any} [options] Init options
-     * @returns {this} Current class
+     * @returns {PicoElement} Current class
      */
     static unbind(key, selector, options = {})
     {
@@ -175,7 +175,7 @@ export class PicoElement
      *
      * @param {string} key Alias key
      * @param {boolean} [plain] Plain options
-     * @returns {this} Current class
+     * @returns {PicoElement} Current class
      */
     static observe(key, plain = false)
     {

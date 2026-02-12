@@ -1,4 +1,5 @@
-import { Arr, Mix, Obj, Dom, Locale } from "#src/index.esm.js";
+import { Arr, Mix, Obj, Dom, Locale } from "../index.esm.js";
+import { PicoDom } from "../utils/Dom.js";
 
 /**
  * @memberof PicoDom
@@ -14,7 +15,7 @@ export class PicoDomMetaStatic
      *
      * @param {string} value New title
      * @param {string} [glue] Title glue
-     * @returns {this} Static class
+     * @returns {PicoDom} Static class
      */
     static setMetaTitle(value, glue = ':value - :title')
     {
@@ -48,7 +49,8 @@ export class PicoDomMetaInstance
 }
 
 /**
- * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ * @param {typeof PicoDom} self
+ * @returns {typeof PicoDom}
  */
 export const PicoDomMetaPlugin = function (self) {
 

@@ -1,4 +1,5 @@
-import { Arr, Mix, Now, Num, Obj, Str } from "#src/index.esm.js";
+import { Arr, Mix, Now, Num, Obj, Str } from "../index.esm.js";
+import { PicoNow } from "../utils/Now.js";
 
 export const NOW_MODIFY = {
     'second': /([+-])([0-9]+)\s?seconds?/i,
@@ -521,7 +522,8 @@ PicoNowGridInstance.prototype.humanMonth = function () {
 }
 
 /**
- * @returns {typeof import('#src/utils/Now.js').PicoNow}
+ * @param {typeof PicoNow} self
+ * @returns {typeof PicoNow}
  */
 export const PicoNowDefaultPlugin = function (self) {
 

@@ -1,4 +1,4 @@
-import { Arr, Hash, Mix } from "#src/index.esm.js";
+import { Arr, Hash, Mix } from "../index.esm.js";
 
 export class PicoRunner
 {
@@ -120,7 +120,7 @@ export class PicoRunner
      * @example Run.frame(() => {}) // => Run
      *
      * @param {function} fn Callback to run
-     * @param {...any} [args] Callback args
+     * @param {...any} args Callback args
      * @returns {typeof PicoRunner} Runner class
      */
     static frame(fn, ...args)
@@ -138,7 +138,7 @@ export class PicoRunner
      * @example Run.async(() => {}) // => Run
      *
      * @param {function} fn Callback to run
-     * @param {...any} [args] Callback args
+     * @param {...any} args Callback args
      * @returns {typeof PicoRunner} Runner class
      */
     static async(fn, ...args)
@@ -157,7 +157,7 @@ export class PicoRunner
      *
      * @param {function} fn Callback to run
      * @param {number} [delay] Delay ms
-     * @param {...any} [args] Callback args
+     * @param {...any} args Callback args
      * @returns {function} Cancel function
      */
     static delay(fn, delay = 0, ...args)

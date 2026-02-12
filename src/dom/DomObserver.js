@@ -1,4 +1,5 @@
-import { Arr, Mix, Obj, Dom } from "#src/index.esm.js";
+import { Arr, Mix, Obj, Dom } from "../index.esm.js";
+import { PicoDom } from "../utils/Dom.js";
 
 /**
  * @memberof PicoDom
@@ -21,7 +22,7 @@ export class PicoDomObserverInstance
      * @example Dom.find("input").value("hello")
      *
      * @param {any} [value] New value
-     * @returns {any|this} Value or instance
+     * @returns {any|PicoDom} Value or instance
      */
     value(value = undefined)
     {
@@ -39,7 +40,8 @@ export class PicoDomObserverInstance
 }
 
 /**
- * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ * @param {typeof PicoDom} self
+ * @returns {typeof PicoDom}
  */
 export const PicoDomObserverPlugin = function (self) {
 

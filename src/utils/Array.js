@@ -1,4 +1,4 @@
-import { Obj, Mix, Arr } from "#src/index.esm.js";
+import { Obj, Mix } from "../index.esm.js";
 
 export class PicoArray
 {

@@ -1,4 +1,5 @@
-import { Arr, For, Mix, Obj } from "#src/index.esm.js";
+import { Arr, For, Mix, Obj } from "../index.esm.js";
+import { PicoFormat } from "../utils/Format.js";
 
 export const OPTION_REGEX = {
     entry: /(^|;)(\s*(?<key>.*?)\s*:\s*(?<val>".*?"|'.*?'|.*?)\s*)(?=;|$)/g
@@ -96,7 +97,8 @@ export class PicoFormatOptionStatic
 }
 
 /**
- * @returns {typeof import('#src/utils/Format.js').PicoFormat}
+ * @param {typeof PicoFormat} self
+ * @returns {typeof PicoFormat}
  */
 export const PicoFormatOptionPlugin = function (self) {
 

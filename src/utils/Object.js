@@ -1,4 +1,4 @@
-import { go, Mix, Arr } from "#src/index.esm.js";
+import { go, Mix, Arr } from "../index.esm.js";
 
 export class PicoObject
 {

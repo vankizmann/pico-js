@@ -56,7 +56,7 @@ export class PicoMap
      * @example Map.setMapStyle(style)
      *
      * @param {Array<any>} [style] Style array
-     * @returns {this} Current class
+     * @returns {PicoMap} Current class
      */
     static setMapStyle(style = [])
     {
@@ -73,7 +73,7 @@ export class PicoMap
      * @param {string} key Style key
      * @param {any} [style] Style options
      * @param {any} [extra] Extra options
-     * @returns {this} Current class
+     * @returns {PicoMap} Current class
      */
     static setMarkerStyle(key, style = {}, extra = {})
     {
@@ -666,7 +666,7 @@ export class PicoMap
      * @example map.showMarkers()
      *
      * @param {any} [filter] Marker filter
-     * @returns {this} Current instance
+     * @returns {PicoMap} Current instance
      */
     showMarkers(filter = null)
     {
@@ -722,7 +722,7 @@ export class PicoMap
      * @param {any} [filter] Marker filter
      * @param {number} [maxZoom] Max zoom level
      * @param {number} [boundSpace] Viewport space
-     * @returns {this} Current instance
+     * @returns {PicoMap} Current instance
      */
     focusMarkers(filter = null, maxZoom = 14, boundSpace = 15)
     {
