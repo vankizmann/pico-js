@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <script src="https://unpkg.com/@kizmann/pico-js@latest/dist/pico-js.js"></script>
+    <script src="/dist/pico-js.browser.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/de.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 120px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div id="red" style="background: red; width: 100px; height: 100px;">
+        <div class="nix" style="width: 100px; height: 100px;"></div>
+    </div>
+    <div id="blue" style="background: blue; width: 100px; height: 100px;">
+        <div class="nix" style="width: 100px; height: 100px;"></div>
+    </div>
+    <div id="green" style="background: green; height: 100px">
+        <div class="multi">
+            <div class="foo-no"></div>
+        </div>
+        <div class="multi">
+            <div class="foo-no"></div>
+        </div>
+    </div>
+    <div id="yellow" style="background: yellow; height: 100px">
+        <div class="multi multi-1">
+            <div class="foo-no"></div>
+        </div>
+        <div class="multi multi-2">
+            <div class="foo-no"></div>
+        </div>
+        <div class="foo multi multi-3">
+            <div class="foo-yes"></div>
+        </div>
+        <div class="foo multi multi-4">
+            <div class="foo-yes"></div>
+        </div>
+        <div class="multi multi-5">
+            <div class="foo-yes"></div>
+        </div>
+    </div>
+</div>
+<div id="scroll-1" style="overflow-y: auto; height: 300px;">
+    <div class="spacer" style="height: 300px;">
+
+    </div>
+    <div id="scroll-2" style="height: 300px; overflow-y: auto; background: gray;">
+        <div class="spacer" style="height: 600px;">
+
+        </div>
+        <div id="scroll-target" style="height: 600px; background: purple">
+            WOhooo
+        </div>
+    </div>
+</div>
+<script>
+
+    // const pix = window.pi;
+
+    // console.log(pix);
+
+    pix.Locale.set({
+        'January': 'Januar',
+        'February': 'Februar',
+        'March': 'März',
+        'April': 'April',
+        'May': 'Mai',
+        'June': 'Juni',
+        'July': 'Juli',
+        'August': 'August',
+        'September': 'September',
+        'October': 'Oktober',
+        'November': 'November',
+        'December': 'Dezember',
+
+        'Monday': 'Montag',
+        'Tuesday': 'Dienstag',
+        'Wednesday': 'Mittwoch',
+        'Thursday': 'Donnerstag',
+        'Friday': 'Freitag',
+        'Saturday': 'Samstag',
+        'Sunday': 'Sonntag'
+    });
+
+    pix.Dom.extend((self) => {
+        self.prototype.nase = function (index = 0) {
+            console.log('nase ' + index);
+        }
+    });
+
+    let els = pix.Dom.find('#yellow');
+
+    console.log(els.parent(), els.find('.foo-no'), els.childs('.foo'));
+
+    let cursor = pix.Dom.find('.multi-3');
+
+    console.log(cursor.closest('#app'), cursor.prev(), cursor.next());
+
+    // console.log('live', pi.Dom.salami());
+    let el = pix.Dom.find('#app');
+
+    console.log(el.getNodeChilds(1));
+
+    el.on('test', () => {
+        console.log('test xx');
+    });
+
+    el.once('test', () => {
+        console.log('test ONCE');
+    });
+
+    el.attr('style', 'background: blue;');
+
+    pix.Dom.find(document.body).live('click', '#red', pix.Run.throttle(() => {
+        console.log('red');
+    }, 1000));
+
+    pix.Dom.find(document.body).live('click', '#blue', pix.Run.debounce(() => {
+        console.log('blue');
+    }, 1000));
+
+    // let interval = setInterval(pix.Run.framerate(() => {
+    //     console.log('framerate', Math.ceil(Date.now()/1000));
+    // }, 30), 0.5);
+
+    // pix.Run.delay(() => {
+    //     clearInterval(interval);
+    // }, 1000*20);
+
+    // pix.Dom.ready(() => {
+    //     console.log('fin ready');
+    // });
+    //
+    // let paramsstr = pix.For.castParams({
+    //     foo: [1,'2', 'foobar'], bar: [true, { no: 20.2 }], yes: false, handle: 'bars aso nae'
+    // });
+    //
+    // let testquery = 'foo[bar]=123&foo[sos]=-12.5&nase="yes"&voov[123]=["ow", "man"]';
+    //
+    // console.log([
+    //     pix.For.parseParams(paramsstr), pix.For.parseParams(testquery)
+    // ]);
+    //
+    // let optionsstr = pix.For.castOptions({
+    //     foo: { bar: '12', els: [1,'2',3] }, bar: [true, { no: 20.2 }], yes: false, handle: 'bars aso nae'
+    // });
+    //
+    // console.log(optionsstr);
+    //
+    // console.log(pix.For.parseOptions(optionsstr));
+    //
+    // console.log([
+    //     pix.For.filesize(21012303),
+    //     pix.For.filesize(2101230),
+    //     pix.For.filesize(210123),
+    //     pix.For.filesize(21012),
+    //     pix.For.filesize(2101),
+    //     pix.For.filesize(210),
+    // ]);
+    //
+    // console.log(pix.For.slugify('    Héllö, Wörld! @ 2026 #Marketing_Campaign & 🚀 (v1.2) -- Is it $100?     '));
+
+    // console.log('---')
+    //
+    // pix.Arr.each(pi.Now.make().getMonths(), (date) => {
+    //     console.log(date.format());
+    // });
+    //
+    // console.log('---')
+    //
+    // pix.Arr.each(pix.Now.make().stack('year'), (date) => {
+    //     console.log(date.format());
+    // });
+    //
+    // console.log('---')
+    //
+    // pix.Arr.each(pi.Now.make().getYears(), (date) => {
+    //     console.log(date.format());
+    // });
+    //
+    // console.log('---')
+    //
+    // pix.Arr.each(['second', 'minute', 'hour', 'day', 'date', 'month'], (date) => {
+    //     console.log(pix.Now.make().last(date).format());
+    // });
+
+    // let fd = pix.Now.make().first('date');
+    // let ld = pix.Now.make().last('date');
+    //
+    // console.log(fd.range(ld, 'date'));
+    //
+    // let fy = pix.Now.make('2020-01-01');
+    // let ly = pix.Now.make('2029-01-01');
+    //
+    // console.log(fy.range(ly, 'year'));
+    //
+    // console.log(pix.Now.make().first('decade'), pix.Now.make().last('decade'))
+
+    // console.log('---', pi.Now.make().getYearsGrid().length);
+    //
+    // pix.Arr.each(pi.Now.make().getYearsGrid(12), (date) => {
+    //     console.log(date.format());
+    // });
+    //
+    // console.log('---', pix.Now.make().getYearsGrid(12).length);
+    //
+    // pix.Arr.each(pix.Now.make().add(24, 'year').getYearsGrid(), (date) => {
+    //     console.log(date.format());
+    // });
+
+    console.log('Dom', [
+        ...pix.Arr.diff(...[
+            pix.Mix.keys(pix.Mix.class(pi.Dom)), pix.Mix.keys(pix.Mix.class(pix.Dom))
+        ]),
+    ]);
+
+    console.log('Dom', [
+        ...pix.Arr.diff(...[
+            pix.Mix.keys(pix.Mix.proto(pi.Dom)), pix.Mix.keys(pix.Mix.proto(pix.Dom))
+        ]),
+    ]);
+
+    console.log('Any', [
+        ...pix.Arr.diff(...[
+            pix.Mix.keys(pix.Mix.class(pi.Any)), pix.Mix.keys(pix.Mix.class(pix.Mix))
+        ]),
+    ]);
+
+    console.log('Now', [
+        ...pix.Arr.diff(...[
+            pix.Mix.keys(pix.Mix.proto(pi.Now)), pix.Mix.keys(pix.Mix.proto(pix.Now))
+        ]),
+    ]);
+
+    console.log('Num', [
+        ...pix.Arr.diff(...[
+            pix.Mix.keys(pix.Mix.class(pi.Num)), pix.Mix.keys(pix.Mix.class(pix.Num))
+        ]),
+    ]);
+
+    console.log('Cookie', [
+        ...pix.Arr.diff(...[
+            pix.Mix.keys(pix.Mix.class(pi.Cookie)), pix.Mix.keys(pix.Mix.class(pix.Cookie))
+        ]),
+    ]);
+
+    console.log('Event', [
+        ...pix.Arr.diff(...[
+            pix.Mix.keys(pix.Mix.class(pi.Event)), pix.Mix.keys(pix.Mix.class(pix.Event))
+        ]),
+    ]);
+
+    // let testarr = [
+    //     'foo', 'bar', 'semi', 'demi'
+    // ];
+    //
+    // pix.Arr.set(testarr, 2, 'nix');
+    // pix.Arr.unset(testarr, 1);
+    //
+    // console.log(testarr, pix.Arr.get(testarr, 2, 'xxx'), pix.Arr.get(testarr, 22, 'fox'));
+
+    console.log('Arr', [
+        ...pix.Arr.diff(...[
+            pix.Mix.keys(pix.Mix.class(pi.Arr)), pix.Mix.keys(pix.Mix.class(pix.Arr))
+        ]),
+    ]);
+
+    console.log('Obj', [
+        ...pix.Arr.diff(...[
+            pix.Mix.keys(pix.Mix.class(pi.Obj)), pix.Mix.keys(pix.Mix.class(pix.Obj))
+        ]),
+    ]);
+
+    console.log('Locale', [
+        ...pix.Arr.diff(...[
+            pix.Mix.keys(pix.Mix.class(pi.Locale)), pix.Mix.keys(pix.Mix.class(pix.Locale))
+        ]),
+    ]);
+
+    console.log('Str', [
+        ...pix.Arr.diff(...[
+            pix.Mix.keys(pix.Mix.class(pi.Str)), pix.Mix.keys(pix.Mix.class(pix.Str))
+        ]),
+    ]);
+
+    let items = [
+        { foo: 'bar' },
+        { foo: 'nix' },
+        { foo: 'ass' }
+    ];
+
+    console.log(pix.Arr.filter(items, { foo: 'ass' }));
+</script>
+</body>
+</html>

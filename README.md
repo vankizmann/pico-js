@@ -10,7 +10,7 @@
   <br>
 </p>
 
-<p align="center">A JS heleper library. <i>Docs following soon</i></p>
+<p align="center">A JS heleper library. <a href="https://pico-js.vanki.de/" target="_blank">Docs are here</a></p>
 
 ### Installation
 
@@ -20,12 +20,12 @@ npm install @kizmann/pico-js [or] yarn add @kizmann/pico-js
 
 ### Dependencies
 
-This package is dependent of [moment](https://github.com/moment/moment) (*Right now its required but will be optional or ditched soon*).
+~~This package is dependent of [moment](https://github.com/moment/moment) (*Right now its required but will be optional or ditched soon*).~~
 
 ### CDN Usage
 
 ```html
-<script src="//unpkg.com/@kizmann/pico-js@latest/dist/pico-js.js"></script>
+<script src="//unpkg.com/@kizmann/pico-js@latest/dist/pico-js.browser.js"></script>
 ```
 
 ```js
@@ -54,7 +54,7 @@ Incase you are not using the babel plugins (ES6) used in *babel.config.js* you w
 module.exports = {
     resolve: {
         alias: {
-            '@kizmann/pico-js': '@kizmann/pico-js/dist/pico-js.js'
+            '@kizmann/pico-js': '@kizmann/pico-js/dist/pico-js.esm.js'
         }
     }
 }
@@ -65,7 +65,7 @@ module.exports = {
 mix.webpackConfig({
     resolve: {
         alias: {
-            '@kizmann/pico-js': '@kizmann/pico-js/dist/pico-js.js'
+            '@kizmann/pico-js': '@kizmann/pico-js/dist/pico-js.esm.js'
         }
     }
 });
@@ -80,8 +80,28 @@ When using VS Code with the ES5 fix from above you need to create or add to your
 {
   "compilerOptions": {
     "paths": {
-      "@kizmann/pico-js": ["node_modules/@kizmann/pico-js/src/index.js"]
+      "@kizmann/pico-js": ["node_modules/@kizmann/pico-js/src/index.esm.js"]
     }
   }
 }
 ```
+
+#### Jobs to do:
+
+- [ ] Dom.obeserver
+- [ ] Dom.observerResize
+- [ ] Dom.datas
+- [ ] Element rework
+- [ ] Maps rework
+
+#### What was killed: 
+
+- Moment.js
+- UUID library
+- Dom.location
+- Dom.closestScrollable
+- Now.decade
+- Coookie.pattern
+- Locale.pickByCount
+- Str.convertFromOptions
+- Str.convertFromParams

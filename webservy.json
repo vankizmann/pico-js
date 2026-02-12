@@ -1,5 +1,5 @@
 {
-    "hostname": "pico-js.local",
+    "hostname": "pico-js.test",
     "webroot": "",
     "engine": "httpd",
     "type": "default",
