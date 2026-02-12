@@ -15,6 +15,14 @@ export class PicoDomObserverStatic
 export class PicoDomObserverInstance
 {
 
+    /**
+     * Get or set element value
+     *
+     * @example Dom.find("input").value("hello")
+     *
+     * @param {any} [value] New value
+     * @returns {any|this} Value or instance
+     */
     value(value = undefined)
     {
         if ( value === undefined ) {
@@ -30,6 +38,9 @@ export class PicoDomObserverInstance
 
 }
 
+/**
+ * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ */
 export const PicoDomObserverPlugin = function (self) {
 
     Obj.each(Mix.class(PicoDomObserverStatic), (fn, id) => {

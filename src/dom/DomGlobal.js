@@ -5,16 +5,37 @@ import { Run, Mix, Obj, Dom } from "#src/index.esm.js";
  */
 export class PicoDomGlobalStatic
 {
+    /**
+     * Get document ready state
+     *
+     * @example Dom.getDomState() // => "complete"
+     *
+     * @returns {string} State string
+     */
     static getDomState()
     {
         return document.readyState;
     }
 
+    /**
+     * Check if DOM is ready
+     *
+     * @example Dom.isDomReady() // => true
+     *
+     * @returns {boolean} True if ready
+     */
     static isDomReady()
     {
         return Dom.getDomState() === 'complete';
     }
 
+    /**
+     * Check if DOM is complete
+     *
+     * @example Dom.isDomComplete() // => true
+     *
+     * @returns {boolean} True if complete
+     */
     static isDomComplete()
     {
         let state = Dom.getDomState();
@@ -26,6 +47,16 @@ export class PicoDomGlobalStatic
         return state === 'interactive';
     }
 
+    /**
+     * Run callback when ready
+     *
+     * @example Dom.ready(cb)
+     *
+     * @param {function} cb Callback fn
+     * @param {number} [delay] Execution delay
+     * @param {number} [limit] Wait limit
+     * @returns {this} Static class
+     */
     static ready(cb, delay = 0, limit = 6000)
     {
         let fn = () => {
@@ -49,6 +80,16 @@ export class PicoDomGlobalStatic
         return this;
     }
 
+    /**
+     * Run callback when complete
+     *
+     * @example Dom.complete(cb)
+     *
+     * @param {function} cb Callback fn
+     * @param {number} [delay] Execution delay
+     * @param {number} [limit] Wait limit
+     * @returns {this} Static class
+     */
     static complete(cb, delay = 0, limit = 6000)
     {
         let fn = () => {
@@ -84,6 +125,13 @@ PicoDomGlobalStatic.required = () => {
  */
 export class PicoDomGlobalInstance
 {
+    /**
+     * Check if node is complete
+     *
+     * @example Dom.find("img").isNodeComplete() // => true
+     *
+     * @returns {boolean} True if complete
+     */
     isNodeComplete()
     {
         if ( this.el == null ) {
@@ -101,6 +149,15 @@ export class PicoDomGlobalInstance
         return !! this.el.complete;
     }
 
+    /**
+     * Run callback when loaded
+     *
+     * @example Dom.find("img").loaded(cb)
+     *
+     * @param {function} cb Callback fn
+     * @param {number} [limit] Wait limit
+     * @returns {this} Current instance
+     */
     loaded(cb, limit = 6000)
     {
         if ( ! this.el ) {
@@ -117,17 +174,20 @@ export class PicoDomGlobalInstance
     }
 }
 
-export const PicoDomGlobalPlugin = function () {
+/**
+ * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ */
+export const PicoDomGlobalPlugin = function (self) {
 
     Obj.each(Mix.class(PicoDomGlobalStatic), (fn, id) => {
-        this[id] = fn;
+        self[id] = fn;
     });
 
     Obj.each(Mix.proto(PicoDomGlobalInstance), (fn, id) => {
-        this.prototype[id] = fn;
+        self.prototype[id] = fn;
     });
 
-    // this.init.push(PicoDomGlobalInstance.constructor);
+    // self.init.push(PicoDomGlobalInstance.constructor);
 
-    return this;
+    return self;
 }

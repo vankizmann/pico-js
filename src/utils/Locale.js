@@ -3,28 +3,34 @@ import { Mix, Obj, Locale } from "#src/index.esm.js";
 export class PicoLocale
 {
     /**
-     * @var {Record<any, any>} $text
+     * Translation dictionary
+     *
+     * @type {Record<any, any>}
      */
     static $text = {};
 
     /**
-     * @var {Intl.Collator|null} $sort
+     * Cached collator instance
+     *
+     * @type {Intl.Collator|null}
      */
     static $sort = null;
 
     /**
-     * @var {string} $code
+     * Active locale code
+     *
+     * @type {string}
      */
     static $code = 'en';
 
     /**
-     * Check if key exists in translations
+     * Check if translation key exists
      *
-     * @example Locale.has('known.key') // => true
-     * @example Locale.has('unkown.key') // => false
+     * @example Locale.has("known.key") // => true
+     * @example Locale.has("unknown.key") // => false
      *
-     * @param {any} [key=undefined] Key to find in translations
-     * @returns {boolean} Returns set state of key
+     * @param {any} [key] Translation key
+     * @returns {boolean} True if exists
      */
     static has(key = undefined)
     {
@@ -36,15 +42,14 @@ export class PicoLocale
     }
 
     /**
-     * Get key from translations or all
+     * Get translation value or map
      *
-     * @example Locale.get('known.key') // => 'value'
-     * @example Locale.get('unkown.key', 'nix') // => 'nix'
-     * @example Locale.get() // => PicoLocale.$text
+     * @example Locale.get("known.key") // => "value"
+     * @example Locale.get() // => object
      *
-     * @param {any} [key=undefined] Key to get from translations
-     * @param {any} [fallback=null] Fallback incase key does not exist
-     * @returns {any} Returns value of key
+     * @param {any} [key] Translation key
+     * @param {any} [fallback] Fallback value
+     * @returns {any} Translation value
      */
     static get(key = undefined, fallback = null)
     {
@@ -56,14 +61,14 @@ export class PicoLocale
     }
 
     /**
-     * Set key from translations or all
+     * Set translation key or map
      *
-     * @example Locale.set({ foo: 'bar' }) // => { foo: 'bar' }
-     * @example Locale.set('unkown', 'nix') // => { 'unknown': 'nix' }
+     * @example Locale.set({foo:"bar"})
+     * @example Locale.set("unknown", "nix")
      *
-     * @param {any} [key=undefined] Key or value if arg value is undefined
-     * @param {any} [value=undefined] Value to set
-     * @returns {any} Returns value of PicoLocale.$text
+     * @param {any} [key] Key or map
+     * @param {any} [value] Value to set
+     * @returns {any} Updated map
      */
     static set(key = undefined, value = undefined)
     {
@@ -75,13 +80,13 @@ export class PicoLocale
     }
 
     /**
-     * Get or set $code of session
+     * Get or set locale code
      *
-     * @example Locale.code() // => 'en'
-     * @example Locale.code('de') // => 'de'
+     * @example Locale.code() // => "en"
+     * @example Locale.code("de") // => "de"
      *
-     * @param {string|null} [code] The value to set
-     * @returns {string} Return set code or current
+     * @param {string|null} [code] Locale code
+     * @returns {string} Active code
      */
     static code(code = null)
     {
@@ -100,11 +105,11 @@ export class PicoLocale
     }
 
     /**
-     * Get the existing Intl.Collator or return new one
+     * Get Intl.Collator for sorting
      *
-     * @example Locale.collator() // => Intl.Collator
+     * @example Locale.collator().compare("a","b")
      *
-     * @returns {Intl.Collator} Return collator instance
+     * @returns {Intl.Collator} Collator instance
      */
     static collator()
     {
@@ -119,7 +124,16 @@ export class PicoLocale
         return Locale.$sort;
     }
 
-
+    /**
+     * Replace :tokens in text
+     *
+     * @example Locale.replace("Hi :x", {x:"Bob"}) // => "Hi Bob"
+     * @example Locale.replace("Hi", null) // => "Hi"
+     *
+     * @param {string} text Input text
+     * @param {any} [replace] Replace map
+     * @returns {string} Replaced text
+     */
     static replace(text, replace = null)
     {
         if ( replace == null ) {
@@ -133,6 +147,16 @@ export class PicoLocale
         return text;
     }
 
+    /**
+     * Translate key with replace map
+     *
+     * @example Locale.trans("known.key") // => "..."
+     * @example Locale.trans("Hi :x", {x:"Bob"}) // => "Hi Bob"
+     *
+     * @param {string} text Key or text
+     * @param {any} [replace] Replace map
+     * @returns {string} Translated text
+     */
     static trans(text, replace = null)
     {
         text = Obj.get(PicoLocale.$text, text, text);
@@ -140,6 +164,17 @@ export class PicoLocale
         return Locale.replace(text, replace);
     }
 
+    /**
+     * Translate plural choice by count
+     *
+     * @example Locale.choice("items", 2) // => "..."
+     * @example Locale.choice("items", 1, {x:"y"}) // => "..."
+     *
+     * @param {string} text Key or text
+     * @param {number} [count] Choice count
+     * @param {any} [replace] Replace map
+     * @returns {string} Chosen text
+     */
     static choice(text, count = 0, replace = {})
     {
         text = Obj.get(PicoLocale.$text, text, text);
@@ -153,6 +188,15 @@ export class PicoLocale
         return Locale.replace(text, replace);
     }
 
+    /**
+     * Pick plural variant from list
+     *
+     * @example Locale.countpick(["a","b"], 2) // => "b"
+     *
+     * @param {Array<string>} splits Variant list
+     * @param {number} count Choice count
+     * @returns {string} Picked text
+     */
     static countpick(splits, count)
     {
         let length = splits.length;

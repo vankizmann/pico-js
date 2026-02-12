@@ -15,6 +15,14 @@ export class PicoDomFormStatic
 export class PicoDomFormInstance
 {
 
+    /**
+     * Get or set input value
+     *
+     * @example Dom.find("input").value("hello")
+     *
+     * @param {any} [value] Input value
+     * @returns {any|this} Value or instance
+     */
     value(value = undefined)
     {
         if ( value === undefined ) {
@@ -30,6 +38,9 @@ export class PicoDomFormInstance
 
 }
 
+/**
+ * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ */
 export const PicoDomFormPlugin = function (self) {
 
     Obj.each(Mix.class(PicoDomFormStatic), (fn, id) => {

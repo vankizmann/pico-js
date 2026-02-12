@@ -7,6 +7,15 @@ import { Mix, Now, Obj, Arr } from "#src/index.esm.js";
 export class PicoNowRangeInstance
 {
 
+    /**
+     * Get range of dates
+     *
+     * @example Now.range("2026-01-31", "day") // => [Now, Now, ...]
+     *
+     * @param {any} [value] End date
+     * @param {string} [scope] Range scope
+     * @returns {Array<PicoNow>} Array of dates
+     */
     range(value = null, scope = 'date')
     {
         let format = 'YYYYMMDD';
@@ -40,16 +49,22 @@ export class PicoNowRangeInstance
 
 }
 
+/**
+ * @see PicoNow.range
+ */
 PicoNowRangeInstance.prototype.getDatesRange = function (...args) {
     console.warn('NowRange.getDatesRange() is deprecated, use NowRange.range() instead.');
     return this.range(...args);
 }
 
-export const PicoNowRangePlugin = function () {
+/**
+ * @returns {typeof import('#src/utils/Now.js').PicoNow}
+ */
+export const PicoNowRangePlugin = function (self) {
 
     Obj.each(Mix.proto(PicoNowRangeInstance), (fn, id) => {
-        this.prototype[id] = fn;
+        self.prototype[id] = fn;
     });
 
-    return this;
+    return self;
 }

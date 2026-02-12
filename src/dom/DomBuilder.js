@@ -5,6 +5,15 @@ import { Arr, Dom, Mix, Obj } from "#src/index.esm.js";
  */
 export class PicoDomBuilderStatic
 {
+    /**
+     * Create element from tag
+     *
+     * @example Dom.make("div", { class: "active" })
+     *
+     * @param {any} el Tag or element
+     * @param {any} [options] Attr options
+     * @returns {PicoDom} Dom instance
+     */
     static make(el, options = {})
     {
         if ( el instanceof Dom ) {
@@ -37,6 +46,14 @@ export class PicoDomBuilderStatic
  */
 export class PicoDomBuilderInstance
 {
+    /**
+     * Prepend value to element
+     *
+     * @example Dom.find("div").prepend("<span></span>")
+     *
+     * @param {any} value Prepend value
+     * @returns {this} Current instance
+     */
     prepend(value)
     {
         this.each((el) => {
@@ -46,6 +63,14 @@ export class PicoDomBuilderInstance
         return this;
     }
 
+    /**
+     * Prepend element to value
+     *
+     * @example Dom.find("span").prependTo("div")
+     *
+     * @param {any} value Target element
+     * @returns {this} Current instance
+     */
     prependTo(value)
     {
         Dom.find(value).each((el) => {
@@ -55,6 +80,14 @@ export class PicoDomBuilderInstance
         return this;
     }
 
+    /**
+     * Append value to element
+     *
+     * @example Dom.find("div").append("<span></span>")
+     *
+     * @param {any} value Append value
+     * @returns {this} Current instance
+     */
     append(value)
     {
         this.each((el) => {
@@ -64,6 +97,14 @@ export class PicoDomBuilderInstance
         return this;
     }
 
+    /**
+     * Append element to value
+     *
+     * @example Dom.find("span").appendTo("div")
+     *
+     * @param {any} value Target element
+     * @returns {this} Current instance
+     */
     appendTo(value)
     {
         Dom.find(value).each((el) => {
@@ -73,6 +114,14 @@ export class PicoDomBuilderInstance
         return this;
     }
 
+    /**
+     * Replace element with value
+     *
+     * @example Dom.find("div").replace("<span></span>")
+     *
+     * @param {any} value Replacement value
+     * @returns {this} Current instance
+     */
     replace(value)
     {
         this.parent().each(el, (el) => {
@@ -84,17 +133,20 @@ export class PicoDomBuilderInstance
 
 }
 
-export const PicoDomBuilderPlugin = function () {
+/**
+ * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ */
+export const PicoDomBuilderPlugin = function (self) {
 
     Obj.each(Mix.class(PicoDomBuilderStatic), (fn, id) => {
-        this[id] = fn;
+        self[id] = fn;
     });
 
     Obj.each(Mix.proto(PicoDomBuilderInstance), (fn, id) => {
-        this.prototype[id] = fn;
+        self.prototype[id] = fn;
     });
 
-    // this.init.push(PicoDomBuilderInstance.constructor);
+    // self.init.push(PicoDomBuilderInstance.constructor);
 
-    return this;
+    return self;
 }

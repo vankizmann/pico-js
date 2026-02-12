@@ -11,6 +11,14 @@ export const PARAM_REGEX = {
 export class PicoFormatParamStatic
 {
 
+    /**
+     * Cast object to params string
+     *
+     * @example Format.castParams({ a: 1 }) // => "a=1"
+     *
+     * @param {any} [params] Input params
+     * @returns {string} Params string
+     */
     static castParams(params = {})
     {
         if ( Mix.isEmpty(params) ) {
@@ -24,6 +32,16 @@ export class PicoFormatParamStatic
         return result.join('&');
     }
 
+    /**
+     * Cast single param to string
+     *
+     * @example Format.castParam("a", 1) // => "a=1"
+     *
+     * @param {string} key Param key
+     * @param {any} value Param value
+     * @param {string} [path] Key path
+     * @returns {string} Param string
+     */
     static castParam(key, value, path = null)
     {
         if ( path != null ) {
@@ -41,6 +59,14 @@ export class PicoFormatParamStatic
         return result.join('&');
     }
 
+    /**
+     * Parse params string
+     *
+     * @example Format.parseParams("a=1") // => { a: 1 }
+     *
+     * @param {string} value Params string
+     * @returns {any} Params object
+     */
     static parseParams(value)
     {
         if ( Mix.isEmpty(value) ) {
@@ -68,11 +94,14 @@ export class PicoFormatParamStatic
 
 }
 
-export const PicoFormatParamPlugin = function () {
+/**
+ * @returns {typeof import('#src/utils/Format.js').PicoFormat}
+ */
+export const PicoFormatParamPlugin = function (self) {
 
     Obj.each(Mix.class(PicoFormatParamStatic), (fn, id) => {
-        this[id] = fn;
+        self[id] = fn;
     });
 
-    return this;
+    return self;
 }

@@ -6,6 +6,15 @@ import { Arr, Dom, Mix, Obj } from "#src/index.esm.js";
 export class PicoDomInviewStatic
 {
 
+    /**
+     * Get first inview element Y
+     *
+     * @example Dom.inviewMaxY(".item")
+     *
+     * @param {any} options Find options
+     * @param {function} [cb] Success callback
+     * @returns {any} Found element
+     */
     static inviewMaxY(options, cb = null)
     {
         let defaults = {
@@ -45,6 +54,15 @@ export class PicoDomInviewStatic
         return Arr.first(els);
     }
 
+    /**
+     * Get first inview element X
+     *
+     * @example Dom.inviewMaxX(".item")
+     *
+     * @param {any} options Find options
+     * @param {function} [cb] Success callback
+     * @returns {any} Found element
+     */
     static inviewMaxX(options, cb = null)
     {
         let defaults = {
@@ -92,6 +110,13 @@ export class PicoDomInviewStatic
  */
 export class PicoDomInviewInstance
 {
+    /**
+     * Get X view offset
+     *
+     * @example Dom.find("div").viewoffX()
+     *
+     * @returns {any} Offset object
+     */
     viewoffX()
     {
         if ( this.el == null ) {
@@ -117,6 +142,14 @@ export class PicoDomInviewInstance
         return { left, right };
     }
 
+    /**
+     * Get X inview pixels
+     *
+     * @example Dom.find("div").inviewX()
+     *
+     * @param {any} [boundry] View boundry
+     * @returns {number} Inview pixels
+     */
     inviewX(boundry = null)
     {
         let { left, right } = Dom.find(boundry).viewoffY();
@@ -138,11 +171,29 @@ export class PicoDomInviewInstance
         return Math.max(0, inview);
     }
 
+    /**
+     * Get X inview ratio
+     *
+     * @example Dom.find("div").inratioX()
+     *
+     * @param {any} [boundry] View boundry
+     * @returns {number} Inview ratio
+     */
     inratioX(boundry = null)
     {
         return 1 / this.width() * this.inviewX(boundry);
     }
 
+    /**
+     * Check if is inview X
+     *
+     * @example Dom.find("div").isInviewX(0.5)
+     *
+     * @param {number} [threshold] View threshold
+     * @param {string} [mode] View mode
+     * @param {any} [boundry] View boundry
+     * @returns {boolean} True if inview
+     */
     isInviewX(threshold = 0.1, mode = 'ratio', boundry = null)
     {
         if ( mode === 'pixel' ) {
@@ -152,6 +203,13 @@ export class PicoDomInviewInstance
         return this.inratioX(boundry) > threshold;
     }
 
+    /**
+     * Get Y view offset
+     *
+     * @example Dom.find("div").viewoffY()
+     *
+     * @returns {any} Offset object
+     */
     viewoffY()
     {
         if ( this.el == null ) {
@@ -177,6 +235,14 @@ export class PicoDomInviewInstance
         return { top, bottom };
     }
 
+    /**
+     * Get Y inview pixels
+     *
+     * @example Dom.find("div").inviewY()
+     *
+     * @param {any} [boundry] View boundry
+     * @returns {number} Inview pixels
+     */
     inviewY(boundry = null)
     {
         let { top, bottom } = Dom.find(boundry).viewoffY();
@@ -198,11 +264,29 @@ export class PicoDomInviewInstance
         return Math.min(Math.max(0, inview), viewport);
     }
 
+    /**
+     * Get Y inview ratio
+     *
+     * @example Dom.find("div").inratioY()
+     *
+     * @param {any} [boundry] View boundry
+     * @returns {number} Inview ratio
+     */
     inratioY(boundry = null)
     {
         return 1 / this.height() * this.inviewY(boundry);
     }
 
+    /**
+     * Check if is inview Y
+     *
+     * @example Dom.find("div").isInviewY(0.5)
+     *
+     * @param {number} [threshold] View threshold
+     * @param {string} [mode] View mode
+     * @param {any} [boundry] View boundry
+     * @returns {boolean} True if inview
+     */
     isInviewY(threshold = 0.1, mode = 'ratio', boundry = null)
     {
         if ( mode === 'pixel' ) {
@@ -213,27 +297,36 @@ export class PicoDomInviewInstance
     }
 }
 
+/**
+ * @see PicoDom.inviewY
+ */
 PicoDomInviewInstance.prototype.inviewHeight = function (...args) {
     console.warn('Dom.inviewHeight() is deprecated, use Dom.inviewY() instead.');
     return this.inviewY(...args);
 }
 
+/**
+ * @see PicoDom.inviewX
+ */
 PicoDomInviewInstance.prototype.inviewWidth = function (...args) {
     console.warn('Dom.inviewWidth() is deprecated, use Dom.inviewX() instead.');
     return this.inviewX(...args);
 }
 
-export const PicoDomInviewPlugin = function () {
+/**
+ * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ */
+export const PicoDomInviewPlugin = function (self) {
 
     Obj.each(Mix.class(PicoDomInviewStatic), (fn, id) => {
-        this[id] = fn;
+        self[id] = fn;
     });
 
     Obj.each(Mix.proto(PicoDomInviewInstance), (fn, id) => {
-        this.prototype[id] = fn;
+        self.prototype[id] = fn;
     });
 
-    // this.init.push(PicoDomInviewInstance.constructor);
+    // self.init.push(PicoDomInviewInstance.constructor);
 
-    return this;
+    return self;
 }

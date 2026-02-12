@@ -31,6 +31,15 @@ export const NOW_HUMAN_MONTHS = [
  */
 export class PicoNowHumanInstance
 {
+    /**
+     * Get human readable value
+     *
+     * @example Now.human("day") // => "Monday"
+     *
+     * @param {string} [scope] Value scope
+     * @param {number} [substr] Substring length
+     * @returns {string|number} Human value
+     */
     human(scope = 'day', substr = null)
     {
         if ( /^days?$/i.test(scope) ) {
@@ -44,6 +53,14 @@ export class PicoNowHumanInstance
         return this.get(scope);
     }
 
+    /**
+     * Get human readable day
+     *
+     * @example Now.getHumanDay(3) // => "Mon"
+     *
+     * @param {number} [substr] Substring length
+     * @returns {string} Day name
+     */
     getHumanDay(substr = null)
     {
         let day = this.day() - 1;
@@ -61,6 +78,14 @@ export class PicoNowHumanInstance
         return value;
     }
 
+    /**
+     * Get human readable month
+     *
+     * @example Now.getHumanMonth(3) // => "Jan"
+     *
+     * @param {number} [substr] Substring length
+     * @returns {string} Month name
+     */
     getHumanMonth(substr = null)
     {
         let month = this.day() - 1;
@@ -80,12 +105,14 @@ export class PicoNowHumanInstance
 
 }
 
-
-export const PicoNowHumanPlugin = function () {
+/**
+ * @returns {typeof import('#src/utils/Now.js').PicoNow}
+ */
+export const PicoNowHumanPlugin = function (self) {
 
     Obj.each(Mix.proto(PicoNowHumanInstance), (fn, id) => {
-        this.prototype[id] = fn;
+        self.prototype[id] = fn;
     });
 
-    return this;
+    return self;
 }

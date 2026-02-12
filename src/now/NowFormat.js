@@ -23,6 +23,15 @@ export const NOW_PARSE = {
 export class PicoNowFormatInstance
 {
 
+    /**
+     * Check if value matches format
+     *
+     * @example Now.isParsable("2026-01-01") // => true
+     *
+     * @param {string} value Test value
+     * @param {string} [format] Date format
+     * @returns {boolean} Is parsable
+     */
     isParsable(value, format = 'YYYY-MM-DD HH:mm:ss')
     {
         for ( const key in NOW_PARSE ) {
@@ -32,6 +41,15 @@ export class PicoNowFormatInstance
         return value === format;
     }
 
+    /**
+     * Parse date from string
+     *
+     * @example Now.parse("2026-01-01") // => Now
+     *
+     * @param {any} value Input value
+     * @param {string} [format] Input format
+     * @returns {PicoNow} Current instance
+     */
     parse(value, format = 'YYYY-MM-DD HH:mm:ss')
     {
         if ( Mix.isTime(value) ) {
@@ -55,6 +73,15 @@ export class PicoNowFormatInstance
         return this;
     }
 
+    /**
+     * Parse date using format
+     *
+     * @example Now.parseFormat("01/01/2026", "DD/MM/YYYY")
+     *
+     * @param {string} value Input value
+     * @param {string} format Input format
+     * @returns {PicoNow} Current instance
+     */
     parseFormat(value, format)
     {
         if ( !this.isParsable(value, format) ) {
@@ -68,6 +95,14 @@ export class PicoNowFormatInstance
         return this;
     }
 
+    /**
+     * Format date to string
+     *
+     * @example Now.format("YYYY-MM-DD") // => "2026-02-12"
+     *
+     * @param {string} [format] Output format
+     * @returns {string} Formatted string
+     */
     format(format = 'YYYY-MM-DD HH:mm:ss')
     {
         if ( Obj.has(NOW_FORMAT, format) ) {
@@ -133,6 +168,14 @@ export class PicoNowFormatInstance
         return format;
     }
 
+    /**
+     * Format date as integer
+     *
+     * @example Now.code("YYYYMMDD") // => 20260212
+     *
+     * @param {string} [format] Output format
+     * @returns {number} Formatted integer
+     */
     code(format = 'X')
     {
         return Mix.int(this.format(format));
@@ -140,11 +183,14 @@ export class PicoNowFormatInstance
 
 }
 
-export const PicoNowFormatPlugin = function () {
+/**
+ * @returns {typeof import('#src/utils/Now.js').PicoNow}
+ */
+export const PicoNowFormatPlugin = function (self) {
 
     Obj.each(Mix.proto(PicoNowFormatInstance), (fn, id) => {
-        this.prototype[id] = fn;
+        self.prototype[id] = fn;
     });
 
-    return this;
+    return self;
 }

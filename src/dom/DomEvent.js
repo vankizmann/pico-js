@@ -15,6 +15,19 @@ export class PicoDomEventStatic
 export class PicoDomEventInstance
 {
 
+    /**
+     * Bind event listener
+     *
+     * @example Dom.bind(el, "click", cb)
+     *
+     * @param {Element} el Target element
+     * @param {string} event Event name
+     * @param {function} cb Callback fn
+     * @param {string} [selector] Event selector
+     * @param {boolean} [pause] Pause listener
+     * @param {any} [options] Listener options
+     * @returns {this} Current instance
+     */
     bind(el, event, cb, selector = null, pause = false, options = {})
     {
         if ( Mix.isPrim(options) ) {
@@ -30,6 +43,17 @@ export class PicoDomEventInstance
         return this;
     }
 
+    /**
+     * Unbind event listener
+     *
+     * @example Dom.unbind(el, "click")
+     *
+     * @param {Element} el Target element
+     * @param {string} event Event name
+     * @param {string} [selector] Event selector
+     * @param {any} [options] Listener options
+     * @returns {this} Current instance
+     */
     unbind(el, event, selector = null, options = {})
     {
         if ( Mix.isPrim(options) ) {
@@ -57,6 +81,18 @@ export class PicoDomEventInstance
         return this;
     }
 
+    /**
+     * Listen to event
+     *
+     * @example Dom.find("div").on("click", cb)
+     *
+     * @param {any} event Event name
+     * @param {function} cb Callback fn
+     * @param {any} [options] Listener options
+     * @param {boolean} [pause] Pause listener
+     * @param {string} [selector] Event selector
+     * @returns {this} Current instance
+     */
     on(event, cb, options = {}, pause = false, selector = null)
     {
         if ( Mix.isPrim(options) ) {
@@ -78,6 +114,16 @@ export class PicoDomEventInstance
         return this;
     }
 
+    /**
+     * Stop listening to event
+     *
+     * @example Dom.find("div").off("click")
+     *
+     * @param {any} event Event name
+     * @param {string} [selector] Event selector
+     * @param {any} [options] Listener options
+     * @returns {this} Current instance
+     */
     off(event, selector = null, options = {})
     {
         if ( Mix.isArr(event) ) {
@@ -95,6 +141,16 @@ export class PicoDomEventInstance
         return this;
     }
 
+    /**
+     * Listen to event once
+     *
+     * @example Dom.find("div").once("click", cb)
+     *
+     * @param {any} event Event name
+     * @param {function} cb Callback fn
+     * @param {any} [options] Listener options
+     * @returns {this} Current instance
+     */
     once(event, cb, options = {})
     {
         options.id = Hash.make(24);
@@ -106,6 +162,18 @@ export class PicoDomEventInstance
         return this;
     }
 
+    /**
+     * Listen to live event
+     *
+     * @example Dom.find("div").live("click", "span", cb)
+     *
+     * @param {any} event Event name
+     * @param {string} selector Event selector
+     * @param {function} cb Callback fn
+     * @param {any} [options] Listener options
+     * @param {boolean} [pause] Pause listener
+     * @returns {this} Current instance
+     */
     live(event, selector, cb, options = {}, pause = false)
     {
         let fn = function (event) {
@@ -124,6 +192,14 @@ export class PicoDomEventInstance
         return this;
     }
 
+    /**
+     * Fire event on element
+     *
+     * @example Dom.find("div").fire("click")
+     *
+     * @param {string} event Event name
+     * @returns {this} Current instance
+     */
     fire(event)
     {
         let callback = new Event(event);
@@ -137,10 +213,14 @@ export class PicoDomEventInstance
 
 }
 
+/**
+ * @see PicoDom.once
+ */
 PicoDomEventInstance.prototype.one = function (...args) {
     console.warn('Dom.one() is deprecated, use Dom.once() instead.');
     return this.once(...args);
 };
+
 
 PicoDomEventInstance.prototype.delayed = function () {
     console.error('Dom.delayed() is not implemented anymore.');
@@ -154,17 +234,20 @@ PicoDomEventInstance.prototype.unpause = function () {
     console.error('Dom.unpause() is not implemented anymore.');
 };
 
-export const PicoDomEventPlugin = function () {
+/**
+ * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ */
+export const PicoDomEventPlugin = function (self) {
 
     Obj.each(Mix.class(PicoDomEventStatic), (fn, id) => {
-        this[id] = fn;
+        self[id] = fn;
     });
 
     Obj.each(Mix.proto(PicoDomEventInstance), (fn, id) => {
-        this.prototype[id] = fn;
+        self.prototype[id] = fn;
     });
 
-    // this.init.push(PicoDomEventInstance.constructor);
+    // self.init.push(PicoDomEventInstance.constructor);
 
-    return this;
+    return self;
 }

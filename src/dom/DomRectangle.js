@@ -6,6 +6,14 @@ import { Arr, Dom, Mix, Obj } from "#src/index.esm.js";
  */
 export class PicoDomRectangleStatic
 {
+    /**
+     * Cast value to number
+     *
+     * @example Dom.num("10px") // => 10
+     *
+     * @param {any} value Input value
+     * @returns {number} Number value
+     */
     static num(value)
     {
         if ( typeof value === 'string' ) {
@@ -22,6 +30,15 @@ export class PicoDomRectangleStatic
  */
 export class PicoDomRectangleInstance
 {
+    /**
+     * Get margin values
+     *
+     * @example Dom.find("div").margin()
+     *
+     * @param {string} [key] Margin key
+     * @param {number} [fallback] Fallback value
+     * @returns {any} Margin values
+     */
     margin(key = null, fallback = 0)
     {
         let computed = this.computed();
@@ -40,6 +57,15 @@ export class PicoDomRectangleInstance
         return Obj.get(result, key, fallback);
     }
 
+    /**
+     * Get padding values
+     *
+     * @example Dom.find("div").padding()
+     *
+     * @param {string} [key] Padding key
+     * @param {number} [fallback] Fallback value
+     * @returns {any} Padding values
+     */
     padding(key = null, fallback = 0)
     {
         let computed = this.computed();
@@ -58,6 +84,13 @@ export class PicoDomRectangleInstance
         return Obj.get(result, key, fallback);
     }
 
+    /**
+     * Get element height
+     *
+     * @example Dom.find("div").height() // => 100
+     *
+     * @returns {number} Height value
+     */
     height()
     {
         if ( this.el == null ) {
@@ -71,6 +104,13 @@ export class PicoDomRectangleInstance
         return this.el.offsetHeight;
     }
 
+    /**
+     * Get client height
+     *
+     * @example Dom.find("div").clientHeight()
+     *
+     * @returns {number} Height value
+     */
     clientHeight()
     {
         if ( this.el == null ) {
@@ -80,6 +120,13 @@ export class PicoDomRectangleInstance
         return Dom.num(this.computed('height', 0));
     }
 
+    /**
+     * Get scroll height
+     *
+     * @example Dom.find("div").scrollHeight()
+     *
+     * @returns {number} Height value
+     */
     scrollHeight()
     {
         if ( this.el == null ) {
@@ -89,6 +136,13 @@ export class PicoDomRectangleInstance
         return this.el.scrollHeight;
     }
 
+    /**
+     * Get inner height
+     *
+     * @example Dom.find("div").innerHeight()
+     *
+     * @returns {number} Height value
+     */
     innerHeight()
     {
         if ( this.el == null ) {
@@ -104,6 +158,14 @@ export class PicoDomRectangleInstance
         return this.el.offsetHeight - pad.top - pad.bottom;
     }
 
+    /**
+     * Get real height
+     *
+     * @example Dom.find("div").realHeight({ display: "block" })
+     *
+     * @param {any} [style] Temp style
+     * @returns {number} Height value
+     */
     realHeight(style = {})
     {
         let height = 'auto';
@@ -115,6 +177,15 @@ export class PicoDomRectangleInstance
         return height;
     }
 
+    /**
+     * Evaluate target height
+     *
+     * @example Dom.find("div").evaluateHeight(".container")
+     *
+     * @param {any} [target] Target element
+     * @param {boolean} [apply] Apply style
+     * @returns {number} Height value
+     */
     evaluateHeight(target = null, apply = true)
     {
         target = Dom.find(target);
@@ -136,6 +207,13 @@ export class PicoDomRectangleInstance
         return height;
     }
 
+    /**
+     * Get element width
+     *
+     * @example Dom.find("div").width() // => 100
+     *
+     * @returns {number} Width value
+     */
     width()
     {
         if ( this.el == null ) {
@@ -149,6 +227,13 @@ export class PicoDomRectangleInstance
         return this.el.offsetWidth;
     }
 
+    /**
+     * Get client width
+     *
+     * @example Dom.find("div").clientWidth()
+     *
+     * @returns {number} Width value
+     */
     clientWidth()
     {
         if ( this.el == null ) {
@@ -158,6 +243,13 @@ export class PicoDomRectangleInstance
         return Dom.num(this.computed('width', 0));
     }
 
+    /**
+     * Get scroll width
+     *
+     * @example Dom.find("div").scrollWidth()
+     *
+     * @returns {number} Width value
+     */
     scrollWidth()
     {
         if ( this.el == null ) {
@@ -167,6 +259,13 @@ export class PicoDomRectangleInstance
         return this.el.scrollWidth;
     }
 
+    /**
+     * Get inner width
+     *
+     * @example Dom.find("div").innerWidth()
+     *
+     * @returns {number} Width value
+     */
     innerWidth()
     {
         if ( this.el == null ) {
@@ -182,6 +281,14 @@ export class PicoDomRectangleInstance
         return this.el.offsetWidth - pad.left - pad.right;
     }
 
+    /**
+     * Get real width
+     *
+     * @example Dom.find("div").realWidth({ display: "block" })
+     *
+     * @param {any} [style] Temp style
+     * @returns {number} Width value
+     */
     realWidth(style = {})
     {
         let width = 'auto';
@@ -193,6 +300,15 @@ export class PicoDomRectangleInstance
         return width;
     }
 
+    /**
+     * Evaluate target width
+     *
+     * @example Dom.find("div").evaluateWidth(".container")
+     *
+     * @param {any} [target] Target element
+     * @param {boolean} [apply] Apply style
+     * @returns {number} Width value
+     */
     evaluateWidth(target = null, apply = true)
     {
         target = Dom.find(target);
@@ -214,6 +330,15 @@ export class PicoDomRectangleInstance
         return width;
     }
 
+    /**
+     * Get element offset
+     *
+     * @example Dom.find("div").offset()
+     *
+     * @param {string} [key] Offset key
+     * @param {any} [boundry] View boundry
+     * @returns {any} Offset values
+     */
     offset(key = null, boundry = null)
     {
         let offset = this.getOffset(boundry);
@@ -225,26 +350,67 @@ export class PicoDomRectangleInstance
         return Obj.get(offset, key, 0);
     }
 
+    /**
+     * Get top offset
+     *
+     * @example Dom.find("div").offsetTop()
+     *
+     * @param {any} [boundry] View boundry
+     * @returns {number} Top offset
+     */
     offsetTop(boundry = null)
     {
         return this.offset('top', boundry);
     }
 
+    /**
+     * Get bottom offset
+     *
+     * @example Dom.find("div").offsetBottom()
+     *
+     * @param {any} [boundry] View boundry
+     * @returns {number} Bottom offset
+     */
     offsetBottom(boundry = null)
     {
         return this.offset('bottom', boundry);
     }
 
+    /**
+     * Get left offset
+     *
+     * @example Dom.find("div").offsetLeft()
+     *
+     * @param {any} [boundry] View boundry
+     * @returns {number} Left offset
+     */
     offsetLeft(boundry = null)
     {
         return this.offset('left', boundry);
     }
 
+    /**
+     * Get right offset
+     *
+     * @example Dom.find("div").offsetRight()
+     *
+     * @param {any} [boundry] View boundry
+     * @returns {number} Right offset
+     */
     offsetRight(boundry = null)
     {
         return this.offset('right', boundry);
     }
 
+    /**
+     * Loop through offset parents
+     *
+     * @example Dom.find("div").loopOffset((el) => console.log(el))
+     *
+     * @param {function} cb Callback fn
+     * @param {any} [boundry] Loop limit
+     * @returns {this} Current instance
+     */
     loopOffset(cb, boundry = null)
     {
         if ( boundry == null ) {
@@ -258,6 +424,16 @@ export class PicoDomRectangleInstance
         return this;
     }
 
+    /**
+     * Calculate relative offset
+     *
+     * @example Dom.calcOffset(offset, 100, 100)
+     *
+     * @param {any} offset Base offset
+     * @param {number} width Element width
+     * @param {number} height Element height
+     * @returns {any} Calculated offset
+     */
     calcOffset(offset, width, height)
     {
         let size = {
@@ -268,6 +444,14 @@ export class PicoDomRectangleInstance
         return { ...offset, ...size };
     }
 
+    /**
+     * Get relative offset
+     *
+     * @example Dom.find("div").getOffset()
+     *
+     * @param {any} [boundry] View boundry
+     * @returns {any} Offset values
+     */
     getOffset(boundry = null)
     {
         if ( boundry == null ) {
@@ -318,6 +502,15 @@ export class PicoDomRectangleInstance
         };
     }
 
+    /**
+     * Get element scroll
+     *
+     * @example Dom.find("div").scroll()
+     *
+     * @param {any} [key] Scroll key
+     * @param {any} [boundry] View boundry
+     * @returns {any} Scroll values
+     */
     scroll(key = null, boundry = null)
     {
         let scroll = this.getScroll(boundry);
@@ -329,6 +522,15 @@ export class PicoDomRectangleInstance
         return Obj.get(scroll, key, 0);
     }
 
+    /**
+     * Get or set scroll top
+     *
+     * @example Dom.find("div").scrollTop(100)
+     *
+     * @param {any} [value] Scroll value
+     * @param {any} [boundry] View boundry
+     * @returns {number|this} Value or instance
+     */
     scrollTop(value = null, boundry = null)
     {
         if ( value == null ) {
@@ -342,6 +544,15 @@ export class PicoDomRectangleInstance
         return this;
     }
 
+    /**
+     * Get or set scroll left
+     *
+     * @example Dom.find("div").scrollLeft(100)
+     *
+     * @param {any} [value] Scroll value
+     * @param {any} [boundry] View boundry
+     * @returns {number|this} Value or instance
+     */
     scrollLeft(value = null, boundry = null)
     {
         if ( value == null ) {
@@ -355,6 +566,14 @@ export class PicoDomRectangleInstance
         return this.scroll('left', boundry);
     }
 
+    /**
+     * Get relative scroll
+     *
+     * @example Dom.find("div").getScroll()
+     *
+     * @param {any} [boundry] View boundry
+     * @returns {any} Scroll values
+     */
     getScroll(boundry = null)
     {
         if ( boundry == null ) {
@@ -370,8 +589,8 @@ export class PicoDomRectangleInstance
         }
 
         cb = (el) => {
-            source.top += Dom.num(el.scrollTop || el.pageYOffset, 0);
-            source.left += Dom.num(el.scrollLeft || el.pageXOffset, 0);
+            source.top += Dom.num(el.scrollTop || el.pageYOffset || 0);
+            source.left += Dom.num(el.scrollLeft || el.pageXOffset || 0);
         }
 
         this.loopParent(cb);
@@ -381,8 +600,8 @@ export class PicoDomRectangleInstance
         };
 
         cb = (el) => {
-            target.top += Dom.num(el.scrollTop || el.pageYOffset, 0);
-            target.left += Dom.num(el.scrollLeft || el.pageXOffset, 0);
+            target.top += Dom.num(el.scrollTop || el.pageYOffset || 0);
+            target.left += Dom.num(el.scrollLeft || el.pageXOffset || 0);
         };
 
         Dom.find(boundry).loopParent(cb);
@@ -395,33 +614,44 @@ export class PicoDomRectangleInstance
 
 }
 
+/**
+ * @see PicoDom.loopOffsetParent
+ */
 PicoDomRectangleInstance.prototype.loopOffsetParent = function (...args) {
     console.warn('Dom.loopOffsetParent() is deprecated, use Dom.loopOffset() instead.');
     return this.loopOffset(...args);
 };
 
-PicoDomRectangleInstance.prototype.scrollTopGlobal = function (...args) {
+/**
+ * @see PicoDom.scrollTopGlobal
+ */
+PicoDomRectangleInstance.prototype.scrollTopGlobal = function () {
     console.warn('Dom.scrollTopGlobal() is deprecated, use Dom.scroll(\'top\') instead.');
-    return this.scroll('top', null, ...args);
+    return this.scroll('top', null);
 };
 
-PicoDomRectangleInstance.prototype.scrollLeftGlobal = function (...args) {
+/**
+ * @see PicoDom.scrollLeftGlobal
+ */
+PicoDomRectangleInstance.prototype.scrollLeftGlobal = function () {
     console.warn('Dom.scrollLeftGlobal() is deprecated, use Dom.scroll(\'left\') instead.');
-    return this.scroll('left', null, ...args);
+    return this.scroll('left', null);
 };
 
-
-export const PicoDomRectanglePlugin = function () {
+/**
+ * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ */
+export const PicoDomRectanglePlugin = function (self) {
 
     Obj.each(Mix.class(PicoDomRectangleStatic), (fn, id) => {
-        this[id] = fn;
+        self[id] = fn;
     });
 
     Obj.each(Mix.proto(PicoDomRectangleInstance), (fn, id) => {
-        this.prototype[id] = fn;
+        self.prototype[id] = fn;
     });
 
-    // this.init.push(PicoDomRectangleInstance.constructor);
+    // self.init.push(PicoDomRectangleInstance.constructor);
 
-    return this;
+    return self;
 }

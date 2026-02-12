@@ -1,11 +1,11 @@
 import { Arr, Dom, Mix, Now, Num } from "#src/index.esm.js";
-import { PicoNowDefaultInstance, PicoNowDefaultPlugin } from "#src/now/NowDefault.js";
-import { PicoNowFormatInstance, PicoNowFormatPlugin } from "#src/now/NowFormat.js";
-import { PicoNowMatchInstance, PicoNowMatchPlugin } from "#src/now/NowMatch.js";
-import { PicoNowGridInstance, PicoNowGridPlugin } from "#src/now/NowGrid.js";
-import { PicoNowWalkerInstance, PicoNowWalkerPlugin } from "#src/now/NowWalker.js";
-import { PicoNowRangeInstance, PicoNowRangePlugin } from "#src/now/NowRange.js";
-import { PicoNowHumanInstance, PicoNowHumanPlugin } from "#src/now/NowHuman.js";
+import { PicoNowDefaultPlugin } from "#src/now/NowDefault.js";
+import { PicoNowFormatPlugin } from "#src/now/NowFormat.js";
+import { PicoNowMatchPlugin } from "#src/now/NowMatch.js";
+import { PicoNowGridPlugin } from "#src/now/NowGrid.js";
+import { PicoNowWalkerPlugin } from "#src/now/NowWalker.js";
+import { PicoNowRangePlugin } from "#src/now/NowRange.js";
+import { PicoNowHumanPlugin } from "#src/now/NowHuman.js";
 
 export const PicoNowPlugins = [
     PicoNowDefaultPlugin,
@@ -19,6 +19,15 @@ export const PicoNowPlugins = [
 
 /**
  * @class PicoNow
+ *
+ * @typedef {import('#src/now/NowMatch.js').PicoNowMatchInstance} PicoNowMatchInstance
+ * @typedef {import('#src/now/NowFormat.js').PicoNowFormatInstance} PicoNowFormatInstance
+ * @typedef {import('#src/now/NowMatch.js').PicoNowMatchInstance} PicoNowMatchInstance
+ * @typedef {import('#src/now/NowGrid.js').PicoNowGridInstance} PicoNowGridInstance
+ * @typedef {import('#src/now/NowWalker.js').PicoNowWalkerInstance} PicoNowWalkerInstance
+ * @typedef {import('#src/now/NowRange.js').PicoNowRangeInstance} PicoNowRangeInstance
+ * @typedef {import('#src/now/NowHuman.js').PicoNowHumanInstance} PicoNowHumanInstance
+ *
  * @extends PicoNowDefaultInstance
  * @extends PicoNowFormatInstance
  * @extends PicoNowMatchInstance
@@ -29,11 +38,35 @@ export const PicoNowPlugins = [
  */
 export class PicoNow
 {
+    /**
+     * Init hooks for instance
+     *
+     * @type {Array<function>}
+     */
     static init = [];
 
+    /**
+     * Original input value
+     *
+     * @type {any}
+     */
     input = null;
+
+    /**
+     * Current Date instance
+     *
+     * @type {Date}
+     */
     value = null;
 
+    /**
+     * Create Now instance from input
+     *
+     * @example new Now().toUTC() // => string
+     *
+     * @param {any} [value] Date input
+     * @param {string} [format] Input format
+     */
     constructor(value = null, format = 'YYYY-MM-DD HH:mm:ss')
     {
         if ( value === 'now' ) {
@@ -69,16 +102,41 @@ export class PicoNow
         return this;
     }
 
+    /**
+     * Extend Now with a plugin
+     *
+     * @example Now.extend(fn)
+     *
+     * @param {function} plugin Plugin function
+     * @returns {void} No return value
+     */
     static extend(plugin)
     {
         plugin.call({}, this);
     }
 
+    /**
+     * Create Now instance helper
+     *
+     * @example Now.make("now") // => Now
+     *
+     * @param {any} [value] Date input
+     * @param {string} [format] Input format
+     * @returns {PicoNow} Now instance
+     */
     static make(value = null, format = 'YYYY-MM-DD HH:mm:ss')
     {
         return new Now(value, format);
     }
 
+    /**
+     * Reset date parts to start
+     *
+     * @example Now.make().reset() // => Now
+     *
+     * @param {any} [config] Reset flags
+     * @returns {PicoNow} Now instance
+     */
     reset(config = null)
     {
         if ( config == null ) {
@@ -100,21 +158,50 @@ export class PicoNow
         return this;
     }
 
+    /**
+     * Clone Now instance
+     *
+     * @example Now.make().clone() // => Now
+     *
+     * @param {boolean} [reset] Reset clone
+     * @returns {PicoNow} New instance
+     */
     clone(reset = false)
     {
         return new Now(new Date(this.value), null, reset);
     }
 
+    /**
+     * Check if input is valid date
+     *
+     * @example Now.make("x").valid() // => false
+     *
+     * @returns {boolean} True if valid
+     */
     valid()
     {
         return ! isNaN(this.input);
     }
 
+    /**
+     * Get Date instance
+     *
+     * @example Now.make().toDate() // => Date
+     *
+     * @returns {Date} Date instance
+     */
     toDate()
     {
         return this.value;
     }
 
+    /**
+     * Get UTC string
+     *
+     * @example Now.make().toUTC() // => string
+     *
+     * @returns {string} UTC string
+     */
     toUTC()
     {
         return this.value.toUTCString();
@@ -122,6 +209,9 @@ export class PicoNow
 
 }
 
+/**
+ * @see PicoNow.reset
+ */
 PicoNow.prototype.resetTime = function () {
     console.warn('Now.resetTime() is deprecated, use Now.reset({ time: true }) instead.');
     return this.reset({ time: true });

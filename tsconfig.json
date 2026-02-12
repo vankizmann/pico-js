@@ -1,14 +1,18 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "*": [
-                "types/*"
-            ]
-        },
-        "typeRoots": [
-            "./node_modules/@types",
-            "./types"
-        ]
+        "target": "ESNext",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
+        "allowJs": true,
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "outDir": "./types",
+        "rootDir": "./src"
+    },
+    "include": [
+        "src/index.esm.js"
+    ],
+    "paths": {
+        "#src/*": ["./src/*"]
     }
 }

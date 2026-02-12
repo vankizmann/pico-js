@@ -2,6 +2,17 @@ import { go, Mix, Arr } from "#src/index.esm.js";
 
 export class PicoObject
 {
+    /**
+     * Normalize key path to array
+     *
+     * @example Obj.keyoptim("a.b") // => ["a","b"]
+     * @example Obj.keyoptim(["a","b"]) // => ["a","b"]
+     *
+     * @param {any} keys Key path
+     * @param {boolean} [flatten] Flatten keys
+     * @param {boolean|null} [isstr] Is string flag
+     * @returns {Array<any>} Key segments
+     */
     static keyoptim(keys, flatten = false, isstr = null)
     {
         if ( isstr === null ) {
@@ -15,6 +26,17 @@ export class PicoObject
         return isstr || flatten ? keys.split('.') : keys;
     }
 
+    /**
+     * Check if nested key exists
+     *
+     * @example Obj.has({a:{b:1}}, "a.b") // => true
+     * @example Obj.has({a:{}}, "a.b") // => false
+     *
+     * @param {any} target Target object
+     * @param {any} keys Key path
+     * @param {boolean} [flatten] Flatten keys
+     * @returns {boolean} True if exists
+     */
     static has(target, keys, flatten = false)
     {
         if ( target == null || keys == null ) {
@@ -53,6 +75,18 @@ export class PicoObject
 
     }
 
+    /**
+     * Get nested value or fallback
+     *
+     * @example Obj.get({a:{b:1}}, "a.b") // => 1
+     * @example Obj.get({}, "a.b", null) // => null
+     *
+     * @param {any} target Target object
+     * @param {any} keys Key path
+     * @param {any} [fallback] Fallback value
+     * @param {boolean} [flatten] Flatten keys
+     * @returns {any} Nested value
+     */
     static get(target, keys, fallback = null, flatten = false)
     {
         if ( target == null || keys == null ) {
@@ -88,6 +122,18 @@ export class PicoObject
         return target;
     }
 
+    /**
+     * Set nested value (mutates)
+     *
+     * @example Obj.set({}, "a.b", 1) // => object
+     * @example Obj.set({}, ["a","b"], 1) // => object
+     *
+     * @param {any} target Target object
+     * @param {any} keys Key path
+     * @param {any} value Value to set
+     * @param {boolean} [flatten] Flatten keys
+     * @returns {any} Mutated target
+     */
     static set(target, keys, value, flatten = false)
     {
         if ( keys == null ) {
@@ -138,6 +184,17 @@ export class PicoObject
         return target;
     }
 
+    /**
+     * Unset nested value (mutates)
+     *
+     * @example Obj.unset({a:{b:1}}, "a.b")
+     * @example Obj.unset({a:{b:1}}, ["a","b"])
+     *
+     * @param {any} target Target object
+     * @param {any} keys Key path
+     * @param {boolean} [flatten] Flatten keys
+     * @returns {any} Mutated target
+     */
     static unset(target, keys, flatten = false)
     {
         if ( keys == null ) {
@@ -175,11 +232,30 @@ export class PicoObject
         return (delete nested[list], target);
     }
 
+    /**
+     * Check if nested value is empty
+     *
+     * @example Obj.empty({a:null}, "a") // => true
+     * @example Obj.empty({a:1}, "a") // => false
+     *
+     * @param {any} target Target object
+     * @param {any} key Key path
+     * @returns {boolean} True if empty
+     */
     static empty(target, key)
     {
         return Mix.isEmpty(this.get(target, key));
     }
 
+    /**
+     * Unset multiple keys (mutates)
+     *
+     * @example Obj.remove({a:1,b:2}, ["a"]) // => object
+     *
+     * @param {any} target Target object
+     * @param {any} keys Keys list
+     * @returns {any} Mutated target
+     */
     static remove(target, keys)
     {
         if ( ! Mix.isArr(keys) ) {
@@ -193,6 +269,16 @@ export class PicoObject
         return target;
     }
 
+    /**
+     * Map object values to object
+     *
+     * @example Obj.each({a:1}, v => v+1) // => {a:2}
+     *
+     * @param {any} value Source object
+     * @param {function} cb Map callback
+     * @param {any} [retval] Forced return
+     * @returns {any} Mapped object
+     */
     static each(value, cb, retval = null)
     {
         let result = {};
@@ -208,6 +294,15 @@ export class PicoObject
         return result;
     }
 
+    /**
+     * Map object values to object
+     *
+     * @example Obj.map({a:1}, v => v+1) // => {a:2}
+     *
+     * @param {any} value Source object
+     * @param {function} cb Map callback
+     * @returns {Record<string, any>} Mapped object
+     */
     static map(value, cb)
     {
         let result = {};
@@ -219,11 +314,29 @@ export class PicoObject
         return result;
     }
 
+    /**
+     * Get filtered key indexes
+     *
+     * @example Obj.filterIndex({a:1,b:null}) // => ["a"]
+     *
+     * @param {any} value Source object
+     * @param {any} [filter] Filter spec
+     * @returns {Array<any>} Key list
+     */
     static filterIndex(value, filter = null)
     {
         return Arr.filterIndex(value, filter);
     }
 
+    /**
+     * Filter object by key filter
+     *
+     * @example Obj.filter({a:1,b:null}) // => {a:1}
+     *
+     * @param {any} value Source object
+     * @param {any} [filter] Filter spec
+     * @returns {Record<string, any>} Filtered object
+     */
     static filter(value, filter = null)
     {
         let result = {};
@@ -235,6 +348,16 @@ export class PicoObject
         return result;
     }
 
+    /**
+     * Flatten object into dot keys
+     *
+     * @example Obj.flatten({a:{b:1}}) // => {"a.b":1}
+     *
+     * @param {any} value Source object
+     * @param {string} [prefix] Key prefix
+     * @param {Record<string, any>} [result] Result map
+     * @returns {Record<string, any>} Flat map
+     */
     static flatten(value, prefix = '', result = {})
     {
         if ( typeof value !== 'object' ) {
@@ -252,6 +375,16 @@ export class PicoObject
         return result;
     }
 
+    /**
+     * Flatten object into form keys
+     *
+     * @example Obj.flattenForm({a:{b:1}}) // => {"a[b]":1}
+     *
+     * @param {any} value Source object
+     * @param {string} [prefix] Key prefix
+     * @param {Record<string, any>} [result] Result map
+     * @returns {Record<string, any>} Flat map
+     */
     static flattenForm(value, prefix = '', result = {})
     {
         if ( typeof value !== 'object' ) {
@@ -269,6 +402,15 @@ export class PicoObject
         return result;
     }
 
+    /**
+     * Unpack dotted keys into object
+     *
+     * @example Obj.unpack({"a.b":1}) // => {a:{b:1}}
+     *
+     * @param {any} value Flat key map
+     * @param {Record<string, any>} [result] Result object
+     * @returns {Record<string, any>} Unpacked object
+     */
     static unpack(value, result = {})
     {
         Arr.each(Mix.keys(value), (key) => {
@@ -278,11 +420,28 @@ export class PicoObject
         return result;
     }
 
+    /**
+     * Assign objects (Object.assign)
+     *
+     * @example Obj.assign({}, {a:1}) // => {a:1}
+     *
+     * @param {...any} args Assign args
+     * @returns {any} Assigned object
+     */
     static assign(...args)
     {
         return Object.assign(...args);
     }
 
+    /**
+     * Deep clone primitive/array/object
+     *
+     * @example Obj.clone({a:{b:1}}) // => new object
+     *
+     * @param {any} value Value to clone
+     * @param {any} [merge] Merge values
+     * @returns {any} Cloned value
+     */
     static clone(value, merge = null)
     {
         if ( Mix.isPrim(value) ) {
@@ -310,6 +469,16 @@ export class PicoObject
         return result;
     }
 
+    /**
+     * Get and remove nested value
+     *
+     * @example Obj.pluck({a:1}, "a") // => 1
+     *
+     * @param {any} value Source object
+     * @param {any} key Key path
+     * @param {any} [fallback] Fallback value
+     * @returns {any} Plucked value
+     */
     static pluck(value, key, fallback = null)
     {
         let result = this.get(value, key, fallback);
@@ -319,6 +488,16 @@ export class PicoObject
         return result;
     }
 
+    /**
+     * Pick only given keys
+     *
+     * @example Obj.only({a:1,b:2}, ["a"]) // => {a:1}
+     *
+     * @param {any} value Source object
+     * @param {Array<any>} keys Allowed keys
+     * @param {any} [merge] Merge values
+     * @returns {Record<string, any>} Picked object
+     */
     static only(value, keys, merge = null)
     {
         let result = {};
@@ -334,6 +513,16 @@ export class PicoObject
         return this.assign(result, merge);
     }
 
+    /**
+     * Pick all keys except given
+     *
+     * @example Obj.except({a:1,b:2}, ["a"]) // => {b:2}
+     *
+     * @param {any} value Source object
+     * @param {Array<any>} keys Excluded keys
+     * @param {any} [merge] Merge values
+     * @returns {Record<string, any>} Picked object
+     */
     static except(value, keys, merge = null)
     {
         let result = {};
@@ -349,6 +538,16 @@ export class PicoObject
         return this.assign(result, merge);
     }
 
+    /**
+     * Check if value includes search
+     *
+     * @example Obj.includes({a:1}, {a:1}) // => true
+     * @example Obj.includes({a:1}, {a:2}) // => false
+     *
+     * @param {any} value Source value
+     * @param {any} search Search spec
+     * @returns {boolean} True if includes
+     */
     static includes(value, search)
     {
         if ( Mix.isArr(search) ) {
@@ -374,6 +573,16 @@ export class PicoObject
         return result;
     }
 
+    /**
+     * Check if value matches search
+     *
+     * @example Obj.matches({a:1}, {a:1}) // => true
+     * @example Obj.matches({a:1}, {b:1}) // => false
+     *
+     * @param {any} value Source value
+     * @param {any} search Search spec
+     * @returns {boolean} True if matches
+     */
     static matches(value, search)
     {
         if ( Mix.isArr(search) ) {
@@ -403,26 +612,41 @@ export class PicoObject
 
 }
 
+/**
+ * @see PicoMixed.vals
+ */
 PicoObject.values = (...args) => {
     console.warn('Obj.values() is deprecated, use Mix.vals() instead.');
     return Mix.vals(...args);
 };
 
+/**
+ * @see PicoArray.find
+ */
 PicoObject.find = (...args) => {
     console.warn('Obj.find() is deprecated, use Arr.find() instead.');
     return Arr.find(...args);
 };
 
+/**
+ * @see PicoArray.findIndex
+ */
 PicoObject.findIndex = (...args) => {
     console.warn('Obj.findIndex() is deprecated, use Arr.findIndex() instead.');
     return Arr.findIndex(...args);
 };
 
+/**
+ * @see PicoArray.sort
+ */
 PicoObject.sort = (...args) => {
     console.warn('Obj.sort() is deprecated, use Arr.sort() instead.');
     return Arr.sort(...args);
 };
 
+/**
+ * @see PicoArray.sortDeep
+ */
 PicoObject.sortString = (...args) => {
     console.warn('Obj.sortString() is deprecated, use Arr.sortDeep() instead.');
     return Arr.sortDeep(...args);

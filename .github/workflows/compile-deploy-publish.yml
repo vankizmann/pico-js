@@ -1,5 +1,9 @@
 name: compile-deploy-publish
 
+permissions:
+  contents: write
+  id-token: write
+
 on:
   push:
     branches:
@@ -16,13 +20,16 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --immutable
 
       - name: Build package
         run: yarn build
+
+      - name: Build package
+        run: npx tsc
 
       - name: Get current version
         id: get_version
@@ -50,20 +57,22 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git tag v$PACKAGE_VERSION
-          git push origin v$PACKAGE_VERSION
-
-      - name: Set up .npmrc
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
 
       - name: Create and push tag
         if: steps.check_tag.outputs.exists == 'false'
-        run: yarn publish --new-version $(node -p "require('./package.json').version") --non-interactive
+        run: npm publish --access public
+        env:
+          NPM_CONFIG_PROVENANCE: true
 
       - name: Remove /dist and /docs/dist from .gitignore
         run: |
           sed -i '/^\/dist$/d' .gitignore
           sed -i '/^\/docs\/dist$/d' .gitignore
           sed -i '/^\/docs\/index\.html$/d' .gitignore
+
+      - name: Push tag to github
+        if: steps.check_tag.outputs.exists == 'false'
+        run: git push origin v$PACKAGE_VERSION
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

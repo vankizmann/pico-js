@@ -8,6 +8,13 @@ export class PicoCookie
 {
     static $cookie = null;
 
+    /**
+     * Read raw document.cookie
+     *
+     * @example Cookie.global() // => "a=b; c=d"
+     *
+     * @returns {string} Cookie string
+     */
     static global()
     {
         if ( globalThis.document == null ) {
@@ -17,6 +24,15 @@ export class PicoCookie
         return globalThis.document.cookie || '';
     }
 
+    /**
+     * Parse cookies into object
+     *
+     * @example Cookie.parse() // => {a:"b"}
+     * @example Cookie.parse(true) // force parse
+     *
+     * @param {boolean} [fresh] Force refresh
+     * @returns {Record<string, any>} Cookie map
+     */
     static parse(fresh = false)
     {
         if ( !fresh && this.$cookie ) {
@@ -44,6 +60,17 @@ export class PicoCookie
         return this.$cookie;
     }
 
+    /**
+     * Get cookie value by key
+     *
+     * @example Cookie.get("foo") // => "bar"
+     * @example Cookie.get("x", null, "bool") // => true
+     *
+     * @param {string} key Cookie key
+     * @param {any} [fallback] Fallback value
+     * @param {string} [decode] Decode mode
+     * @returns {any} Cookie value
+     */
     static get(key, fallback = null, decode = 'string')
     {
         if ( !this.$cookie ) {
@@ -73,6 +100,18 @@ export class PicoCookie
         return Mix.str(this.$cookie[key]);
     }
 
+    /**
+     * Set cookie value with options
+     *
+     * @example Cookie.set("a", "b") // => Cookie
+     * @example Cookie.set("a", {x:1}) // => Cookie
+     *
+     * @param {string} key Cookie key
+     * @param {any} value Cookie value
+     * @param {any} [expire] Expire date spec
+     * @param {any} [options] Cookie options
+     * @returns {typeof PicoCookie} Cookie class
+     */
     static set(key, value, expire = null, options = {})
     {
         if ( !this.$cookie ) {
@@ -108,6 +147,15 @@ export class PicoCookie
         return this;
     }
 
+    /**
+     * Remove cookie by key
+     *
+     * @example Cookie.forget("a") // => Cookie
+     *
+     * @param {string} key Cookie key
+     * @param {any} [options] Cookie options
+     * @returns {typeof PicoCookie} Cookie class
+     */
     static forget(key, options = {})
     {
         let expires = 'Thu, 01 Jan 1970 00:00:01 GMT';

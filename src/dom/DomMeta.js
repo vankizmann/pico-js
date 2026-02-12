@@ -7,6 +7,15 @@ export class PicoDomMetaStatic
 {
     static $meta = {};
 
+    /**
+     * Set document title
+     *
+     * @example Dom.setMetaTitle("Home")
+     *
+     * @param {string} value New title
+     * @param {string} [glue] Title glue
+     * @returns {this} Static class
+     */
     static setMetaTitle(value, glue = ':value - :title')
     {
         if ( ! this.$meta.title ) {
@@ -21,6 +30,9 @@ export class PicoDomMetaStatic
     }
 }
 
+/**
+ * @see PicoDom.setMetaTitle
+ */
 PicoDomMetaStatic.title = (value) => {
     console.warn('Dom.title() is deprecated, use Dom.setMetaTitle() instead.');
     return Dom.setMetaTitle(value);
@@ -35,6 +47,9 @@ export class PicoDomMetaInstance
 
 }
 
+/**
+ * @returns {typeof import('#src/utils/Dom.js').PicoDom}
+ */
 export const PicoDomMetaPlugin = function (self) {
 
     Obj.each(Mix.class(PicoDomMetaStatic), (fn, id) => {

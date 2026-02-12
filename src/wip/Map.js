@@ -24,6 +24,14 @@ export class PicoMap
 
     static closeInfoWindows = true;
 
+    /**
+     * Create map instance
+     *
+     * @example new Map("#map", { lat: 0, lng: 0 })
+     *
+     * @param {any} el Target element
+     * @param {any} [options] Map options
+     */
     constructor(el, options = {})
     {
         if ( ! globalThis.google ) {
@@ -42,6 +50,14 @@ export class PicoMap
         this.map = new globalThis.google.maps.Map(Dom.find(el).get(0), options)
     }
 
+    /**
+     * Set global map style
+     *
+     * @example Map.setMapStyle(style)
+     *
+     * @param {Array<any>} [style] Style array
+     * @returns {this} Current class
+     */
     static setMapStyle(style = [])
     {
         Map.mapStyle = style;
@@ -49,6 +65,16 @@ export class PicoMap
         return this;
     }
 
+    /**
+     * Set marker style
+     *
+     * @example Map.setMarkerStyle("default", { default: "icon.png" })
+     *
+     * @param {string} key Style key
+     * @param {any} [style] Style options
+     * @param {any} [extra] Extra options
+     * @returns {this} Current class
+     */
     static setMarkerStyle(key, style = {}, extra = {})
     {
         if ( ! globalThis.google ) {
@@ -107,6 +133,16 @@ export class PicoMap
         return this;
     }
 
+    /**
+     * Cluster map markers
+     *
+     * @example map.clusterMarkers()
+     *
+     * @param {any} [options] Cluster options
+     * @param {any} [filter] Marker filter
+     * @param {boolean} [allowCreate] Create cluster
+     * @returns {void} No return value
+     */
     clusterMarkers(options = {}, filter = null, allowCreate = true)
     {
         if ( ! this.cluster && ! allowCreate ) {
@@ -144,6 +180,15 @@ export class PicoMap
             this.clusterOptions = options);
     }
 
+    /**
+     * Apply style to marker
+     *
+     * @example map.styleMarker("m1", "hover")
+     *
+     * @param {string} key Marker key
+     * @param {any} [type] Style type
+     * @returns {void} No return value
+     */
     styleMarker(key, type = null)
     {
         let item = Obj.get(this.markers, key);
@@ -163,11 +208,28 @@ export class PicoMap
         item.marker.setIcon(Obj.get(Map.markerStyles, [item.style, type]));
     }
 
+    /**
+     * Get marker by key
+     *
+     * @example map.getMarker("m1")
+     *
+     * @param {string} key Marker key
+     * @returns {any} Marker object
+     */
     getMarker(key)
     {
         return Obj.get(this.markers, key);
     }
 
+    /**
+     * Check if marker is visible
+     *
+     * @example map.getMarkerVisibility("m1") // => true
+     *
+     * @param {string} key Marker key
+     * @param {boolean} [fallback] Fallback value
+     * @returns {boolean} Visibility state
+     */
     getMarkerVisibility(key, fallback = false)
     {
         let item = Obj.get(this.markers, key);
@@ -179,6 +241,15 @@ export class PicoMap
         return item.marker.getVisible();
     }
 
+    /**
+     * Get marker position
+     *
+     * @example map.getMarkerPositon("m1") // => LatLng
+     *
+     * @param {string} key Marker key
+     * @param {any} [fallback] Fallback value
+     * @returns {any} Position object
+     */
     getMarkerPositon(key, fallback = null)
     {
         let item = Obj.get(this.markers, key);
@@ -190,6 +261,14 @@ export class PicoMap
         return item.marker.getPosition();
     }
 
+    /**
+     * Toggle marker visibility
+     *
+     * @example map.toggleMarker("m1")
+     *
+     * @param {string} key Marker key
+     * @returns {boolean|void} Visibility state
+     */
     toggleMarker(key)
     {
         let item = Obj.get(this.markers, key);
@@ -205,6 +284,14 @@ export class PicoMap
         return this.showMarker(key);
     }
 
+    /**
+     * Show marker on map
+     *
+     * @example map.showMarker("m1")
+     *
+     * @param {string} key Marker key
+     * @returns {boolean|void} Previous state
+     */
     showMarker(key)
     {
         let item = Obj.get(this.markers, key);
@@ -222,6 +309,14 @@ export class PicoMap
         return hidden;
     }
 
+    /**
+     * Hide marker on map
+     *
+     * @example map.hideMarker("m1")
+     *
+     * @param {string} key Marker key
+     * @returns {boolean|void} Previous state
+     */
     hideMarker(key)
     {
         let item = Obj.get(this.markers, key);
@@ -241,6 +336,14 @@ export class PicoMap
         return visible;
     }
 
+    /**
+     * Marker hover enter
+     *
+     * @example map.enterMarker("m1")
+     *
+     * @param {string} key Marker key
+     * @returns {this|void} Current instance
+     */
     enterMarker(key)
     {
         let item = Obj.get(this.markers, key);
@@ -260,6 +363,14 @@ export class PicoMap
         return this;
     }
 
+    /**
+     * Marker hover leave
+     *
+     * @example map.leaveMarker("m1")
+     *
+     * @param {string} key Marker key
+     * @returns {this|void} Current instance
+     */
     leaveMarker(key)
     {
         let item = Obj.get(this.markers, key);
@@ -279,6 +390,15 @@ export class PicoMap
         return this;
     }
 
+    /**
+     * Check if info is open
+     *
+     * @example map.getInfoVisibility("m1") // => true
+     *
+     * @param {string} key Marker key
+     * @param {boolean} [fallback] Fallback value
+     * @returns {boolean} Visibility state
+     */
     getInfoVisibility(key, fallback = false)
     {
         let item = Obj.get(this.markers, key);
@@ -290,6 +410,14 @@ export class PicoMap
         return !! item.info.getMap();
     }
 
+    /**
+     * Toggle info window
+     *
+     * @example map.toggleInfo("m1")
+     *
+     * @param {string} key Marker key
+     * @returns {boolean|void} Visibility state
+     */
     toggleInfo(key)
     {
         let item = Obj.get(this.markers, key);
@@ -305,6 +433,14 @@ export class PicoMap
         return this.openInfo(key);
     }
 
+    /**
+     * Open info window
+     *
+     * @example map.openInfo("m1")
+     *
+     * @param {string} key Marker key
+     * @returns {boolean|void} Previous state
+     */
     openInfo(key)
     {
         let item = Obj.get(this.markers, key);
@@ -336,6 +472,14 @@ export class PicoMap
         return hidden;
     }
 
+    /**
+     * Close info window
+     *
+     * @example map.closeInfo("m1")
+     *
+     * @param {string} key Marker key
+     * @returns {boolean|void} Previous state
+     */
     closeInfo(key)
     {
         let item = Obj.get(this.markers, key);
@@ -363,6 +507,15 @@ export class PicoMap
         return visible;
     }
 
+    /**
+     * Create map marker
+     *
+     * @example map.createMarker("m1", { lat: 0, lng: 0 })
+     *
+     * @param {any} [key] Marker key
+     * @param {any} [options] Marker options
+     * @returns {any} Marker object
+     */
     createMarker(key = null, options = {})
     {
         if ( Mix.isEmpty(key) ) {
@@ -437,6 +590,15 @@ export class PicoMap
         return Obj.get(this.markers, key);
     }
 
+    /**
+     * Set marker position
+     *
+     * @example map.setMarkerPosition("m1", { lat: 0, lng: 0 })
+     *
+     * @param {string} key Marker key
+     * @param {any} [options] Position options
+     * @returns {void} No return value
+     */
     setMarkerPosition(key, options = {})
     {
         let item = Obj.get(this.markers, key);
@@ -448,6 +610,15 @@ export class PicoMap
         item.marker.setPosition(options);
     }
 
+    /**
+     * Set marker by address
+     *
+     * @example map.setMarkerByAddress("m1", "Address")
+     *
+     * @param {string} key Marker key
+     * @param {any} address Search address
+     * @returns {Promise<any>} Response promise
+     */
     setMarkerByAddress(key, address)
     {
         return this.getLocationByAddress(address, (res) => {
@@ -455,6 +626,15 @@ export class PicoMap
         });
     }
 
+    /**
+     * Get location by address
+     *
+     * @example map.getLocationByAddress("Address")
+     *
+     * @param {any} address Search address
+     * @param {function} [callback] Success callback
+     * @returns {Promise<any>} Response promise
+     */
     getLocationByAddress(address, callback = null)
     {
         let geocoderService = new globalThis.google.maps.Geocoder();
@@ -480,6 +660,14 @@ export class PicoMap
         return new Promise(geocoderPromise);
     }
 
+    /**
+     * Show markers on map
+     *
+     * @example map.showMarkers()
+     *
+     * @param {any} [filter] Marker filter
+     * @returns {this} Current instance
+     */
     showMarkers(filter = null)
     {
         let markers = this.markers;
@@ -499,6 +687,14 @@ export class PicoMap
         return this;
     }
 
+    /**
+     * Get marker boundary
+     *
+     * @example map.getMarkerBoundry() // => LatLngBounds
+     *
+     * @param {any} [filter] Marker filter
+     * @returns {any} Boundary object
+     */
     getMarkerBoundry(filter = null)
     {
         let markers = this.markers;
@@ -518,6 +714,16 @@ export class PicoMap
         return boundry;
     }
 
+    /**
+     * Focus markers on map
+     *
+     * @example map.focusMarkers()
+     *
+     * @param {any} [filter] Marker filter
+     * @param {number} [maxZoom] Max zoom level
+     * @param {number} [boundSpace] Viewport space
+     * @returns {this} Current instance
+     */
     focusMarkers(filter = null, maxZoom = 14, boundSpace = 15)
     {
         let boundry = this.getMarkerBoundry(filter);
@@ -535,6 +741,14 @@ export class PicoMap
         return this;
     }
 
+    /**
+     * Render directions on map
+     *
+     * @example map.renderDirections({ origin: "A", destination: "B" })
+     *
+     * @param {any} options Render options
+     * @returns {Promise<any>} Response promise
+     */
     renderDirections(options)
     {
         // Get directions service

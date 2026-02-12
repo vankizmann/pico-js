@@ -394,6 +394,15 @@ export class PicoMixed
         return /^\d{2}:\d{2}:\d{2}$/.test(value);
     }
 
+    /**
+     * Check if value is equal
+     *
+     * @example Mix.isEqual(el, el) // => true
+     *
+     * @param {any} obj Source value
+     * @param {any} val Compare value
+     * @returns {boolean} True if equal
+     */
     static isEqual(obj, val)
     {
         if ( obj instanceof Node ) {
@@ -484,11 +493,28 @@ export class PicoMixed
         return keys;
     }
 
+    /**
+     * Cast to array
+     *
+     * @example Mix.nodes(nodeList) // => []
+     *
+     * @param {any} value Source value
+     * @returns {Array<any>} Array result
+     */
     static nodes(value)
     {
         return Array.prototype.slice.call(value);
     }
 
+    /**
+     * Get own props excluding keys
+     *
+     * @example Mix.props(Math, ["PI"]) // => {}
+     *
+     * @param {any} value Source object
+     * @param {Array<any>} [exclude] Exclude keys
+     * @returns {Record<string, any>} Props map
+     */
     static props(value, exclude = [])
     {
         let result = {};
@@ -502,6 +528,15 @@ export class PicoMixed
         return result;
     }
 
+    /**
+     * Get static class props
+     *
+     * @example Mix.class(MyClass) // => {}
+     *
+     * @param {any} value Source class
+     * @param {Array<any>} [exclude] Exclude keys
+     * @returns {Record<string, any>} Props map
+     */
     static class(value, exclude = [])
     {
         exclude = Arr.merge(exclude, [
@@ -511,6 +546,15 @@ export class PicoMixed
         return this.props(value, exclude);
     }
 
+    /**
+     * Get prototype props
+     *
+     * @example Mix.proto(MyClass) // => {}
+     *
+     * @param {any} value Source class
+     * @param {Array<any>} [exclude] Exclude keys
+     * @returns {Record<string, any>} Props map
+     */
     static proto(value, exclude = [])
     {
         exclude = Arr.merge(exclude, [
@@ -520,6 +564,14 @@ export class PicoMixed
         return this.props(value.prototype, exclude);
     }
 
+    /**
+     * Create form data
+     *
+     * @example Mix.form({ a: 1 }) // => FormData
+     *
+     * @param {any} value Source object
+     * @returns {FormData} Form instance
+     */
     static form(value)
     {
         let form = new FormData();
@@ -595,6 +647,15 @@ export class PicoMixed
         return Locale.collator().compare(value, compare);
     }
 
+    /**
+     * Get value as null
+     *
+     * @example Mix.null("null") // => null
+     *
+     * @param {any} value Input value
+     * @param {any} [fallback] Fallback value
+     * @returns {any} Null or fallback
+     */
     static null(value, fallback = null)
     {
         if ( value === 'null' ) {
@@ -608,6 +669,14 @@ export class PicoMixed
         return fallback;
     }
 
+    /**
+     * Cast to array
+     *
+     * @example Mix.arr("a,b") // => ["a", "b"]
+     *
+     * @param {any} value Source value
+     * @returns {Array<any>} Array result
+     */
     static arr(value)
     {
         if ( this.isArr(value) ) {

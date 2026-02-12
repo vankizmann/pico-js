@@ -1,3 +1,10 @@
+/**
+ * Get global runtime scope
+ *
+ * @example go().Math // => Math
+ *
+ * @returns {any} Global scope obj
+ */
 export function go() {
 
     if ( typeof globalThis !== 'undefined' ) {
@@ -15,6 +22,13 @@ export function go() {
     return {};
 }
 
+/**
+ * Detect browser from userAgent
+ *
+ * @example browser() // sets global flags
+ *
+ * @returns {void} No return value
+ */
 export function browser() {
 
     const scope = go();
@@ -46,6 +60,13 @@ export function browser() {
     scope.piuag = result;
 }
 
+/**
+ * Detect device OS from userAgent
+ *
+ * @example device() // sets global flags
+ *
+ * @returns {void} No return value
+ */
 export function device() {
 
     const scope = go();
@@ -77,7 +98,6 @@ export function device() {
     if ( result.oid == null ) {
         result.oid = /Android/.test(agent);
     }
-
 
     scope.piudv = result;
 }

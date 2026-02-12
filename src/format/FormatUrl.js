@@ -39,6 +39,14 @@ export const SLUG_CONVERT = [
 export class PicoFormatUrlStatic
 {
 
+    /**
+     * Create slug from string
+     *
+     * @example Format.slugify("Hello World") // => "hello-world"
+     *
+     * @param {any} value Input string
+     * @returns {string} Slug string
+     */
     static slugify(value)
     {
         value = String(value).replace(/(^\s+|\s+$)/g, '')
@@ -54,11 +62,14 @@ export class PicoFormatUrlStatic
 
 }
 
-export const PicoFormatUrlPlugin = function () {
+/**
+ * @returns {typeof import('#src/utils/Format.js').PicoFormat}
+ */
+export const PicoFormatUrlPlugin = function (self) {
 
     Obj.each(Mix.class(PicoFormatUrlStatic), (fn, id) => {
-        this[id] = fn;
+        self[id] = fn;
     });
 
-    return this;
+    return self;
 }

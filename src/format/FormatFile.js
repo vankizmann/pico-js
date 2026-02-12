@@ -11,6 +11,15 @@ export const FILE_UNITS = [
 export class PicoFormatFileStatic
 {
 
+    /**
+     * Format file size
+     *
+     * @example Format.filesize(1000) // => "1.0 KB"
+     *
+     * @param {any} value Bytes value
+     * @param {number} [decimals] Decimal points
+     * @returns {string} Formatted size
+     */
     static filesize(value, decimals = 1)
     {
         if ( ! Mix.isNum(value) ) {
@@ -32,11 +41,14 @@ export class PicoFormatFileStatic
 
 }
 
-export const PicoFormatFilePlugin = function () {
+/**
+ * @returns {typeof import('#src/utils/Format.js').PicoFormat}
+ */
+export const PicoFormatFilePlugin = function (self) {
 
     Obj.each(Mix.class(PicoFormatFileStatic), (fn, id) => {
-        this[id] = fn;
+        self[id] = fn;
     });
 
-    return this;
+    return self;
 }

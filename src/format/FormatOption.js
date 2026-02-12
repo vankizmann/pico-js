@@ -10,6 +10,15 @@ export const OPTION_REGEX = {
 export class PicoFormatOptionStatic
 {
 
+    /**
+     * Cast object to options string
+     *
+     * @example Format.castOptions({ a: 1 }) // => "a: 1;"
+     *
+     * @param {any} [options] Input options
+     * @param {boolean} [space] Add space
+     * @returns {string} Options string
+     */
     static castOptions(options = {}, space = true)
     {
         if ( Mix.isEmpty(options) ) {
@@ -23,6 +32,17 @@ export class PicoFormatOptionStatic
         return result.join(';') + ';';
     }
 
+    /**
+     * Cast single option to string
+     *
+     * @example Format.castOption("a", 1) // => "a: 1"
+     *
+     * @param {string} key Option key
+     * @param {any} value Option value
+     * @param {string} [path] Key path
+     * @param {boolean} [space] Add space
+     * @returns {string} Option string
+     */
     static castOption(key, value, path = null, space = true)
     {
         if ( path != null ) {
@@ -42,6 +62,14 @@ export class PicoFormatOptionStatic
         return result.join(';');
     }
 
+    /**
+     * Parse options string
+     *
+     * @example Format.parseOptions("a: 1;") // => { a: 1 }
+     *
+     * @param {string} value Options string
+     * @returns {any} Options object
+     */
     static parseOptions(value)
     {
         if ( Mix.isEmpty(value) ) {
@@ -67,11 +95,14 @@ export class PicoFormatOptionStatic
 
 }
 
-export const PicoFormatOptionPlugin = function () {
+/**
+ * @returns {typeof import('#src/utils/Format.js').PicoFormat}
+ */
+export const PicoFormatOptionPlugin = function (self) {
 
     Obj.each(Mix.class(PicoFormatOptionStatic), (fn, id) => {
-        this[id] = fn;
+        self[id] = fn;
     });
 
-    return this;
+    return self;
 }

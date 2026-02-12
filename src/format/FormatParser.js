@@ -60,6 +60,15 @@ export const TYPE_CASTERS = [
 export class PicoFormatParserStatic
 {
 
+    /**
+     * Convert key path format
+     *
+     * @example Format.keyed("a[b]") // => "a.b"
+     *
+     * @param {any} value Input key
+     * @param {any} [fallback] Fallback value
+     * @returns {string} Keyed string
+     */
     static keyed(value, fallback = null)
     {
         if ( ! Mix.isStr(value) ) {
@@ -73,6 +82,16 @@ export class PicoFormatParserStatic
         return value.replace(/\[([^\]]+)\]/g, '.$1');
     }
 
+    /**
+     * Parse value by type
+     *
+     * @example Format.parsed("true") // => true
+     *
+     * @param {any} value Input value
+     * @param {any} [fallback] Fallback value
+     * @param {Array<any>} [parsers] Custom parsers
+     * @returns {any} Parsed value
+     */
     static parsed(value, fallback = null, parsers = [])
     {
         if ( ! Mix.isStr(value) ) {
@@ -92,6 +111,16 @@ export class PicoFormatParserStatic
         return value;
     }
 
+    /**
+     * Cast value to string
+     *
+     * @example Format.casted(true) // => "true"
+     *
+     * @param {any} value Input value
+     * @param {boolean} [encode] Encode value
+     * @param {Array<any>} [casters] Custom casters
+     * @returns {string} Casted string
+     */
     static casted(value, encode = false, casters = [])
     {
         if ( encode ) {
@@ -114,11 +143,14 @@ export class PicoFormatParserStatic
     }
 }
 
-export const PicoFormatParserPlugin = function () {
+/**
+ * @returns {typeof import('#src/utils/Format.js').PicoFormat}
+ */
+export const PicoFormatParserPlugin = function (self) {
 
     Obj.each(Mix.class(PicoFormatParserStatic), (fn, id) => {
-        this[id] = fn;
+        self[id] = fn;
     });
 
-    return this;
+    return self;
 }
