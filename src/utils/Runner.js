@@ -233,18 +233,28 @@ export class PicoRunner
      *
      * @param {function} cb Callback to run
      * @param {string} key Buffer key
-     * @param {number} [order] Sort order
+     * @param {number} [priority] Sort priority
      * @returns {function} Buffered handler
      */
-    static framebuffer(cb, key, order = 1000)
+    static framebuffer(cb, key, priority = 1000)
     {
+        const item = {
+            key, cb, priority, args: [], active: false
+        };
+
+        Arr.add(this.$buffer, item);
+
+        let fn = () => {
+            this.runFramebuffer();
+        };
+
         return (e, ...args) => {
 
-            Arr.replace(PicoRunner.$buffer, {
-                key, cb, order, args: [e, ...args], active: true
-            }, { key });
+            Obj.assign(item, {
+                args: [e, ...args], active: true
+            });
 
-            (e.preventDefault(), PicoRunner.runFramebuffer());
+            (e.preventDefault(), fn());
         };
     }
 
@@ -262,10 +272,11 @@ export class PicoRunner
         }
 
         this.$idler = setTimeout(() => {
+            console.log('delayed runFramebuffer')
             this.runFramebuffer();
         }, 50);
 
-        if ( Date.now() - this.$timer <= 50 ) {
+        if ( Date.now() - this.$timer < 50 ) {
             return;
         }
 
@@ -283,10 +294,10 @@ export class PicoRunner
             return;
         }
 
-        this.frame(() => {
-            Arr.each(Arr.sort(buffer, 'order'), (item) => {
-                item.cb(...item.args); item.active = false;
-            });
+        buffer = Arr.sort(buffer, 'priority');
+
+        Arr.each(buffer.reverse(), (item) => {
+            item.cb(...item.args); item.active = false;
         });
     }
 

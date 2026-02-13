@@ -1,4 +1,4 @@
-import { Obj, Mix } from "../index.esm.js";
+import { Obj, Mix, Any } from "../index.esm.js";
 
 export class PicoArray
 {
@@ -30,7 +30,7 @@ export class PicoArray
      */
     static get(value, index, fallback = null)
     {
-        if ( ! Mix.isArr(value) ) {
+        if ( !Mix.isArr(value) ) {
             return value;
         }
 
@@ -111,7 +111,7 @@ export class PicoArray
             return this.findIndex(value, search) !== - 1;
         }
 
-        if ( ! Mix.isArr(value) ) {
+        if ( !Mix.isArr(value) ) {
             value = [value];
         }
 
@@ -241,13 +241,23 @@ export class PicoArray
 
         let result = new Array(value.length);
 
-        for (let i = 0; i < value.length; i++) {
+        for ( let i = 0; i < value.length; i ++ ) {
             result[i] = cb(value[i], i);
         }
 
         return retval != null ? retval : result;
     }
 
+    /**
+     * Iterate over object keys
+     *
+     * @example Arr.eachObj({a:1}, (v,k) => v+1) // => [2]
+     *
+     * @param {any} value Input object
+     * @param {function} cb Iterate callback
+     * @param {any} [retval] Return value override
+     * @returns {any} Mapped values or retval
+     */
     static eachObj(value, cb, retval = null)
     {
         if ( Mix.isArr(value) ) {
@@ -304,32 +314,32 @@ export class PicoArray
      */
     static recursive(value, key, cb, cascade = [])
     {
-        if ( value == null ) {
-            return value;
+        // NIE WIEDER ANFASSEN !!!
+        let fn = (cas) => (val) => {
+            return this.recursive(val, key, cb, cas);
+        };
+
+        if ( Mix.isArr(value) ) {
+            return this.map(value, fn(cascade));
         }
 
         if ( Mix.isObj(value) ) {
-            return this.recursiveObj(value, key, cb, cascade);
+            value = cb(value, cascade) ?? value;
         }
 
-        return this.each(value, (item) => {
-            return (this.recursive(item[key], key, cb, [
-                ...cascade, value
-            ]), cb(item, this.clone(cascade)));
-        });
+        cascade = [
+            ...this.clone(cascade), value
+        ];
 
-        // [{childs: [{ childs: [] } ] }, { childs: [] } ] }]
-    }
-
-    static recursiveObj(value, key, cb, cascade = [])
-    {
-        if ( value == null ) {
-            return value;
+        if ( Mix.isObj(value[key]) ) {
+            value[key] = fn(cascade)(value[key]);
         }
 
-        return this.recursive(value[key], key, cb, [
-            ...cascade, value
-        ]), cb(item, this.clone(cascade))
+        if ( Mix.isArr(value[key]) ) {
+            value[key] = this.map(value[key], fn(cascade));
+        }
+
+        return value;
     }
 
     /**
@@ -365,6 +375,15 @@ export class PicoArray
         });
     }
 
+    /**
+     * Remove values matching filter (mutates)
+     *
+     * @example Arr.filterRemove([1,2], 2) // => [1]
+     *
+     * @param {any} value Input list
+     * @param {any} [filter] Filter spec
+     * @returns {any} Mutated list
+     */
     static filterRemove(value, filter = null)
     {
         if ( value == null ) {
@@ -531,8 +550,12 @@ export class PicoArray
      */
     static sortDeep(value, key)
     {
+        let fn = (val) => {
+            return Obj.get(val, key);
+        }
+
         let keys = Mix.keys(value).sort((a, b) => {
-            return Mix.compare(Obj.get(a, key), Obj.get(b, key));
+            return Mix.compare(fn(value[a]), fn(value[b]));
         });
 
         let result = [];
@@ -625,7 +648,7 @@ export class PicoArray
             finder = target;
         }
 
-        if ( this.findIndex(value, finder) !== -1 ) {
+        if ( this.findIndex(value, finder) !== - 1 ) {
             return value;
         }
 
@@ -650,7 +673,7 @@ export class PicoArray
 
         let index = this.findIndex(value, finder);
 
-        if ( index !== -1 ) {
+        if ( index !== - 1 ) {
             this.splice(value, index, 1);
         }
 
@@ -675,7 +698,7 @@ export class PicoArray
 
         let index = this.findIndex(value, finder);
 
-        if ( index === -1 ) {
+        if ( index === - 1 ) {
             return value;
         }
 
@@ -701,7 +724,7 @@ export class PicoArray
 
         let index = this.findIndex(value, finder);
 
-        if ( index === -1 ) {
+        if ( index === - 1 ) {
             return (value.push(target), value);
         }
 
@@ -791,7 +814,7 @@ export class PicoArray
             return Obj.clone(value);
         }
 
-        if ( ! Mix.isArr(value) ) {
+        if ( !Mix.isArr(value) ) {
             return value;
         }
 
@@ -905,7 +928,7 @@ export class PicoArray
             return Obj.includes(value, search);
         }
 
-        if ( ! Mix.isArr(search) ) {
+        if ( !Mix.isArr(search) ) {
             return value === search;
         }
 
@@ -917,7 +940,7 @@ export class PicoArray
             return true;
         }
 
-        for ( let i = 0; result === false && i < length; i++) {
+        for ( let i = 0; result === false && i < length; i ++ ) {
             result ||= this.has(value, search[i]);
         }
 
@@ -938,7 +961,7 @@ export class PicoArray
         let result = true;
 
         for ( let key of Mix.vals(val) ) {
-            result &&= Mix.vals(arr).indexOf(key) !== -1;
+            result &&= Mix.vals(arr).indexOf(key) !== - 1;
         }
 
         return result;
@@ -959,7 +982,7 @@ export class PicoArray
             return Obj.matches(value, search);
         }
 
-        if ( ! Mix.isArr(value) ) {
+        if ( !Mix.isArr(value) ) {
             return value === search;
         }
 
@@ -973,7 +996,7 @@ export class PicoArray
             return false;
         }
 
-        for ( let i = 0; result === true && i < length; i++) {
+        for ( let i = 0; result === true && i < length; i ++ ) {
             result &&= this.has(value, search[i]);
         }
 
