@@ -38,10 +38,12 @@ export class PicoRoute
             route = this.$routes[key] || key
         }
 
-        route = Locale.replace(route, values);
+        Obj.each(values, (val, key) => {
+            route = route.replace(new RegExp('{' + key + '}', 'g'), val);
+        });
 
         if ( ! Mix.isEmpty(query) ) {
-            route += '?' + For.castParams(values);
+            route += '?' + For.castParams(query);
         }
 
         return route;

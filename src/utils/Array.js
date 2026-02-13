@@ -231,25 +231,38 @@ export class PicoArray
      */
     static each(value, cb, retval = null)
     {
-        let [isArr, keys] = [
-            Mix.isArr(value), Mix.keys(value)
-        ];
-
-        let fn = (key) => {
-            return isArr ? parseInt(key) : key;
-        };
-
-        let result = new Array(keys.length);
-
-        for (let i = 0; i < keys.length; i++) {
-            result[i] = cb(value[keys[i]], fn(keys[i]));
+        if ( Mix.isObj(value) ) {
+            return this.eachObj(value, cb, retval);
         }
 
-        if ( retval != null ) {
-            return retval;
+        if ( value == null ) {
+            value = [];
         }
 
-        return result;
+        let result = new Array(value.length);
+
+        for (let i = 0; i < value.length; i++) {
+            result[i] = cb(value[i], i);
+        }
+
+        return retval != null ? retval : result;
+    }
+
+    static eachObj(value, cb, retval = null)
+    {
+        if ( Mix.isArr(value) ) {
+            return this.each(value, cb, retval);
+        }
+
+        if ( value == null ) {
+            value = {};
+        }
+
+        let result = Mix.keys(value).map((key) => {
+            return cb(value[key], key);
+        });
+
+        return retval != null ? retval : result;
     }
 
     /**
@@ -295,13 +308,28 @@ export class PicoArray
             return value;
         }
 
-        return this.map(value, (item) => {
+        if ( Mix.isObj(value) ) {
+            return this.recursiveObj(value, key, cb, cascade);
+        }
+
+        return this.each(value, (item) => {
             return (this.recursive(item[key], key, cb, [
                 ...cascade, value
-            ]), cb(item, cascade));
+            ]), cb(item, this.clone(cascade)));
         });
 
         // [{childs: [{ childs: [] } ] }, { childs: [] } ] }]
+    }
+
+    static recursiveObj(value, key, cb, cascade = [])
+    {
+        if ( value == null ) {
+            return value;
+        }
+
+        return this.recursive(value[key], key, cb, [
+            ...cascade, value
+        ]), cb(item, this.clone(cascade))
     }
 
     /**
@@ -315,6 +343,10 @@ export class PicoArray
      */
     static filterIndex(value, filter = null)
     {
+        if ( value == null ) {
+            return [];
+        }
+
         if ( filter == null ) {
             filter = (val) => !Mix.isEmpty(val);
         }
@@ -333,6 +365,21 @@ export class PicoArray
         });
     }
 
+    static filterRemove(value, filter = null)
+    {
+        if ( value == null ) {
+            return value;
+        }
+
+        let indexes = this.filterIndex(value, filter);
+
+        if ( indexes.length === 0 ) {
+            return value;
+        }
+
+        return this.splices(value, indexes);
+    }
+
     /**
      * Filter values by filter
      *
@@ -344,6 +391,10 @@ export class PicoArray
      */
     static filter(value, filter = null)
     {
+        if ( value == null ) {
+            return [];
+        }
+
         if ( filter == null ) {
             filter = (val) => !Mix.isEmpty(val);
         }
@@ -374,6 +425,10 @@ export class PicoArray
      */
     static findIndex(value, filter = null, fallback = - 1)
     {
+        if ( value == null ) {
+            return fallback;
+        }
+
         if ( filter == null ) {
             filter = (val) => !Mix.isEmpty(val);
         }
@@ -930,57 +985,57 @@ export class PicoArray
 /**
  * @see PicoArray.unset
  */
-PicoArray.removeIndex = (...args) => {
+PicoArray.removeIndex = function (...args) {
     console.warn('Arr.removeIndex() is deprecated, use Arr.unset() instead.');
-    return Arr.unset(...args);
+    return this.unset(...args);
 };
 
 /**
  * @see PicoArray.sortPrim
  */
-PicoArray.sortString = (...args) => {
+PicoArray.sortString = function (...args) {
     console.warn('Arr.sortString() is deprecated, use Arr.sortPrim() instead.');
-    return Arr.sortPrim(...args);
+    return this.sortPrim(...args);
 };
 
 /**
  * @see PicoArray.append
  */
-PicoArray.push = (...args) => {
+PicoArray.push = function (...args) {
     console.warn('Arr.push() is deprecated, use Arr.append() instead.');
-    return Arr.append(...args);
+    return this.append(...args);
 };
 
 /**
  * @see PicoArray.merge
  */
-PicoArray.concat = (...args) => {
+PicoArray.concat = function (...args) {
     console.warn('Arr.concat() is deprecated, use Arr.merge() instead.');
-    return Arr.merge(...args);
+    return this.merge(...args);
 };
 
 /**
  * @see PicoArray.matches
  */
-PicoArray.equal = (...args) => {
+PicoArray.equal = function (...args) {
     console.warn('Arr.equal() is deprecated, use Arr.matches() instead.');
-    return Arr.matches(...args);
+    return this.matches(...args);
 };
 
 /**
  * @see PicoArray.diff
  */
-PicoArray.diffrence = (...args) => {
+PicoArray.diffrence = function (...args) {
     console.warn('Arr.diffrence() is deprecated, use Arr.diff() instead.');
-    return Arr.diff(...args);
+    return this.diff(...args);
 };
 
 /**
  * @see PicoArray.isect
  */
-PicoArray.intersect = (...args) => {
+PicoArray.intersect = function (...args) {
     console.warn('Arr.intersect() is deprecated, use Arr.isect() instead.');
-    return Arr.isect(...args);
+    return this.isect(...args);
 };
 
 export default PicoArray;

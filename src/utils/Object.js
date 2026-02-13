@@ -305,13 +305,11 @@ export class PicoObject
      */
     static map(value, cb)
     {
-        let result = {};
-
         for ( let key of Mix.keys(value) ) {
-            result[key] = cb(value[key], key);
+            value[key] = cb(value[key], key);
         }
 
-        return result;
+        return value;
     }
 
     /**
@@ -610,6 +608,56 @@ export class PicoObject
         return result;
     }
 
+    static sort(obj, key)
+    {
+        let keys = Mix.keys(obj);
+
+        if ( Mix.isFunction(key) ) {
+            keys = keys.sort((a, b) => {
+                return key.call({}, obj[a], obj[b]);
+            });
+        }
+
+        if ( !Mix.isFunction(key) ) {
+            keys = keys.sort((a, b) => {
+                return Mix.integer(this.get(obj[a], key)) - Mix.integer(this.get(obj[b], key));
+            })
+        }
+
+        let result = [];
+
+        Arr.each(keys, (key, index) => {
+            obj[key]['_key'] = key;
+            result[index] = obj[key];
+        });
+
+        return result;
+    }
+
+    static sortString(obj, key)
+    {
+        let keys = Mix.keys(obj);
+
+        if ( !Mix.isFunction(key) ) {
+            keys = keys.sort((a, b) => {
+
+                let va = Mix.string(this.get(obj[a], key)).toLowerCase();
+                let vb = Mix.string(this.get(obj[b], key)).toLowerCase();
+
+                return (va < vb) ? - 1 : (va > vb) ? 1 : 0;
+            })
+        }
+
+        let result = [];
+
+        Arr.each(keys, (key, index) => {
+            obj[key]['_key'] = key;
+            result[index] = obj[key];
+        });
+
+        return result;
+    }
+
 }
 
 /**
@@ -636,20 +684,20 @@ PicoObject.findIndex = (...args) => {
     return Arr.findIndex(...args);
 };
 
-/**
- * @see PicoArray.sort
- */
-PicoObject.sort = (...args) => {
-    console.warn('Obj.sort() is deprecated, use Arr.sort() instead.');
-    return Arr.sort(...args);
-};
-
-/**
- * @see PicoArray.sortDeep
- */
-PicoObject.sortString = (...args) => {
-    console.warn('Obj.sortString() is deprecated, use Arr.sortDeep() instead.');
-    return Arr.sortDeep(...args);
-};
+// /**
+//  * @see PicoArray.sort
+//  */
+// PicoObject.sort = (...args) => {
+//     console.warn('Obj.sort() is deprecated, use Arr.sort() instead.');
+//     return Arr.sort(...args);
+// };
+//
+// /**
+//  * @see PicoArray.sortDeep
+//  */
+// PicoObject.sortString = (...args) => {
+//     console.warn('Obj.sortString() is deprecated, use Arr.sortDeep() instead.');
+//     return Arr.sortDeep(...args);
+// };
 
 export default PicoObject

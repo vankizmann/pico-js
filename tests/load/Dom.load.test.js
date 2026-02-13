@@ -1,14 +1,14 @@
 import { Bench } from 'tinybench';
 import { Dom, Hash, Now } from "#src/index.esm.js";
-import { Dom as _Dom } from "#src/index.js";
+// import { Dom as _Dom } from "#src/index.js";
 
 const bench = new Bench(BENCH_CFG || {});
 
 // Hash.uuid
 
 TASK_CFG.legacy && bench.add('Legacy Dom.find()', () => {
-    _Dom.find('#red').closest('#app');
-    _Dom.find('#red').attr('style', 'width: 100px; height: 100px; background: blue;');
+    // _Dom.find('#red').closest('#app');
+    // _Dom.find('#red').attr('style', 'width: 100px; height: 100px; background: blue;');
 });
 
 bench.add('Dom.find()', () => {

@@ -279,7 +279,7 @@ export class PicoMixed
             return false;
         }
 
-        return Object.getPrototypeOf(value) === Object.prototype;
+        return typeof value === 'object' && value.constructor === Object;
     }
 
     /**
@@ -302,7 +302,7 @@ export class PicoMixed
             return false;
         }
 
-        return Object.getPrototypeOf(value) === Array.prototype;
+        return typeof value === 'object' && value.constructor === Array;
     }
 
     /**

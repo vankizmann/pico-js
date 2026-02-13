@@ -134,7 +134,7 @@ export class PicoCookie
             this.$cookie[key] = value;
         }
 
-        let plain = key + '=' + value.replaceAll(...[
+        let plain = key + '=' + Mix.str(value).replaceAll(...[
             ';', '{:}'
         ]);
 

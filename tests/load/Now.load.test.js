@@ -1,6 +1,6 @@
 import { Bench } from 'tinybench';
 import { Now } from "#src/index.esm.js";
-import { Now as _Now } from "#src/index.js";
+// import { Now as _Now } from "#src/index.js";
 import moment from "moment";
 
 // Make moment global
@@ -26,19 +26,19 @@ TASK_CFG.detail && bench.add('moment.format (2026-02-03T11:00:00+01:00)', () => 
 });
 
 TASK_CFG.legacy && bench.add('Legacy Now.format (null)', () => {
-    _Now.make(null).format('YYYY-MM-DD');
+    // _Now.make(null).format('YYYY-MM-DD');
 });
 
 TASK_CFG.legacy && bench.add('Legacy Now.format (+1day)', () => {
-    _Now.make('+1day').format('YYYY-MM-DD');
+    // _Now.make('+1day').format('YYYY-MM-DD');
 });
 
 TASK_CFG.legacy && bench.add('Legacy Now.format (2023-12-01 00:40:0)', () => {
-    _Now.make('2023-12-01 00:40:0').format('YYYY-MM-DD');
+    // _Now.make('2023-12-01 00:40:0').format('YYYY-MM-DD');
 });
 
 TASK_CFG.legacy && bench.add('Legacy Now.format (2026-02-03T11:00:00+01:00)', () => {
-    _Now.make('2026-02-03T11:00:00+01:00').format('YYYY-MM-DD');
+    // _Now.make('2026-02-03T11:00:00+01:00').format('YYYY-MM-DD');
 });
 
 bench.add('Now.format (null)', () => {
@@ -62,7 +62,7 @@ bench.add('Now.first (+1day)', () => {
 });
 
 TASK_CFG.legacy && bench.add('Legacy Now.last', () => {
-    _Now.make().lastDate();
+    // _Now.make().lastDate();
 });
 
 bench.add('Now.last (+1day)', () => {

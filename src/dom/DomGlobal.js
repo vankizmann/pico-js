@@ -1,4 +1,4 @@
-import { Run, Mix, Obj, Dom } from "../index.esm.js";
+import { Run, Mix, Obj, Dom, Hash } from "../index.esm.js";
 import { PicoDom } from "../utils/Dom.js";
 
 /**
@@ -60,18 +60,18 @@ export class PicoDomGlobalStatic
      */
     static ready(cb, delay = 0, limit = 6000)
     {
-        let fn = () => {
-            Run.delay(cb, delay);
-        };
-
-        let [el, event] = [
-            Dom.find(document), 'DOMContentLoaded'
+        let [id, el, event] = [
+            Hash.make(), Dom.find(document), 'DOMContentLoaded'
         ];
+
+        let fn = () => {
+            (Run.delay(cb, delay), el.off(event, null, { id }));
+        };
 
         let ready = Dom.isDomReady;
 
         if ( ! ready() ) {
-            return (el.on(event, fn), this);
+            return (el.on(event, fn, { id }), this);
         }
 
         Run.wait(() => {

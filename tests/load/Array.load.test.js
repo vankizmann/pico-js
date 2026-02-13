@@ -1,6 +1,6 @@
 import { Bench } from 'tinybench';
 import { Now, Arr, Obj } from "#src/index.esm.js";
-import { Arr as _Arr } from "#src/index.js";
+// import { Arr as _Arr } from "#src/index.js";
 import _ from "lodash";
 
 const bench = new Bench(BENCH_CFG || {});
@@ -18,12 +18,21 @@ TASK_CFG.detail && bench.add('_.each', () => {
     _.each(getarr(), () => null);
 });
 
+TASK_CFG.detail && bench.add('_.each (obj)', () => {
+    _.each(getobj(), () => null);
+});
+
+
 TASK_CFG.legacy && bench.add('Legacy Arr.each', () => {
-    _Arr.each(getarr(), () => null);
+    // _Arr.each(getarr(), () => null);
 });
 
 bench.add('Arr.each', () => {
     Arr.each(getarr(), () => null);
+});
+
+bench.add('Arr.each (obj)', () => {
+    Arr.each(getobj(), () => null);
 });
 
 // Arr.map
@@ -33,7 +42,7 @@ TASK_CFG.detail && bench.add('_.map', () => {
 });
 
 TASK_CFG.legacy && bench.add('Legacy Arr.map', () => {
-    _Arr.map(getarr(), () => null);
+    // _Arr.map(getarr(), () => null);
 });
 
 bench.add('Arr.map', () => {
@@ -47,7 +56,7 @@ TASK_CFG.detail && bench.add('_.cloneDeep', () => {
 });
 
 TASK_CFG.legacy && bench.add('Legacy Arr.clone', () => {
-    _Arr.clone(getarr());
+    // _Arr.clone(getarr());
 });
 
 bench.add('Arr.clone', () => {
@@ -57,7 +66,7 @@ bench.add('Arr.clone', () => {
 // Arr.includes
 
 TASK_CFG.legacy && bench.add('Legacy Arr.includes', () => {
-    _Arr.includes([1, 2, 3, 4, 5], [1, 3, 5]);
+    // _Arr.includes([1, 2, 3, 4, 5], [1, 3, 5]);
 });
 
 bench.add('Arr.includes', () => {
@@ -67,7 +76,7 @@ bench.add('Arr.includes', () => {
 // Arr.filterIndex
 
 TASK_CFG.legacy && bench.add('Legacy Arr.filterIndex', () => {
-    _Arr.filterIndex(arr1, { foo: 'bar1' });
+    // _Arr.filterIndex(arr1, { foo: 'bar1' });
 });
 
 bench.add('Arr.filterIndex', () => {
@@ -77,7 +86,7 @@ bench.add('Arr.filterIndex', () => {
 // Arr.filter
 
 TASK_CFG.legacy && bench.add('Legacy Arr.filter', () => {
-    _Arr.filter(arr1, { foo: 'bar1' });
+    // _Arr.filter(arr1, { foo: 'bar1' });
 });
 
 bench.add('Arr.filter', () => {
@@ -87,7 +96,7 @@ bench.add('Arr.filter', () => {
 // Arr.findIndex
 
 TASK_CFG.legacy && bench.add('Legacy Arr.findIndex', () => {
-    _Arr.findIndex(arr1, { foo: 'bar3' });
+    // _Arr.findIndex(arr1, { foo: 'bar3' });
 });
 
 bench.add('Arr.findIndex', () => {
@@ -97,7 +106,7 @@ bench.add('Arr.findIndex', () => {
 // Arr.find
 
 TASK_CFG.legacy && bench.add('Legacy Arr.find', () => {
-    _Arr.find(arr1, { foo: 'bar3' });
+    // _Arr.find(arr1, { foo: 'bar3' });
 });
 
 bench.add('Arr.find', () => {
@@ -117,8 +126,8 @@ bench.add('Arr.unique', () => {
 // Arr.has
 
 TASK_CFG.legacy && bench.add('Legacy Arr.has', () => {
-    _Arr.has(['1', 2, '3', 4, '5'], 4);
-    _Arr.has(['1', 2, '3', 4, '5'], '2');
+    // _Arr.has(['1', 2, '3', 4, '5'], 4);
+    // _Arr.has(['1', 2, '3', 4, '5'], '2');
 });
 
 bench.add('Arr.has', () => {

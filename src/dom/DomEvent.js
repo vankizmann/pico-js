@@ -1,4 +1,4 @@
-import { Arr, Hash, Mix, Obj, Dom } from "../index.esm.js";
+import { Arr, Hash, Mix, Obj, Dom, Run } from "../index.esm.js";
 import { PicoDom } from "../utils/Dom.js";
 
 /**
@@ -6,7 +6,7 @@ import { PicoDom } from "../utils/Dom.js";
  */
 export class PicoDomEventStatic
 {
-    static events = [];
+    static $events = [];
 }
 
 /**
@@ -35,7 +35,7 @@ export class PicoDomEventInstance
             options = { id: options };
         }
 
-        Dom.events = Arr.append(Dom.events, {
+        Dom.$events = Arr.append(Dom.$events, {
             el, event, cb, selector, pause, options
         });
 
@@ -61,7 +61,7 @@ export class PicoDomEventInstance
             options = { id: options };
         }
 
-        let indexes = Arr.filterIndex(Dom.events, {
+        let indexes = Arr.filterIndex(Dom.$events, {
             el, event, selector, options
         });
 
@@ -74,10 +74,10 @@ export class PicoDomEventInstance
         };
 
         Arr.each(indexes.reverse(), (index) => {
-            el.removeEventListener(...args(Dom.events[index]));
+            el.removeEventListener(...args(Dom.$events[index]));
         });
 
-        Arr.splices(Dom.events, indexes);
+        Arr.splices(Dom.$events, indexes);
 
         return this;
     }
@@ -137,6 +137,27 @@ export class PicoDomEventInstance
 
         this.each((el) => {
             this.unbind(el, event, selector, options);
+        });
+
+        return this;
+    }
+
+    /**
+     * Stop listening to event with specific options
+     *
+     * @example Dom.find("div").optoff({ id: "my-id" })
+     *
+     * @param {any} [options] Listener options
+     * @returns {PicoDom} Current instance
+     */
+    optoff(options = {})
+    {
+        Run.idle(() => {
+            Arr.filterRemove(Dom.$events, { options });
+        });
+
+        this.each((el) => {
+            el && el.removeAllListeners();
         });
 
         return this;
