@@ -1,169 +1,147 @@
-import { Arr, Hash, Mix } from "../index.esm.js";
+import { Arr, Hash, Mix, Obj } from "../index.esm.js";
 
 export class PicoRunner
 {
-    static $idler = {
-        native: {}, debounce: {}, throttle: {}
-    };
+    static $idler = null;
 
-    static $timer = {
-        date: 0, func: null
-    };
+    static $timer = 0;
 
     static $buffer = [];
 
     /**
-     * Run callback after delay (id)
+     * Clear timer or call function
      *
-     * @example Run.timeout(() => {}, 100) // => "t-..."
+     * @example Run.clear(timer)
      *
-     * @param {function} fn Callback to run
-     * @param {number} [delay] Delay ms
-     * @param {string|null} [index] Timer id
-     * @returns {string} Timer id
+     * @param {any} timer Timer ID, array of IDs, or function
+     * @returns {typeof PicoRunner} Static class
      */
-    static timeout(fn, delay = 0, index = null)
+    static clear(timer)
     {
-        let idler = PicoRunner.$idler.native;
-
-        if ( index == null ) {
-            index = Hash.make(12);
+        if ( Mix.isArr(timer) ) {
+            return Arr.each(timer, (t) => this.clear(t), this);
         }
 
-        idler[(index = 't-' + index)] = setInterval(() => {
-            fn();
-        }, delay);
+        if ( Mix.isFunc(timer) ) {
+            return (timer(), this);
+        }
 
-        return index;
+        clearTimeout(timer);
+        clearInterval(timer);
+
+        return this;
     }
 
     /**
-     * Run callback on interval (id)
+     * Request idle callback with fallback
      *
-     * @example Run.interval(() => {}, 250) // => "i-..."
-     *
-     * @param {function} fn Callback to run
-     * @param {number} [intval] Interval ms
-     * @param {string|null} [index] Timer id
-     * @returns {string} Timer id
+     * @param {function} cb Callback function
+     * @returns {typeof PicoRunner} Static class
      */
-    static interval(fn, intval = 0, index = null)
+    static tryin(cb)
     {
-        let idler = PicoRunner.$idler.native;
-
-        if ( index == null ) {
-            index = Hash.make(12);
-        }
-
-        idler[(index = 'i-' + index)] = setInterval(() => {
-            fn();
-        }, intval);
-
-        return index;
-    }
-
-    /**
-     * Clear timer(s) by id
-     *
-     * @example Run.clear("i-abc") // => Run
-     * @example Run.clear(["t-a","i-b"]) // => Run
-     *
-     * @param {string|Array<string>} index Timer id(s)
-     * @param {string} [scope] Idler scope key
-     * @returns {typeof PicoRunner} Runner class
-     */
-    static clear(index, scope = 'native')
-    {
-        if ( Mix.isArr(index) ) {
-            return (Arr.each(index, (e) => this.clear(e, scope)), this);
-        }
-
-        let idler = PicoRunner.$idler[scope];
-
-        if ( /^i-/.test(index) === false ) {
-            clearInterval(idler[index]);
-        }
-
-        if ( /^t-/.test(index) === false ) {
-            clearTimeout(idler[index]);
+        try {
+            requestIdleCallback(cb);
+        } catch (e) {
+            //
         }
 
         return this;
     }
 
     /**
-     * Poll until callback is true
+     * Wait for condition to be true
      *
-     * @example Run.wait(() => ready, 50) // polls
+     * @example Run.wait(() => window.foo, 10, 100)
      *
-     * @param {function} fn Condition callback
-     * @param {number} [intval] Poll interval ms
-     * @param {number} [limit] Max poll count
-     * @returns {void} No return value
+     * @param {function} fn Condition function
+     * @param {number} [intval] Interval ms
+     * @param {number} [limit] Max iterations
+     * @returns {function} Clear function
      */
     static wait(fn, intval = 0, limit = 500)
     {
         let idler, timer;
 
-        timer = this.timeout(() => {
+        timer = setTimeout(() => {
             this.clear([idler, timer]);
         }, intval * limit);
 
-        idler = this.interval(() => {
-            if ( fn() ) this.clear([idler, timer]);
+        idler = setInterval(() => {
+            if ( fn() ) this.clear([timer, idler]);
         }, intval);
+
+        return () => clearInterval(idler);
     }
 
     /**
-     * Run callback in next frame
+     * Run function in next animation frame
      *
-     * @example Run.frame(() => {}) // => Run
+     * @example Run.frame(cb)
      *
-     * @param {function} fn Callback to run
-     * @param {...any} args Callback args
-     * @returns {typeof PicoRunner} Runner class
+     * @param {function} fn Callback function
+     * @param {any} [...args] Callback arguments
+     * @returns {function} Noop clear function
      */
     static frame(fn, ...args)
     {
-        requestAnimationFrame(function() {
-            fn(...args);
+        requestAnimationFrame(() => {
+            fn(...args)
         });
 
-        return this;
+        return () => null;
     }
 
     /**
-     * Run callback async soon
+     * Run function when browser is idle
      *
-     * @example Run.async(() => {}) // => Run
+     * @example Run.idle(cb)
      *
-     * @param {function} fn Callback to run
-     * @param {...any} args Callback args
-     * @returns {typeof PicoRunner} Runner class
+     * @param {function} fn Callback function
+     * @param {any} [...args] Callback arguments
+     * @returns {function} Noop clear function
+     */
+    static idle(fn, ...args)
+    {
+        requestIdleCallback(() => {
+            fn(...args)
+        });
+
+        return () => null;
+    }
+
+    /**
+     * Run function asynchronously
+     *
+     * @example Run.async(cb)
+     *
+     * @param {function} fn Callback function
+     * @param {any} [...args] Callback arguments
+     * @returns {function} Noop clear function
      */
     static async(fn, ...args)
     {
         setTimeout(() => {
-            fn(...args);
+            fn(...args)
         });
 
-        return this;
+        return () => null;
     }
 
     /**
-     * Run callback after delay
+     * Run function after delay
      *
-     * @example const cancel = Run.delay(() => {}, 50)
+     * @example Run.delay(cb, 100)
      *
-     * @param {function} fn Callback to run
+     * @param {function} fn Callback function
      * @param {number} [delay] Delay ms
-     * @param {...any} args Callback args
-     * @returns {function} Cancel function
+     * @param {any} [...args] Callback arguments
+     * @returns {function} Clear function
      */
     static delay(fn, delay = 0, ...args)
     {
         let idler = setTimeout(() => {
-            this.async(fn, ...args);
+            fn(...args);
         }, delay);
 
         return () => clearTimeout(idler);
@@ -176,24 +154,19 @@ export class PicoRunner
      *
      * @param {function} cb Callback to run
      * @param {number} [timeout] Wait ms
-     * @param {string|null} [index] Debounce id
      * @returns {function} Debounced fn
      */
-    static debounce(cb, timeout = 100, index = null)
+    static debounce(cb, timeout = 100)
     {
-        let idler = PicoRunner.$idler.debounce;
-
-        if ( index == null ) {
-            index = Hash.make(12);
-        }
+        let idler = null;
 
         return (...args) => {
 
-            if ( idler[index] ) {
-                clearTimeout(idler[index]);
+            if ( idler ) {
+                clearTimeout(idler);
             }
 
-            idler[index] = setTimeout(() => {
+            idler = setTimeout(() => {
                 this.frame(cb, ...args);
             }, timeout);
         };
@@ -206,24 +179,19 @@ export class PicoRunner
      *
      * @param {function} cb Callback to run
      * @param {number} [timeout] Wait ms
-     * @param {string|null} [index] Throttle id
      * @returns {function} Throttled fn
      */
-    static throttle(cb, timeout = 100, index = null)
+    static throttle(cb, timeout = 100)
     {
-        let queued, idler = PicoRunner.$idler.throttle;
-
-        if ( index == null ) {
-            index = Hash.make(12);
-        }
+        let queued, idler = null;
 
         return (...args) => {
 
-            if ( idler[index] ) {
-                clearTimeout(idler[index]);
+            if ( idler ) {
+                clearTimeout(idler);
             }
 
-            idler[index] = setTimeout(() => {
+            idler = setTimeout(() => {
                 queued = false;
             }, timeout);
 
@@ -231,7 +199,7 @@ export class PicoRunner
                 return;
             }
 
-            (this.frame(cb, ...args), queued = true)
+            (this.frame(cb, ...args), queued = true);
         };
     }
 
@@ -289,23 +257,23 @@ export class PicoRunner
      */
     static runFramebuffer()
     {
-        if ( this.$timer.func ) {
-            this.$timer.func();
+        if ( this.$idler ) {
+            clearTimeout(this.$idler);
         }
 
-        this.$timer.func = this.delay(() => {
+        this.$idler = setTimeout(() => {
             this.runFramebuffer();
         }, 50);
 
-        if ( Date.now() - this.$timer.date <= 50 ) {
+        if ( Date.now() - this.$timer <= 50 ) {
             return;
         }
 
-        if ( this.$timer.func ) {
-            this.$timer.func();
+        if ( this.$idler ) {
+            clearTimeout(this.$idler);
         }
 
-        this.$timer.date = Date.now();
+        this.$timer = Date.now();
 
         let buffer = Arr.filter(this.$buffer, {
             active: true

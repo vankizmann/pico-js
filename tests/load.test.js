@@ -1,7 +1,7 @@
 import { Hash, Obj } from "#src/index.esm.js";
 
 globalThis.TASK_CFG = {
-    detail: true, native: false, legacy: true
+    detail: true, native: true, legacy: false
 };
 
 if ( globalThis.window === undefined ) {
@@ -69,7 +69,7 @@ setTimeout(async () => {
     // await import("./load/Hash.load.test.js");
     // await import("./load/Locale.load.test.js");
     // await import("./load/Now.load.test.js");
-    // await import("./load/Array.load.test.js");
+    await import("./load/Array.load.test.js");
     // await import("./load/Object.load.test.js");
     // await import("./load/Mixed.load.test.js");
 }, 500);

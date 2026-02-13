@@ -1,6 +1,6 @@
 import { Bench } from 'tinybench';
 import { Now, Obj } from "#src/index.esm.js";
-import { Obj as _Obj } from "#src/index.js";
+// import { Obj as _Obj } from "#src/index.js";
 import _ from "lodash";
 
 const bench = new Bench(BENCH_CFG || {});
@@ -17,7 +17,7 @@ if ( OBJECT_CFG.has ) {
     });
 
     TASK_CFG.legacy && bench.add('Legacy Obj.has (string)', () => {
-        _Obj.has(medobj, 'name.cheese.noway.swiss.foobar');
+        // _Obj.has(medobj, 'name.cheese.noway.swiss.foobar');
     });
 
     bench.add('Obj.has (string)', () => {
@@ -29,7 +29,7 @@ if ( OBJECT_CFG.has ) {
     });
 
     TASK_CFG.legacy && bench.add('Legacy Obj.has (array)', () => {
-        _Obj.has(medobj, ['name', 'cheese', 'noway', 'swiss', 'foobar']);
+        // _Obj.has(medobj, ['name', 'cheese', 'noway', 'swiss', 'foobar']);
     });
 
     bench.add('Obj.has (array)', () => {
@@ -44,7 +44,7 @@ if ( OBJECT_CFG.get ) {
     });
 
     TASK_CFG.legacy && bench.add('Legacy Obj.get (string)', () => {
-        _Obj.get(medobj, 'name.cheese.noway.swiss.foobar');
+        // _Obj.get(medobj, 'name.cheese.noway.swiss.foobar');
     });
 
     bench.add('Obj.get (string)', () => {
@@ -56,7 +56,7 @@ if ( OBJECT_CFG.get ) {
     });
 
     TASK_CFG.legacy && bench.add('Legacy Obj.get (array)', () => {
-        _Obj.get(medobj, ['name', 'cheese', 'noway', 'swiss', 'foobar']);
+        // _Obj.get(medobj, ['name', 'cheese', 'noway', 'swiss', 'foobar']);
     });
 
     bench.add('Obj.get (array)', () => {
@@ -72,7 +72,7 @@ if ( OBJECT_CFG.set ) {
     });
 
     TASK_CFG.legacy && bench.add('Legacy Obj.set (string)', () => {
-        _Obj.set({}, 'name.cheese.noway.swiss.foobar', 'nowo');
+        // _Obj.set({}, 'name.cheese.noway.swiss.foobar', 'nowo');
     });
 
     bench.add('Obj.set (string)', () => {
@@ -84,7 +84,7 @@ if ( OBJECT_CFG.set ) {
     });
 
     TASK_CFG.legacy && bench.add('Legacy Obj.set (array)', () => {
-        _Obj.set({}, ['name', 'cheese', 'noway', 'swiss', 'foobar'], 'nowo');
+        // _Obj.set({}, ['name', 'cheese', 'noway', 'swiss', 'foobar'], 'nowo');
     });
 
     bench.add('Obj.set (array)', () => {
@@ -100,7 +100,7 @@ if ( OBJECT_CFG.unset ) {
     });
 
     TASK_CFG.legacy && bench.add('Legacy Obj.unset (string)', () => {
-        _Obj.unset(getobj(), 'name.cheese.noway.swiss.foobar');
+        // _Obj.unset(getobj(), 'name.cheese.noway.swiss.foobar');
     });
 
     bench.add('Obj.unset (string)', () => {
@@ -112,7 +112,7 @@ if ( OBJECT_CFG.unset ) {
     });
 
     TASK_CFG.legacy && bench.add('Legacy Obj.unset (array)', () => {
-        _Obj.unset(getobj(), ['name', 'cheese', 'noway', 'swiss', 'foobar']);
+        // _Obj.unset(getobj(), ['name', 'cheese', 'noway', 'swiss', 'foobar']);
     });
 
     bench.add('Obj.unset (array)', () => {

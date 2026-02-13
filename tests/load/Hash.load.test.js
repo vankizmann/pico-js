@@ -1,13 +1,13 @@
 import { Bench } from 'tinybench';
 import { Hash, Now } from "#src/index.esm.js";
-import uuid from "uuid";
+// import uuid from "uuid";
 
 const bench = new Bench(BENCH_CFG || {});
 
 // Hash.uuid
 
 TASK_CFG.detail && bench.add('UUID.v4', () => {
-    uuid.v4();
+    // uuid.v4();
 });
 
 bench.add('Hash.uuid', () => {
