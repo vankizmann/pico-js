@@ -111,8 +111,12 @@ export class PicoArray
             return this.findIndex(value, search) !== - 1;
         }
 
-        if ( !Mix.isArr(value) ) {
+        if ( !Mix.isRef(value) ) {
             value = [value];
+        }
+
+        if ( !Mix.isArr(value) ) {
+            value = Mix.vals(value);
         }
 
         let index = value.findIndex((val) => {
@@ -330,6 +334,10 @@ export class PicoArray
         cascade = [
             ...this.clone(cascade), value
         ];
+
+        if ( value == null ) {
+            return value;
+        }
 
         if ( Mix.isObj(value[key]) ) {
             value[key] = fn(cascade)(value[key]);

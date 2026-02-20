@@ -1,5 +1,6 @@
 import { Str, Event, For, Mix, Arr } from "../index.esm.js";
-export class PicoEvent
+
+export class PicoSignal
 {
     static $events = [];
 
@@ -13,7 +14,7 @@ export class PicoEvent
      * @param {function} cb Event callback
      * @param {any} [options] Listener options
      * @param {boolean} [paused] Start paused
-     * @returns {typeof PicoEvent} Event class
+     * @returns {typeof PicoSignal} Event class
      */
     static bind(event, cb, options = {}, paused = false)
     {
@@ -40,7 +41,7 @@ export class PicoEvent
      *
      * @param {any} event Event name(s)
      * @param {any} [options] Listener options
-     * @returns {typeof PicoEvent} Event class
+     * @returns {typeof PicoSignal} Event class
      */
     static unbind(event, options = {})
     {
@@ -66,7 +67,7 @@ export class PicoEvent
      *
      * @param {string} event Event name
      * @param {...any} args Event args
-     * @returns {typeof PicoEvent} Event class
+     * @returns {typeof PicoSignal} Event class
      */
     static fire(event, ...args)
     {
@@ -90,7 +91,7 @@ export class PicoEvent
      *
      * @param {any} event Event name(s)
      * @param {any} [options] Listener options
-     * @returns {typeof PicoEvent} Event class
+     * @returns {typeof PicoSignal} Event class
      */
     static pause(event, options = {})
     {
@@ -116,7 +117,7 @@ export class PicoEvent
      *
      * @param {any} event Event name(s)
      * @param {any} [options] Listener options
-     * @returns {typeof PicoEvent} Event class
+     * @returns {typeof PicoSignal} Event class
      */
     static unpause(event, options = {})
     {
@@ -137,4 +138,4 @@ export class PicoEvent
 
 }
 
-export default PicoEvent;
+export default PicoSignal;

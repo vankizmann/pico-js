@@ -5,7 +5,7 @@ import { PicoArray, default as Arr } from "./utils/Array.js";
 import { PicoObject, default as Obj } from "./utils/Object.js";
 import { PicoMixed, default as Mix } from "./utils/Mixed.js";
 import { PicoHash, default as Hash } from "./utils/Hash.js";
-import { PicoEvent, default as Event } from "./utils/Event.js";
+import { PicoSignal, default as Signal } from "./utils/Signal.js";
 import { PicoLocale, default as Locale } from "./utils/Locale.js";
 import { PicoCookie, default as Cookie } from "./utils/Cookie.js";
 
@@ -25,7 +25,7 @@ const Now = NowBuilder();
 const For = ForBuilder();
 
 export {
-    Dom, Now, For, Run, Str, Num, Arr, Obj, Mix, Hash, Event, Locale, Cookie
+    Dom, Now, For, Run, Str, Num, Arr, Obj, Mix, Hash, Signal, Locale, Cookie
 }
 
 import { PicoDom, default as DomBuilder } from "./utils/Dom.js";
@@ -58,6 +58,16 @@ export const Any = new Proxy({}, {
     get: function (target, prop) {
         console.warn(`Any.${prop} is deprecated, use Mix.${prop}() instead.`);
         return (...args) => Mix[prop](...args);
+    }
+});
+
+/**
+ * @type {typeof PicoMixed}
+ */
+export const Event = new Proxy({}, {
+    get: function (target, prop) {
+        console.warn(`Event.${prop} is deprecated, use Signal.${prop}() instead.`);
+        return (...args) => Signal[prop](...args);
     }
 });
 

@@ -130,6 +130,28 @@ export class PicoDomAttributeInstance
             value = { ...styles, ...value };
         }
 
+        if ( value.translate ) {
+            value.transform = `translate3d(${value.translate.join(',')}, 0)`;
+        }
+
+        delete value.translate;
+
+        if ( Mix.isNum(value.top) ) {
+            value.top += 'px';
+        }
+
+        if ( Mix.isNum(value.left) ) {
+            value.left += 'px';
+        }
+
+        if ( Mix.isNum(value.width) ) {
+            value.width += 'px';
+        }
+
+        if ( Mix.isNum(value.height) ) {
+            value.height += 'px';
+        }
+
         this.attr('style', value);
 
         return this;
