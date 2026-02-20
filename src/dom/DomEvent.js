@@ -100,9 +100,10 @@ export class PicoDomEventInstance
             options = { id: options };
         }
 
-        if ( Mix.isArr(event) ) {
-            return (Arr.each(event, (e) => this.on(e, ...arguments)), this);
-        }
+        // geht so nicht
+        // if ( Mix.isArr(event) ) {
+        //     return (Arr.each(event, (e) => this.on(e, cb, options, pause, selector)), this);
+        // }
 
         let fn = (e) => {
             cb.call(e.target, e, e.target);
@@ -127,9 +128,14 @@ export class PicoDomEventInstance
      */
     off(event, selector = null, options = {})
     {
-        if ( Mix.isArr(event) ) {
-            return (Arr.each(event, (e) => this.off(e, ...arguments)), this);
+        if ( Mix.isPrim(options) ) {
+            options = { id: options };
         }
+
+        // geht so nicht
+        // if ( Mix.isArr(event) ) {
+        //     return (Arr.each(event, (e) => this.off(e, ...arguments)), this);
+        // }
 
         if ( Mix.isObj(selector) ) {
             (options = selector, selector = null);
@@ -220,11 +226,12 @@ export class PicoDomEventInstance
      * @example Dom.find("div").fire("click")
      *
      * @param {string} event Event name
+     * @param {object} [detail] Event detail
      * @returns {PicoDom} Current instance
      */
-    fire(event)
+    fire(event, detail = {})
     {
-        let callback = new Event(event);
+        let callback = new CustomEvent(event, { detail });
 
         this.each((el) => {
             el.dispatchEvent(callback);

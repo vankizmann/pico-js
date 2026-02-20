@@ -15,28 +15,7 @@ export class PicoDomObserverStatic
  */
 export class PicoDomObserverInstance
 {
-
-    /**
-     * Get or set element value
-     *
-     * @example Dom.find("input").value("hello")
-     *
-     * @param {any} [value] New value
-     * @returns {any|PicoDom} Value or instance
-     */
-    value(value = undefined)
-    {
-        if ( value === undefined ) {
-            return this.el.value;
-        }
-
-        this.each((el) => {
-            el.value = value;
-        });
-
-        return this;
-    }
-
+    //
 }
 
 /**

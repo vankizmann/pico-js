@@ -454,6 +454,10 @@ export class PicoMixed
             return [];
         }
 
+        if ( this.isFunc(value.toJSON) ) {
+            value = value.toJSON();
+        }
+
         if ( this.isIter(value) ) {
             value = this.iter(value);
         }
@@ -474,6 +478,10 @@ export class PicoMixed
     {
         if ( value == null ) {
             return [];
+        }
+
+        if ( this.isFunc(value.toJSON) ) {
+            value = value.toJSON();
         }
 
         if ( this.isIter(value) ) {

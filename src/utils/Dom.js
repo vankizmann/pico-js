@@ -9,6 +9,7 @@ import { PicoDomAttributePlugin } from "../dom/DomAttribute.js";
 import { PicoDomInviewPlugin } from "../dom/DomInview.js";
 import { PicoDomMetaPlugin } from "../dom/DomMeta.js";
 import { PicoDomObserverPlugin } from "../dom/DomObserver.js";
+import { PicoDomPopoverPlugin } from "../dom/DomPopover.js";
 
 export const PicoDomPlugins = [
     PicoDomFinderPlugin,
@@ -21,6 +22,7 @@ export const PicoDomPlugins = [
     PicoDomInviewPlugin,
     PicoDomMetaPlugin,
     PicoDomObserverPlugin,
+    PicoDomPopoverPlugin,
 ];
 
 /**
@@ -43,6 +45,8 @@ export const PicoDomPlugins = [
  * @typedef {import('../dom/DomMeta.js').PicoDomMetaInstance} PicoDomMetaInstance
  * @typedef {import('../dom/DomObserver.js').PicoDomObserverStatic} PicoDomObserverStatic
  * @typedef {import('../dom/DomObserver.js').PicoDomObserverInstance} PicoDomObserverInstance
+ * @typedef {import('../dom/DomPopover.js').PicoDomPopoverStatic} PicoDomPopoverStatic
+ * @typedef {import('../dom/DomPopover.js').PicoDomPopoverInstance} PicoDomPopoverInstance
  *
  * @mixes PicoDomFinderStatic
  * @mixes PicoDomGlobalStatic
@@ -54,6 +58,7 @@ export const PicoDomPlugins = [
  * @mixes PicoDomInviewStatic
  * @mixes PicoDomMetaStatic
  * @mixes PicoDomObserverStatic
+ * @mixes PicoDomPopoverStatic
  *
  * @extends PicoDomFinderInstance
  * @extends PicoDomGlobalInstance
@@ -65,6 +70,7 @@ export const PicoDomPlugins = [
  * @extends PicoDomInviewInstance
  * @extends PicoDomMetaInstance
  * @extends PicoDomObserverInstance
+ * @extends PicoDomPopoverInstance
  */
 export class PicoDom {
 

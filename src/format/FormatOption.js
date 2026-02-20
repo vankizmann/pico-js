@@ -30,7 +30,7 @@ export class PicoFormatOptionStatic
             return this.castOption(key, val, null, space);
         });
 
-        return result.join(';') + ';';
+        return result.join(space ? '; ' : ';') + ';';
     }
 
     /**
@@ -57,10 +57,10 @@ export class PicoFormatOptionStatic
         }
 
         let result = Arr.map(value, (v, k) => {
-            return this.castOption(k, v, key);
+            return this.castOption(k, v, key, space);
         });
 
-        return result.join(';');
+        return result.join(space ? '; ' : ';');
     }
 
     /**

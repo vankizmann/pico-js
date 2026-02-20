@@ -30,6 +30,17 @@ export class PicoDomRectangleStatic
  */
 export class PicoDomRectangleInstance
 {
+    rect(fallback = {})
+    {
+        const rect = this.el.getBoundingClientRect();
+
+        if ( rect == null ) {
+            return fallback;
+        }
+        
+        return rect.toJSON();
+    }
+
     /**
      * Get margin values
      *

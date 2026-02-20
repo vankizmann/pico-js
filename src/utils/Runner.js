@@ -244,17 +244,17 @@ export class PicoRunner
 
         Arr.add(this.$buffer, item);
 
-        let fn = () => {
-            this.runFramebuffer();
-        };
-
         return (e, ...args) => {
+
+            if ( /^drag/.test(e.type) ) {
+                e.preventDefault();
+            }
 
             Obj.assign(item, {
                 args: [e, ...args], active: true
             });
 
-            (e.preventDefault(), fn());
+            this.runFramebuffer();
         };
     }
 
@@ -272,7 +272,6 @@ export class PicoRunner
         }
 
         this.$idler = setTimeout(() => {
-            console.log('delayed runFramebuffer')
             this.runFramebuffer();
         }, 50);
 

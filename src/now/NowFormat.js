@@ -5,7 +5,10 @@ export const NOW_FORMAT = {
     'L': 'DD/MM/YYYY',
     'LL': 'MMMM DD, YYYY',
     'LLL': 'MMMM DD, YYYY HH:mm',
-    'LLLL': 'dddd, MMMM DD, YYYY HH:mm'
+    'LLLL': 'dddd, MMMM DD, YYYY HH:mm',
+    'LT': 'HH:mm',
+    'LTS': 'HH:mm:ss',
+    'LTSD': 'DD/MM/YYYY HH:mm:ss',
 }
 
 export const NOW_PARSE = {
@@ -107,7 +110,7 @@ export class PicoNowFormatInstance
     format(format = 'YYYY-MM-DD HH:mm:ss')
     {
         if ( Obj.has(NOW_FORMAT, format) ) {
-            format = Locale.trans(NOW_FORMAT[format]);
+            format = Locale.$text[format] ?? NOW_FORMAT[format];
         }
 
         format = format.replace('dddd', () => {

@@ -443,6 +443,13 @@ export class PicoDomFinderInstance
         return null;
     }
 
+    upnode(selector)
+    {
+        return Dom.find(...[
+            this.closest(selector)
+        ]);
+    }
+
     /**
      * Get previous element
      *
@@ -610,7 +617,7 @@ export class PicoDomFinderInstance
     contains(selector)
     {
         // Has child of selector
-        return this.find(selector) != null;
+        return this.el.contains(selector);
     }
 
 }

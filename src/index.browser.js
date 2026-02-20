@@ -28,3 +28,9 @@ import * as pi from "./index.esm.js";
  * @type {PicoLibrary}
  */
 globalThis.pi = pi;
+
+globalThis.addEventListener && globalThis.addEventListener('beforeunload', (e) => {
+    pi.Arr.map(pi.Dom.$events, ({ el, cb, event }) => {
+        return (el.removeEventListener(event, cb), null);
+    });
+});
