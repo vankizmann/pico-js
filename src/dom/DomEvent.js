@@ -158,7 +158,7 @@ export class PicoDomEventInstance
      */
     optoff(options = {})
     {
-        Run.idle(() => {
+        Run.async(() => {
             Arr.filterRemove(Dom.$events, { options });
         });
 
@@ -235,6 +235,30 @@ export class PicoDomEventInstance
 
         this.each((el) => {
             el.dispatchEvent(callback);
+        });
+
+        return this;
+    }
+
+    pointerdown(button = 1)
+    {
+        const rect = this.rect();
+
+        const [x, y] = [
+            rect.left + rect.width / 2,
+            rect.top + rect.height / 2,
+        ];
+
+        const event = new PointerEvent('pointerdown', {
+            view: window,
+            bubbles: true,
+            cancelable: true,
+            buttons: 1,
+            clientX: x, clientY: y
+        });
+
+        this.each((el) => {
+            el.dispatchEvent(event);
         });
 
         return this;

@@ -28,20 +28,25 @@ export class PicoDomFinderStatic
      *
      * @example Dom.getNodePoint(100, 100)
      *
-     * @param {number} posx X position
-     * @param {number} posy Y position
+     * @param {object} event Event data
      * @returns {Array<Element>} Nodes at point
      */
-    static getNodePoint(posx, posy)
+    static getNodePoint(event)
     {
-        let el = null;
+        if ( event.touches?.[0] ) {
+            // event = event.touches[0];
+        }
+
+        let [el, src] = [
+            null, [event.clientX, event.clientY]
+        ];
 
         if ( Dom.doc().elementsFromPoint != null ) {
-            el = document.elementsFromPoint(posx, posy);
+            el = document.elementsFromPoint(src[0], src[1]);
         }
 
         if ( Dom.doc().msElementsFromPoint != null ) {
-            el = document.msElementsFromPoint(posx, posy);
+            el = document.msElementsFromPoint(src[0], src[1]);
         }
 
         return el;
@@ -64,10 +69,10 @@ export class PicoDomFinderStatic
             target = event.target;
         }
 
-        let { type, clientX, clientY } = event;
+        let { type } = event;
 
         if ( /^(drag[a-z]*|drop$)/.test(type) ) {
-            target = Dom.getNodePoint(clientX, clientY);
+            target = Dom.getNodePoint(event);
         }
 
         if ( Mix.isArr(target) ) {
@@ -389,12 +394,10 @@ export class PicoDomFinderInstance
      * @param {number} [filter] Node type
      * @returns {PicoDom} Child instance
      */
-    child(selector, filter = 1)
+    child(selector = null, filter = 1)
     {
-        for ( let el of this.els ) {
-            if ( el.nodeType === filter ) {
-                return Dom.find(el);
-            }
+        for ( let el of this.childs(selector, filter) ) {
+            return Dom.find(el);
         }
 
         return Dom.find(null);
@@ -506,16 +509,17 @@ export class PicoDomFinderInstance
      * @example Dom.find("div").is(".active") // => true
      *
      * @param {any} selector Test selector
+     * @param {boolean} [empty] Test selector
      * @returns {boolean} True if matches
      */
-    is(selector)
+    is(selector, empty = false)
     {
         if ( this.el === selector ) {
             return true;
         }
 
         if ( this.el == null ) {
-            return false;
+            return empty;
         }
 
         for ( let el of this.parent().find(selector).get() ) {

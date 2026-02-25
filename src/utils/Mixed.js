@@ -528,12 +528,44 @@ export class PicoMixed
         let result = {};
 
         for ( const key of Object.getOwnPropertyNames(value) ) {
-            if ( exclude.length && ! Arr.has(exclude, key) ) {
+            if ( exclude.length && !Arr.has(exclude, key) ) {
                 result[key] = value[key];
             }
         }
 
         return result;
+    }
+
+    static extend(target, value, exclude = ['constructor'])
+    {
+        if ( value == null ) {
+            return {};
+        }
+
+        let proto = Object.getPrototypeOf(value);
+
+        for ( const key of Object.getOwnPropertyNames(value) ) {
+
+            if ( !exclude.length || Arr.has(exclude, key) ) {
+                continue;
+            }
+
+            let desc = Object.getOwnPropertyDescriptor(proto, key);
+
+            if ( !desc ) {
+                desc = Object.getOwnPropertyDescriptor(value, key);
+            }
+
+            if ( !desc && (!desc.get && !desc.set) ) {
+                target[key] = value[key];
+            }
+
+            if ( desc && (desc.get || desc.set) ) {
+                Object.defineProperty(target, key, desc);
+            }
+        }
+
+        return target;
     }
 
     /**
@@ -631,7 +663,7 @@ export class PicoMixed
             return value.length;
         }
 
-        if ( ! this.isRef(value) ) {
+        if ( !this.isRef(value) ) {
             return this.string(value).length;
         }
 
@@ -691,7 +723,7 @@ export class PicoMixed
             return value;
         }
 
-        if ( ! this.isStr(value) ) {
+        if ( !this.isStr(value) ) {
             return [value];
         }
 
@@ -889,7 +921,6 @@ PicoMixed.convertBoolean = function (...args) {
     console.warn('Mix.convertBoolean() is deprecated, use Str.boolean() instead.');
     return Str.boolean(...args);
 };
-
 
 
 export default PicoMixed;
