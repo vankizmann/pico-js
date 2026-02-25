@@ -70,6 +70,32 @@ export class PicoArray
         return this.splice(target, index, 1);
     }
 
+    static prev(target, index, fallback = 0)
+    {
+        if ( Mix.isEmpty(target) || !Mix.isArr(target) ) {
+            return 0;
+        }
+
+        if ( index - 1 < 0 ) {
+            return target.length-1;
+        }
+
+        return index - 1;
+    }
+
+    static next(target, index, fallback = 0)
+    {
+        if ( Mix.isEmpty(target) || !Mix.isArr(target) ) {
+            return 0;
+        }
+
+        if ( index + 1 > target.length ) {
+            return 0;
+        }
+
+        return index + 1;
+    }
+
     /**
      * Create array with callback values
      *
@@ -348,6 +374,29 @@ export class PicoArray
         }
 
         return value;
+    }
+
+    static cascade(value, childs, key, cascade = [], result = {})
+    {
+        if ( value == null ) {
+            return result;
+        }
+
+        if ( Mix.isObj(value) ) {
+            return this.cascade(value[key], key, cb);
+        }
+
+        const fn = (val) => {
+            return this.cascade(...[
+                val[childs], childs, key, result[val[key]], result
+            ]);
+        };
+
+        this.each(value, (val) => {
+            (result[val[key]] = [...cascade, val[key] ], fn(val));
+        });
+
+        return result;
     }
 
     /**

@@ -1,4 +1,4 @@
-import { Arr, Hash, Mix, Obj } from "../index.esm.js";
+import { Arr, Mix, Obj } from "../index.esm.js";
 
 export class PicoRunner
 {
@@ -7,6 +7,15 @@ export class PicoRunner
     static $timer = 0;
 
     static $buffer = [];
+
+    static interval(fn, intval = 0)
+    {
+        const idle = setInterval(() => {
+            fn();
+        }, intval);
+
+        return () => clearInterval(idle);
+    }
 
     /**
      * Clear timer or call function
@@ -41,7 +50,7 @@ export class PicoRunner
     static tryin(cb)
     {
         try {
-            requestIdleCallback(cb);
+            cb();
         } catch (e) {
             //
         }
@@ -80,34 +89,16 @@ export class PicoRunner
      * @example Run.frame(cb)
      *
      * @param {function} fn Callback function
-     * @param {any} [...args] Callback arguments
+     * @param {any} [options] Callback options
      * @returns {function} Noop clear function
      */
-    static frame(fn, ...args)
+    static frame(fn, options = {})
     {
-        requestAnimationFrame(() => {
-            fn(...args)
+        const frame = requestAnimationFrame(() => {
+            fn();
         });
 
-        return () => null;
-    }
-
-    /**
-     * Run function when browser is idle
-     *
-     * @example Run.idle(cb)
-     *
-     * @param {function} fn Callback function
-     * @param {any} [...args] Callback arguments
-     * @returns {function} Noop clear function
-     */
-    static idle(fn, ...args)
-    {
-        requestIdleCallback(() => {
-            fn(...args)
-        });
-
-        return () => null;
+        return () => cancelAnimationFrame(frame);
     }
 
     /**
@@ -116,16 +107,15 @@ export class PicoRunner
      * @example Run.async(cb)
      *
      * @param {function} fn Callback function
-     * @param {any} [...args] Callback arguments
      * @returns {function} Noop clear function
      */
-    static async(fn, ...args)
+    static async(fn)
     {
-        setTimeout(() => {
-            fn(...args)
+        const idle = setTimeout(() => {
+            fn()
         });
 
-        return () => null;
+        return () => clearTimeout(idle);
     }
 
     /**
@@ -135,13 +125,12 @@ export class PicoRunner
      *
      * @param {function} fn Callback function
      * @param {number} [delay] Delay ms
-     * @param {any} [...args] Callback arguments
      * @returns {function} Clear function
      */
-    static delay(fn, delay = 0, ...args)
+    static delay(fn, delay = 0)
     {
         let idler = setTimeout(() => {
-            fn(...args);
+            fn();
         }, delay);
 
         return () => clearTimeout(idler);
@@ -210,20 +199,25 @@ export class PicoRunner
      *
      * @param {function} cb Callback to run
      * @param {number} [fps] Max frames per sec
+     * @param {boolean} [finish] Finish last frame
      * @returns {function} Rate-limited fn
      */
-    static framerate(cb, fps = 30)
+    static framerate(cb, fps = 30, finish = true)
     {
-        let last = 0;
+        let timer, last = 0, hertz = 1000 / fps;
 
-        return (...args) => {
+        const fn = (...args) => {
 
-            if ( Date.now() - last <= (1000 / fps) ) {
-                return;
+            clearTimeout(timer);
+
+            if ( Date.now() - last <= hertz ) {
+                return finish && (timer = setTimeout(fn, hertz + 1));
             }
 
-            (this.frame(cb, ...args), last = Date.now());
+            (this.frame(() => cb(...args)), last = Date.now());
         };
+
+        return fn;
     }
 
     /**

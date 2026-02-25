@@ -30,8 +30,12 @@ export class PicoDomRectangleStatic
  */
 export class PicoDomRectangleInstance
 {
-    rect(fallback = {})
+    rect(fallback = { left: 0, top: 0, width: 0, height: 0 })
     {
+        if ( ! this.el.getBoundingClientRect ) {
+            return fallback;
+        }
+
         const rect = this.el.getBoundingClientRect();
 
         if ( rect == null ) {
