@@ -1,4 +1,4 @@
-import { go, Obj, Arr, Mix, Dom, Event, Hash } from "../index.esm.ts";
+import { Obj, Arr, Mix, Dom, Signal, Hash } from "../index.esm.ts";
 
 /**
  * @const {object} google
@@ -6,23 +6,51 @@ import { go, Obj, Arr, Mix, Dom, Event, Hash } from "../index.esm.ts";
 
 export class PicoMap
 {
-    map = null;
 
-    static mapStyle = [];
+    /**
+     * @type {any[]}
+     */
+    static mapStyle : any[] = [];
 
-    markers = {};
+    /**
+     * @type {object}
+     */
+    static markerStyles : any = {};
 
-    static markerStyles = {};
+    /**
+     * @type {boolean}
+     */
+    static hideMarkers : boolean = true;
 
-    cluster = null;
+    /**
+     * @type {boolean}
+     */
+    static closeInfoWindows : boolean = true;
 
-    clusterFilter = null;
+    /**
+     * @type {any}
+     */
+    map : any = null;
 
-    clusterOptions = {};
+    /**
+     * @type {any}
+     */
+    markers : any = {};
 
-    static hideMarkers = true;
+    /**
+     * @type {any}
+     */
+    cluster : any = null;
 
-    static closeInfoWindows = true;
+    /**
+     * @type {any}
+     */
+    clusterFilter : any = null;
+
+    /**
+     * @type {any}
+     */
+    clusterOptions : any = {};
 
     /**
      * Create map instance
@@ -32,16 +60,16 @@ export class PicoMap
      * @param {any} el Target element
      * @param {any} [options] Map options
      */
-    constructor(el, options = {})
+    constructor(el : any, options : any = {})
     {
-        if ( ! globalThis.google ) {
+        if ( !globalThis.google ) {
             throw new Error('Google Maps is required for pi.Map');
         }
 
         let center = Obj.only(options, ['lat', 'lng']);
 
-        if ( ! Obj.has(options, 'styles') ) {
-            options.styles = Map.mapStyle;
+        if ( !Obj.has(options, 'styles') ) {
+            options.styles = PicoMap.mapStyle;
         }
 
         options = Obj.assign({ gestureHandling: 'cooperative', scrollwheel: null, zoom: 12, center },
@@ -55,12 +83,12 @@ export class PicoMap
      *
      * @example Map.setMapStyle(style)
      *
-     * @param {Array<any>} [style] Style array
+     * @param {any[]} [style] Style array
      * @returns {PicoMap} Current class
      */
-    static setMapStyle(style = [])
+    static setMapStyle(style : any[] = []) : typeof PicoMap
     {
-        Map.mapStyle = style;
+        PicoMap.mapStyle = style;
 
         return this;
     }
@@ -73,27 +101,27 @@ export class PicoMap
      * @param {string} key Style key
      * @param {any} [style] Style options
      * @param {any} [extra] Extra options
-     * @returns {PicoMap} Current class
+     * @returns {typeof PicoMap} Current class
      */
-    static setMarkerStyle(key, style = {}, extra = {})
+    static setMarkerStyle(key : string, style : any = {}, extra : any = {}) : typeof PicoMap
     {
-        if ( ! globalThis.google ) {
+        if ( !globalThis.google ) {
             throw new Error('Google Maps is required for pi.Map');
         }
 
-        if ( ! Obj.has(style, 'default') ) {
-            return console.error('Marker style requires default property')
+        if ( !Obj.has(style, 'default') ) {
+            throw new Error('Marker style requires default property');
         }
 
-        if ( ! Obj.has(style, 'width') ) {
+        if ( !Obj.has(style, 'width') ) {
             style.width = 45;
         }
 
-        if ( ! Obj.has(style, 'height') ) {
+        if ( !Obj.has(style, 'height') ) {
             style.height = 45;
         }
 
-        let final = {};
+        let final : any = {};
 
         // Marker size
         let size = new globalThis.google.maps.Size(style.width, style.height);
@@ -112,7 +140,7 @@ export class PicoMap
             final.hover = Obj.assign({}, final.default, { url: style.hover });
         }
 
-        if ( ! Obj.has(final, 'hover') ) {
+        if ( !Obj.has(final, 'hover') ) {
             final.hover = final.default;
         }
 
@@ -120,7 +148,7 @@ export class PicoMap
             final.active = Obj.assign({}, final.default, { url: style.active });
         }
 
-        if ( ! Obj.has(final, 'active') ) {
+        if ( !Obj.has(final, 'active') ) {
             final.active = final.default;
         }
 
@@ -128,7 +156,7 @@ export class PicoMap
             final[prop] = Obj.assign({}, final.default, { url: value });
         });
 
-        Obj.set(Map.markerStyles, key, final);
+        Obj.set(PicoMap.markerStyles, key, final);
 
         return this;
     }
@@ -143,9 +171,9 @@ export class PicoMap
      * @param {boolean} [allowCreate] Create cluster
      * @returns {void} No return value
      */
-    clusterMarkers(options = {}, filter = null, allowCreate = true)
+    clusterMarkers(options : any = {}, filter : any = null, allowCreate : boolean = true) : void
     {
-        if ( ! this.cluster && ! allowCreate ) {
+        if ( !this.cluster && !allowCreate ) {
             return;
         }
 
@@ -153,7 +181,7 @@ export class PicoMap
             return console.error('Google Maps Cluster library not laoded!');
         }
 
-        if ( ! Obj.has(options, 'imagePath') && ! Obj.has(options, 'styles') ) {
+        if ( !Obj.has(options, 'imagePath') && !Obj.has(options, 'styles') ) {
             options.imagePath = '//developers.google.com/maps/documentation/javascript/examples/markerclusterer/m';
         }
 
@@ -169,7 +197,7 @@ export class PicoMap
 
             let visible = this.getMarkerVisibility(item.key);
 
-            if ( ! Mix.isFunction(this.clusterFilter) ) {
+            if ( !Mix.isFunction(this.clusterFilter) ) {
                 return visible;
             }
 
@@ -189,7 +217,7 @@ export class PicoMap
      * @param {any} [type] Style type
      * @returns {void} No return value
      */
-    styleMarker(key, type = null)
+    styleMarker(key : string, type : any = null) : void
     {
         let item = Obj.get(this.markers, key);
 
@@ -201,11 +229,11 @@ export class PicoMap
             type = this.getInfoVisibility(key) ? 'active' : 'default';
         }
 
-        if ( ! Obj.has(Map.markerStyles, [item.style, type]) ) {
+        if ( !Obj.has(PicoMap.markerStyles, [item.style, type]) ) {
             return;
         }
 
-        item.marker.setIcon(Obj.get(Map.markerStyles, [item.style, type]));
+        item.marker.setIcon(Obj.get(PicoMap.markerStyles, [item.style, type]));
     }
 
     /**
@@ -216,7 +244,7 @@ export class PicoMap
      * @param {string} key Marker key
      * @returns {any} Marker object
      */
-    getMarker(key)
+    getMarker(key : string) : any
     {
         return Obj.get(this.markers, key);
     }
@@ -230,7 +258,7 @@ export class PicoMap
      * @param {boolean} [fallback] Fallback value
      * @returns {boolean} Visibility state
      */
-    getMarkerVisibility(key, fallback = false)
+    getMarkerVisibility(key : string, fallback : boolean = false) : boolean
     {
         let item = Obj.get(this.markers, key);
 
@@ -250,7 +278,7 @@ export class PicoMap
      * @param {any} [fallback] Fallback value
      * @returns {any} Position object
      */
-    getMarkerPositon(key, fallback = null)
+    getMarkerPositon(key : string, fallback : any = null) : any
     {
         let item = Obj.get(this.markers, key);
 
@@ -267,14 +295,14 @@ export class PicoMap
      * @example map.toggleMarker("m1")
      *
      * @param {string} key Marker key
-     * @returns {boolean|void} Visibility state
+     * @returns {boolean} Visibility state
      */
-    toggleMarker(key)
+    toggleMarker(key : string) : boolean
     {
         let item = Obj.get(this.markers, key);
 
         if ( Mix.isEmpty(item) ) {
-            return console.error(`Marker "${key}" not found`);
+            throw new Error(`Marker "${key}" not found`);
         }
 
         if ( item.marker.getVisible() ) {
@@ -290,17 +318,17 @@ export class PicoMap
      * @example map.showMarker("m1")
      *
      * @param {string} key Marker key
-     * @returns {boolean|void} Previous state
+     * @returns {boolean} Previous state
      */
-    showMarker(key)
+    showMarker(key : string) : boolean
     {
         let item = Obj.get(this.markers, key);
 
         if ( Mix.isEmpty(item) ) {
-            return console.error(`Marker "${key}" not found`);
+            throw new Error(`Marker "${key}" not found`);
         }
 
-        let hidden = ! item.marker.getVisible();
+        let hidden = !item.marker.getVisible();
 
         if ( hidden ) {
             item.marker.setVisible(true);
@@ -315,17 +343,17 @@ export class PicoMap
      * @example map.hideMarker("m1")
      *
      * @param {string} key Marker key
-     * @returns {boolean|void} Previous state
+     * @returns {boolean} Previous state
      */
-    hideMarker(key)
+    hideMarker(key : string) : boolean
     {
         let item = Obj.get(this.markers, key);
 
         if ( Mix.isEmpty(item) ) {
-            return console.error(`Marker "${key}" not found`);
+            throw new Error(`Marker "${key}" not found`);
         }
 
-        let visible = !! item.marker.getVisible();
+        let visible = !!item.marker.getVisible();
 
         if ( visible ) {
             item.marker.setVisible(false);
@@ -342,14 +370,14 @@ export class PicoMap
      * @example map.enterMarker("m1")
      *
      * @param {string} key Marker key
-     * @returns {this|void} Current instance
+     * @returns {PicoMap} Current instance
      */
-    enterMarker(key)
+    enterMarker(key : string) : PicoMap
     {
         let item = Obj.get(this.markers, key);
 
         if ( Mix.isEmpty(item) ) {
-            return console.error(`Marker "${key}" not found`);
+            throw new Error(`Marker "${key}" not found`);
         }
 
         let type = 'hover';
@@ -369,14 +397,14 @@ export class PicoMap
      * @example map.leaveMarker("m1")
      *
      * @param {string} key Marker key
-     * @returns {this|void} Current instance
+     * @returns {PicoMap} Current instance
      */
-    leaveMarker(key)
+    leaveMarker(key : string) : PicoMap
     {
         let item = Obj.get(this.markers, key);
 
         if ( Mix.isEmpty(item) ) {
-            return console.error(`Marker "${key}" not found`);
+            throw new Error(`Marker "${key}" not found`);
         }
 
         let type = 'default';
@@ -399,15 +427,15 @@ export class PicoMap
      * @param {boolean} [fallback] Fallback value
      * @returns {boolean} Visibility state
      */
-    getInfoVisibility(key, fallback = false)
+    getInfoVisibility(key : string, fallback : boolean = false) : boolean
     {
         let item = Obj.get(this.markers, key);
 
-        if ( Mix.isEmpty(item) || ! Obj.has(item, 'info') ) {
+        if ( Mix.isEmpty(item) || !Obj.has(item, 'info') ) {
             return fallback;
         }
 
-        return !! item.info.getMap();
+        return !!item.info.getMap();
     }
 
     /**
@@ -416,14 +444,14 @@ export class PicoMap
      * @example map.toggleInfo("m1")
      *
      * @param {string} key Marker key
-     * @returns {boolean|void} Visibility state
+     * @returns {boolean} Visibility state
      */
-    toggleInfo(key)
+    toggleInfo(key : string) : boolean
     {
         let item = Obj.get(this.markers, key);
 
         if ( Mix.isEmpty(item) ) {
-            return console.error(`Marker "${key}" not found`);
+            throw new Error(`Marker "${key}" not found`);
         }
 
         if ( item.info.getMap() ) {
@@ -439,23 +467,23 @@ export class PicoMap
      * @example map.openInfo("m1")
      *
      * @param {string} key Marker key
-     * @returns {boolean|void} Previous state
+     * @returns {boolean} Previous state
      */
-    openInfo(key)
+    openInfo(key : string) : boolean
     {
         let item = Obj.get(this.markers, key);
 
         if ( Mix.isEmpty(item) ) {
-            return console.error(`InfoWindow "${key}" not found`);
+            throw new Error(`InfoWindow "${key}" not found`);
         }
 
-        if ( ! Obj.has(item, 'info') ) {
+        if ( !Obj.has(item, 'info') ) {
             return true;
         }
 
-        let hidden = ! item.info.getMap();
+        let hidden = !item.info.getMap();
 
-        if ( Map.closeInfoWindows ) {
+        if ( PicoMap.closeInfoWindows ) {
             Obj.each(Mix.keys(this.markers), this.closeInfo.bind(this));
         }
 
@@ -478,21 +506,21 @@ export class PicoMap
      * @example map.closeInfo("m1")
      *
      * @param {string} key Marker key
-     * @returns {boolean|void} Previous state
+     * @returns {boolean} Previous state
      */
-    closeInfo(key)
+    closeInfo(key : string) : boolean
     {
         let item = Obj.get(this.markers, key);
 
         if ( Mix.isEmpty(item) ) {
-            return console.error(`InfoWindow "${key}" not found`);
+            throw new Error(`InfoWindow "${key}" not found`);
         }
 
-        if ( ! Obj.has(item, 'info') ) {
+        if ( !Obj.has(item, 'info') ) {
             return false;
         }
 
-        let visible = !! item.info.getMap();
+        let visible = !!item.info.getMap();
 
         if ( visible ) {
             item.info.close();
@@ -516,15 +544,15 @@ export class PicoMap
      * @param {any} [options] Marker options
      * @returns {any} Marker object
      */
-    createMarker(key = null, options = {})
+    createMarker(key : any = null, options : any = {}) : any
     {
         if ( Mix.isEmpty(key) ) {
             key = Hash.uuid();
         }
 
-        let item = { key };
+        let item : any = { key };
 
-        if ( ! Obj.has(options, 'visible') ) {
+        if ( !Obj.has(options, 'visible') ) {
             options.visible = true;
         }
 
@@ -532,11 +560,11 @@ export class PicoMap
             'map', 'position', 'lat', 'lng', 'html', 'style', 'visible', 'onOpen', 'onClose'
         ]);
 
-        if ( ! Obj.has(options, 'map') ) {
+        if ( !Obj.has(options, 'map') ) {
             options.map = this.map;
         }
 
-        if ( ! Obj.has(options, 'position') ) {
+        if ( !Obj.has(options, 'position') ) {
             options.position = Obj.only(options, ['lat', 'lng']);
         }
 
@@ -558,11 +586,11 @@ export class PicoMap
 
         this.clusterMarkers(this.clusterOptions, null, false);
 
-        if ( ! Obj.has(options, 'html') ) {
+        if ( !Obj.has(options, 'html') ) {
             return Obj.get(this.markers, key);
         }
 
-        if ( ! Obj.has(item, 'style') ) {
+        if ( !Obj.has(item, 'style') ) {
             item.style = 'default';
         }
 
@@ -583,7 +611,7 @@ export class PicoMap
         item.info.addListener('closeclick', () => this.closeInfo(key));
 
         // Dom change event
-        item.info.addListener('domready', () => Event.fire('MapsDomReady'));
+        item.info.addListener('domready', () => Signal.fire('MapsDomReady'));
 
         Obj.set(this.markers, key, item);
 
@@ -599,7 +627,7 @@ export class PicoMap
      * @param {any} [options] Position options
      * @returns {void} No return value
      */
-    setMarkerPosition(key, options = {})
+    setMarkerPosition(key : string, options : any = {}) : void
     {
         let item = Obj.get(this.markers, key);
 
@@ -619,9 +647,9 @@ export class PicoMap
      * @param {any} address Search address
      * @returns {Promise<any>} Response promise
      */
-    setMarkerByAddress(key, address)
+    setMarkerByAddress(key : string, address : any) : Promise<any>
     {
-        return this.getLocationByAddress(address, (res) => {
+        return this.getLocationByAddress(address, (res : any) => {
             this.setMarkerPosition(key, Obj.get(res, '0.geometry.location', {}));
         });
     }
@@ -632,16 +660,16 @@ export class PicoMap
      * @example map.getLocationByAddress("Address")
      *
      * @param {any} address Search address
-     * @param {function} [callback] Success callback
+     * @param {Function} [callback] Success callback
      * @returns {Promise<any>} Response promise
      */
-    getLocationByAddress(address, callback = null)
+    getLocationByAddress(address : any, callback : Function = null) : Promise<any>
     {
         let geocoderService = new globalThis.google.maps.Geocoder();
 
-        let geocoderPromise = (resolve, reject) => {
+        let geocoderPromise = (resolve : any, reject : any) => {
 
-            let geocoderResult = (response, status) => {
+            let geocoderResult = (response : any, status : any) => {
 
                 if ( status === 'OK' ) {
                     callback(response);
@@ -668,19 +696,21 @@ export class PicoMap
      * @param {any} [filter] Marker filter
      * @returns {PicoMap} Current instance
      */
-    showMarkers(filter = null)
+    showMarkers(filter : any = null) : PicoMap
     {
         let markers = this.markers;
 
-        if ( ! Mix.isEmpty(filter) ) {
+        if ( !Mix.isEmpty(filter) ) {
             markers = Obj.filter(this.markers, filter);
         }
 
-        if ( Map.hideMarkers ) {
+        if ( PicoMap.hideMarkers ) {
             Obj.each(Mix.keys(this.markers), this.hideMarker.bind(this));
         }
 
-        Obj.each(markers, (item) => this.showMarker(item.key));
+        Obj.each(markers, (item : any) => {
+            return this.showMarker(item.key);
+        });
 
         this.clusterMarkers(this.clusterOptions, null, false);
 
@@ -695,17 +725,17 @@ export class PicoMap
      * @param {any} [filter] Marker filter
      * @returns {any} Boundary object
      */
-    getMarkerBoundry(filter = null)
+    getMarkerBoundry(filter : any = null) : any
     {
         let markers = this.markers;
 
-        if ( ! Mix.isEmpty(filter) ) {
+        if ( !Mix.isEmpty(filter) ) {
             markers = Obj.filter(this.markers, filter);
         }
 
         let boundry = new globalThis.google.maps.LatLngBounds();
 
-        Obj.each(markers, (item) => {
+        Obj.each(markers, (item : any) => {
             if ( item.marker.getVisible() ) {
                 boundry.extend(item.marker.getPosition());
             }
@@ -724,7 +754,7 @@ export class PicoMap
      * @param {number} [boundSpace] Viewport space
      * @returns {PicoMap} Current instance
      */
-    focusMarkers(filter = null, maxZoom = 14, boundSpace = 15)
+    focusMarkers(filter : any = null, maxZoom : number = 14, boundSpace : number = 15) : PicoMap
     {
         let boundry = this.getMarkerBoundry(filter);
 
@@ -749,7 +779,7 @@ export class PicoMap
      * @param {any} options Render options
      * @returns {Promise<any>} Response promise
      */
-    renderDirections(options)
+    renderDirections(options : any) : Promise<any>
     {
         // Get directions service
         let directionsService = new globalThis.google.maps.DirectionsService();
@@ -757,26 +787,26 @@ export class PicoMap
         // Get directions renderer
         let directionsRenderer = new globalThis.google.maps.DirectionsRenderer();
 
-        if ( ! Obj.has(options, 'map') ) {
+        if ( !Obj.has(options, 'map') ) {
             options.map = this.map;
         }
 
-        if ( ! Obj.has(options, 'travelMode') ) {
+        if ( !Obj.has(options, 'travelMode') ) {
             options.travelMode = 'DRIVING';
         }
 
         // Set directions map
         directionsRenderer.setMap(options.map);
 
-        if ( Obj.has(options, 'panel') && ! Dom.find(options.panel).empty() ) {
+        if ( Obj.has(options, 'panel') && !Dom.find(options.panel).empty() ) {
             directionsRenderer.setPanel(Dom.find(options.panel).get(0));
         }
 
         options = Obj.only(options, ['origin', 'destination', 'travelMode']);
 
-        let directionsPromise = (resolve, reject) => {
+        let directionsPromise = (resolve : any, reject : any) => {
 
-            let directionsResult = (response, status) => {
+            let directionsResult = (response : any, status : any) => {
 
                 if ( status === 'OK' ) {
                     directionsRenderer.setDirections(response);

@@ -43,12 +43,7 @@ export class PicoDomEvent
             el, event, cb, selector, pause, options
         });
 
-        console.log(this.els, el);
-        try {
-            el.addEventListener(event, cb, options);
-        } catch (e) {
-            console.log('ERRROR', this.els, el, e);
-        }
+        el.addEventListener(event, cb, options);
 
         return <PicoDom> <unknown> this;
     }
@@ -135,7 +130,7 @@ export class PicoDomEvent
      * @example Dom.find("div").off("click")
      *
      * @param {any} event Event name
-     * @param {string} [selector] Event selector
+     * @param {any} [selector] Event selector
      * @param {any} [options] Listener options
      * @returns {PicoDom} Current instance
      */
