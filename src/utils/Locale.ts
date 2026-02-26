@@ -12,9 +12,9 @@ export class PicoLocale
     /**
      * Cached collator instance
      *
-     * @type {Intl.Collator|null}
+     * @type {Intl.Collator}
      */
-    static $sort : Intl.Collator;
+    static $sort : Intl.Collator = null;
 
     /**
      * Active locale code
@@ -113,7 +113,7 @@ export class PicoLocale
      */
     static collator() : Intl.Collator
     {
-        if ( !Mix.isNull(Locale.$sort) ) {
+        if ( Locale.$sort != null ) {
             return Locale.$sort;
         }
 
