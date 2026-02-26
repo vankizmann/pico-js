@@ -35,6 +35,17 @@ let libJs = {
                 options: {
                     configFile: path.resolve('babel.config.cjs')
                 },
+            },
+            {
+                test: /.ts$/,
+                include: [
+                    path.resolve('src'),
+                    path.resolve('node_modules/@kizmann/pico-js'),
+                ],
+                loader: 'babel-loader',
+                options: {
+                    configFile: path.resolve('babel.config.cjs')
+                },
             }
         ],
     },
@@ -53,6 +64,17 @@ let docJs = {
                 test: /.c?js$/,
                 include: [
                     path.resolve('src'),
+                ],
+                loader: 'babel-loader',
+                options: {
+                    configFile: path.resolve('babel.config.cjs')
+                },
+            },
+            {
+                test: /.ts$/,
+                include: [
+                    path.resolve('src'),
+                    path.resolve('node_modules/@kizmann/pico-js'),
                 ],
                 loader: 'babel-loader',
                 options: {
@@ -132,7 +154,7 @@ module.exports = function (env, argv) {
 
     let browserJsBundle = Object.assign({
 
-        entry: ["./src/index.browser.js"],
+        entry: ["./src/index.browser.ts"],
 
         output: {
             filename: "pico-js.browser.js",
@@ -144,7 +166,7 @@ module.exports = function (env, argv) {
 
     let moduleJsBundle = Object.assign({
 
-        entry: ["./src/index.esm.js"],
+        entry: ["./src/index.esm.ts"],
 
         output: {
             filename: "pico-js.esm.js",

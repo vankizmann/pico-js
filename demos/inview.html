@@ -93,6 +93,7 @@
 
 <script>
     pi.Dom.ready(() => {
+        console.log('DOM ready');
         pi.Dom.find('[data-boundry]').on('scroll', () => {
 
             pi.Dom.find('[data-inview]').each((el) => {
