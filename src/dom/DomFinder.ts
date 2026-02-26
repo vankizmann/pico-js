@@ -1,6 +1,5 @@
 import { Arr, Mix, Obj, Dom } from "../index.esm.ts";
 import { PicoDomInterface, PicoDom } from "../utils/Dom.ts";
-import Element from "#src/wip/Element.js";
 
 export interface PicoDomFinder extends PicoDomInterface
 {
@@ -19,9 +18,9 @@ export class PicoDomFinder
      *
      * @param {any} nodes Source nodes
      * @param {number} [filter] Node type
-     * @returns {Array<Element>} Filtered nodes
+     * @returns {Array<any>} Filtered nodes
      */
-    static filterNodes(nodes : any, filter : number = 1) : Array<Element>
+    static filterNodes(nodes : any, filter : number = 1) : Array<any>
     {
         return Arr.filter(Mix.nodes(nodes), (el : any) => {
             return el.nodeType === filter;
@@ -34,9 +33,9 @@ export class PicoDomFinder
      * @example Dom.getNodePoint(100, 100)
      *
      * @param {any} event Event data
-     * @returns {Array<Element>} Nodes at point
+     * @returns {Array<any>} Nodes at point
      */
-    static getNodePoint(event : any) : Array<Element>
+    static getNodePoint(event : any) : Array<any>
     {
         if ( event.touches?.[0] ) {
             event = event.touches[0];
@@ -65,9 +64,9 @@ export class PicoDomFinder
      *
      * @param {string} selector Node selector
      * @param {any} [event] Event object
-     * @returns {Element} Found element
+     * @returns {any} Found element
      */
-    static getNodeEvent(selector : string, event : any = {}) : Element
+    static getNodeEvent(selector : string, event : any = {}) : any
     {
         let target = event.srcElement;
 
@@ -167,9 +166,9 @@ export class PicoDomFinder
      *
      * @param {number} [type] Node type
      * @param {any} [fallback] Fallback value
-     * @returns {Array<Element>} Child nodes
+     * @returns {Array<any>} Child nodes
      */
-    getNodeChilds(type : number = -1, fallback : any = []) : Array<Element>
+    getNodeChilds(type : number = -1, fallback : any = []) : Array<any>
     {
         if ( !this.el ) {
             return fallback;
@@ -207,9 +206,9 @@ export class PicoDomFinder
      * @example Dom.find("div").filter(".active")
      *
      * @param {any} selector Filter selector
-     * @returns {Array<Element>} Filtered nodes
+     * @returns {Array<any>} Filtered nodes
      */
-    filter(selector : any) : Array<Element>
+    filter(selector : any) : Array<any>
     {
         if ( typeof selector !== 'function' ) {
             selector = (el : any) => Dom.find(el).is(selector);
@@ -224,9 +223,9 @@ export class PicoDomFinder
      * @example Dom.find("div").except(".active")
      *
      * @param {any} selector Exclude selector
-     * @returns {Array<Element>} Filtered nodes
+     * @returns {Array<any>} Filtered nodes
      */
-    except(selector : any) : Array<Element>
+    except(selector : any) : Array<any>
     {
         if ( typeof selector !== 'function' ) {
             selector = (el : any) => !Dom.find(el).is(selector);
@@ -267,7 +266,7 @@ export class PicoDomFinder
     /**
      * Get element by index
      *
-     * @example Dom.find("div").get(0) // => Element
+     * @example Dom.find("div").get(0) // => HTMLElement
      *
      * @param {number} [index] Node index
      * @returns {any} Found element
@@ -286,7 +285,7 @@ export class PicoDomFinder
     /**
      * Get first element
      *
-     * @example Dom.find("div").first() // => Element
+     * @example Dom.find("div").first() // => HTMLElement
      *
      * @param {number} [offset] Node offset
      * @returns {any} Found element
@@ -299,7 +298,7 @@ export class PicoDomFinder
     /**
      * Get last element
      *
-     * @example Dom.find("div").last() // => Element
+     * @example Dom.find("div").last() // => HTMLElement
      *
      * @param {number} [offset] Node offset
      * @returns {any} Found element
@@ -387,9 +386,9 @@ export class PicoDomFinder
      *
      * @param {any} [selector] Child selector
      * @param {number} [filter] Node type
-     * @returns {Array<Element>} Child elements
+     * @returns {Array<any>} Child elements
      */
-    childs(selector : any = null, filter : number = 1) : Array<Element>
+    childs(selector : any = null, filter : number = 1) : Array<any>
     {
         let childs = this.getNodeChilds(filter);
 
@@ -408,9 +407,9 @@ export class PicoDomFinder
      * @example Dom.find("div").closest(".container")
      *
      * @param {any} selector Target selector
-     * @returns {Element} Found element
+     * @returns {any} Found element
      */
-    closest(selector : any) : Element
+    closest(selector : any) : any
     {
         if ( this.el === selector ) {
             return this.el;

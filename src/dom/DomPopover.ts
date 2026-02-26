@@ -1,10 +1,8 @@
-import { Arr, Mix, Obj, Dom } from "../index.esm.ts";
+import { Obj, Dom } from "../index.esm.ts";
 import { PicoDom, PicoDomInterface } from "../utils/Dom.ts";
-import PicoDomFinder from "#src/dom/DomFinder.js";
-import PicoDomRectangle from "#src/dom/DomRectangle.js";
+import PicoDomRectangle from "./DomRectangle.js";
 
 export interface PicoDomPopover extends PicoDomInterface,
-    // PicoDomFinder,
     PicoDomRectangle
 {
     //
@@ -12,7 +10,6 @@ export interface PicoDomPopover extends PicoDomInterface,
 
 /**
  * @memberof PicoDom
- * @extends {PicoDom}
  */
 export class PicoDomPopover
 {

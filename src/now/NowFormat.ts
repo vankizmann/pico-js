@@ -1,7 +1,7 @@
 import { Locale, Mix, Obj, Str } from "../index.esm.ts";
 import { PicoNow, PicoNowInterface } from "../utils/Now.ts";
 import PicoNowDefault from "./NowDefault.js";
-import PicoNowHuman from "#src/now/NowHuman.js";
+import PicoNowHuman from "./NowHuman.js";
 
 export const NOW_FORMAT : any = {
     'L': 'DD/MM/YYYY',

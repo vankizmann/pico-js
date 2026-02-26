@@ -6,9 +6,9 @@
     "private": false,
     "author": "Eduard Kizmann <kizmann@protonmail.ch>",
     "repository": "https://github.com/vankizmann/pico-js",
-    "main": "./dist/index.esm.js",
+    "main": "./dist/pico-js.esm.js",
     "unpkg": "./dist/pico-js.browser.js",
-    "jsnext:main": "./dist/index.esm.js",
+    "jsnext:main": "./dist/pico-js.esm.js",
     "typings": "./types/index.esm.d.ts",
     "files": [
         "dist/",

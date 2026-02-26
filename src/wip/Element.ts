@@ -1,4 +1,4 @@
-import { Str, Obj, Dom, Mix, Arr } from "#src/index.esm.ts";
+import { Str, Obj, Dom, Mix, Arr } from "../index.esm.ts";
 
 export class PicoElement
 {

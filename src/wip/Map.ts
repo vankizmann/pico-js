@@ -1,4 +1,4 @@
-import { go, Obj, Arr, Mix, Dom, Event, Hash } from "#src/index.esm.ts";
+import { go, Obj, Arr, Mix, Dom, Event, Hash } from "../index.esm.ts";
 
 /**
  * @const {object} google

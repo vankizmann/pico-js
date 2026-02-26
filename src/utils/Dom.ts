@@ -170,7 +170,7 @@ export class PicoDom extends trait(PicoDomPlugins)
     /**
      * Get document or empty object
      *
-     * @example Dom.doc().body // => HTMLElement|undefined
+     * @example Dom.doc().body // => HTMLElement
      *
      * @returns {any} Document or {}
      */
