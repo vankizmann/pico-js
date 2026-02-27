@@ -376,27 +376,72 @@ export class PicoArray
         return value;
     }
 
-    static cascade(value : any, childs : string, key : string, cascade : any[] = [], result : any = {}) : any
+    static cascade(value : any, childs : string, cb: Function, cascade: any[] = [], result = []) : any
     {
+        let fn = (cas : any) => (val : any) => {
+            return this.cascade(val, childs, cb, cas, result);
+        };
+
+        if ( Mix.isArr(value) ) {
+            return (this.each(value, fn(cascade)), result);
+        }
+
+        if ( Mix.isObj(value) ) {
+            result.push(cb(value, cascade));
+        }
+
+        cascade = [
+            ...this.clone(cascade), value
+        ];
+
         if ( value == null ) {
             return result;
         }
 
-        if ( Mix.isObj(value) ) {
-            return this.cascade(value[key], childs, key);
+        if ( Mix.isObj(value[childs]) ) {
+            result.push(fn(cascade)(value[childs]));
         }
 
-        const fn = (val : any) => {
-            return this.cascade(...[
-                val[childs], childs, key, result[val[key]], result
-            ]);
+        if ( Mix.isArr(value[childs]) ) {
+            this.each(value[childs], fn(cascade));
+        }
+
+        return result;
+    }
+
+    static cascadeFind(value : any, childs : string, cb : Function) : any
+    {
+        if ( value == null ) {
+            return null;
+        }
+
+        let result = null
+
+        const fn = (val : any, cascade: any[]) => {
+            return cb(val, cascade) ? [...cascade, val] : null;
         };
 
-        this.each(value, (val : any) => {
-            (result[val[key]] = [...cascade, val[key]], fn(val));
+        this.cascade(value, childs, (val:any, cascade : any[]) => {
+            if ( result == null ) result = fn(val, cascade);
         });
 
         return result;
+    }
+
+    static cascadeMap(value : any, childs : string, key : string) : any
+    {
+        let result = {};
+
+        if ( value == null ) {
+            return result;
+        }
+
+        result = this.cascade(value, childs, (val : any, cascade : any[]) => {
+            return { [val[key]]: [...this.extract(cascade, key), val[key]] };
+        });
+
+        // @ts-ignore
+        return Obj.assign(...result);
     }
 
     /**
