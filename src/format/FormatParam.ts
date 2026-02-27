@@ -1,5 +1,4 @@
 import { Arr, Mix, Obj, For } from "../index.esm.ts";
-import { PicoFormat } from "../utils/Format.ts";
 
 export const PARAM_REGEX = {
     entry: /(?<=^|&|\?)(\s*(?<key>.*?)\s*=\s*(?<val>".*?"|'.*?'|.*?)\s*)(?=&|$)/g

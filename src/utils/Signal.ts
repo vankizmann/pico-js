@@ -1,4 +1,4 @@
-import { Str, Event, For, Mix, Arr } from "../index.esm.ts";
+import { Mix, Arr } from "../index.esm.ts";
 
 export class PicoSignal
 {

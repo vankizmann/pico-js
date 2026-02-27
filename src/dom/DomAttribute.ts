@@ -360,14 +360,20 @@ export class PicoDomAttribute
 
 }
 
+/**
+ * @deprecated use Dom.style instead
+ */
 // @ts-ignore
-PicoDomAttribute.prototype.css = function (...args : Parameters<typeof PicoDomAttribute.style>) {
+PicoDomAttribute.prototype.css = function(...args : Parameters<typeof PicoDomAttribute.prototype.style>) : any {
     console.warn('Dom.css() is deprecated, use Dom.style() instead.');
     return this.style(...args);
 };
 
+/**
+ * @deprecated use Dom.remClass instead
+ */
 // @ts-ignore
-PicoDomAttribute.prototype.removeClass = function (...args : Parameters<typeof PicoDomAttribute.remClass>) {
+PicoDomAttribute.prototype.removeClass = function(...args : Parameters<typeof PicoDomAttribute.prototype.remClass>) : any {
     console.warn('Dom.removeClass() is deprecated, use Dom.remClass() instead.');
     return this.remClass(...args);
 };

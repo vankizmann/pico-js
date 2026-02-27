@@ -544,84 +544,90 @@ export class PicoString
 }
 
 /**
- * @see PicoStr.regex
+ * @deprecated use Str.regex instead
  */
 // @ts-ignore
-PicoString.regexEscape = (...args : Parameters<typeof Str.regex>) => {
+PicoString.regexEscape = (...args : Parameters<typeof Str.regex>) : any => {
     console.warn('Str.regexEscape() is deprecated, use Str.regex() instead.');
     return Str.regex(...args);
 };
 
 /**
- * @see PicoStr.pascalcase
+ * @deprecated use Str.pc instead
  */
 // @ts-ignore
-PicoString.humancase = (...args : Parameters<typeof Str.pc>) => {
+PicoString.humancase = (...args : Parameters<typeof Str.pc>) : any => {
     console.warn('Str.humancase() is deprecated, use Str.pascalcase() instead.');
     return Str.pc(...args);
 };
 
 /**
- * @see PicoFormat.slugify
+ * @deprecated use For.slugify instead
  */
 // @ts-ignore
-PicoString.slugify = (...args : Parameters<typeof For.slugify>) => {
+PicoString.slugify = (...args : Parameters<typeof For.slugify>) : any => {
     console.warn('Str.slugify() is deprecated, use For.slugify() instead.');
     return For.slugify(...args);
 };
 
 /**
- * @see PicoFormat.castOptions
+ * @deprecated use For.castOptions instead
  */
 // @ts-ignore
-PicoString.options = (...args : Parameters<typeof For.castOptions>) => {
+PicoString.options = (...args : Parameters<typeof For.castOptions>) : any => {
     console.warn('Str.options() is deprecated, use For.castOptions() instead.');
     return For.castOptions(...args);
 };
 
 /**
- * @see PicoFormat.parseOptions
+ * @deprecated use For.parseOptions instead
  */
 // @ts-ignore
-PicoString.fromOptions = (...args : Parameters<typeof For.parseOptions>) => {
+PicoString.fromOptions = (...args : Parameters<typeof For.parseOptions>) : any => {
     console.warn('Str.fromOptions() is deprecated, use For.parseOptions() instead.');
     return For.parseOptions(...args);
 };
 
 /**
- * @see PicoFormat.castParams
+ * @deprecated use For.castParams instead
  */
 // @ts-ignore
-PicoString.params = (...args : Parameters<typeof For.castParams>) => {
+PicoString.params = (...args : Parameters<typeof For.castParams>) : any => {
     console.warn('Str.params() is deprecated, use For.castParams() instead.');
     return For.castParams(...args);
 };
 
 /**
- * @see PicoFormat.parseParams
+ * @deprecated use For.parseParams instead
  */
 // @ts-ignore
-PicoString.fromParams = (...args : Parameters<typeof For.parseParams>) => {
+PicoString.fromParams = (...args : Parameters<typeof For.parseParams>) : any => {
     console.warn('Str.fromParams() is deprecated, use For.parseParams() instead.');
     return For.parseParams(...args);
 };
 
 /**
- * @see PicoFormat.filesize
+ * @deprecated use For.filesize instead
  */
 // @ts-ignore
-PicoString.filesize = (...args : Parameters<typeof For.filesize>) => {
+PicoString.filesize = (...args : Parameters<typeof For.filesize>) : any => {
     console.warn('Str.filesize() is deprecated, use For.filesize() instead.');
     return For.filesize(...args);
 };
 
+/**
+ * @deprecated not implemented anymore
+ */
 // @ts-ignore
-PicoString.real = () => {
+PicoString.real = () : void => {
     console.error('Str.real() is not implemented anymore.');
 };
 
+/**
+ * @deprecated not implemented anymore
+ */
 // @ts-ignore
-PicoString.array = () => {
+PicoString.array = () : void => {
     console.error('Str.array() is not implemented anymore.');
 };
 

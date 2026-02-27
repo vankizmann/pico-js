@@ -168,11 +168,15 @@ export class PicoDomGlobal
 
         return <PicoDom> <unknown> this;
     }
-}
+    /**
+     * @deprecated not implemented anymore
+     */
+    // @ts-ignore
+    static required() : void
+    {
+        console.error('Dom.required() is not implemented anymore.');
+    }
 
-// @ts-ignore
-PicoDomGlobal.required = () => {
-    console.error('Dom.required() is not implemented anymore.');
 }
 
 export default PicoDomGlobal;

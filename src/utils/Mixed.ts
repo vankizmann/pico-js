@@ -536,6 +536,16 @@ export class PicoMixed
         return result;
     }
 
+    /**
+     * Extend object with another object
+     *
+     * @example Mix.extend({}, {a:1}) // => {a:1}
+     *
+     * @param {any} target Target object
+     * @param {any} value Source object
+     * @param {string[]} [exclude] Exclude keys
+     * @returns {any} Extended target
+     */
     static extend(target : any, value : any, exclude : string[] = ['constructor'])
     {
         if ( value == null ) {
@@ -860,79 +870,115 @@ export class PicoMixed
      * @see PicoMixed.bool
      */
     static boolean = PicoMixed.bool;
+
 }
 
+/**
+ * @deprecated use go instead
+ */
 // @ts-ignore
-PicoMixed.global = function (...args : Parameters<typeof go>) {
+PicoMixed.global = (...args : Parameters<typeof go>) : any => {
     console.warn('Mix.global() is deprecated, use go() instead.');
     return go(...args);
 };
 
+/**
+ * @deprecated use Mix.isObj instead
+ */
 // @ts-ignore
-PicoMixed.isPlain = function (...args : Parameters<typeof Mix.isObj>) {
+PicoMixed.isPlain = (...args : Parameters<typeof Mix.isObj>) : any => {
     console.warn('Mix.isPlain() is deprecated, use Mix.isObj() instead.');
     return Mix.isObj(...args);
 };
 
+/**
+ * @deprecated use Mix.num instead
+ */
 // @ts-ignore
-PicoMixed.float = function (...args : Parameters<typeof Mix.num>) {
+PicoMixed.float = (...args : Parameters<typeof Mix.num>) : any => {
     console.warn('Mix.float() is deprecated, use Mix.num() instead.');
     return Mix.num(...args);
 };
 
+/**
+ * @deprecated use Run.delay instead
+ */
 // @ts-ignore
-PicoMixed.delay = function (...args : Parameters<typeof Run.delay>) {
+PicoMixed.delay = (...args : Parameters<typeof Run.delay>) : any => {
     console.warn('Mix.delay() is deprecated, use Run.delay() instead.');
     return Run.delay(...args);
 };
 
+/**
+ * @deprecated use Run.async instead
+ */
 // @ts-ignore
-PicoMixed.async = function (...args : Parameters<typeof Run.async>) {
+PicoMixed.async = (...args : Parameters<typeof Run.async>) : any => {
     console.warn('Mix.async() is deprecated, use Run.async() instead.');
     return Run.async(...args);
 };
 
+/**
+ * @deprecated use Run.debounce instead
+ */
 // @ts-ignore
-PicoMixed.debounce = function (...args : Parameters<typeof Run.debounce>) {
+PicoMixed.debounce = (...args : Parameters<typeof Run.debounce>) : any => {
     console.warn('Mix.debounce() is deprecated, use Run.debounce() instead.');
     return Run.debounce(...args);
 };
 
+/**
+ * @deprecated use Run.throttle instead
+ */
 // @ts-ignore
-PicoMixed.throttle = function (...args : Parameters<typeof Run.throttle>) {
+PicoMixed.throttle = (...args : Parameters<typeof Run.throttle>) : any => {
     console.warn('Mix.throttle() is deprecated, use Run.throttle() instead.');
     return Run.throttle(...args);
 };
 
+/**
+ * @deprecated use Run.framerate instead
+ */
 // @ts-ignore
-PicoMixed.framerate = function (...args : Parameters<typeof Run.framerate>) {
+PicoMixed.framerate = (...args : Parameters<typeof Run.framerate>) : any => {
     console.warn('Mix.framerate() is deprecated, use Run.framerate() instead.');
     return Run.framerate(...args);
 };
 
+/**
+ * @deprecated use Str.string instead
+ */
 // @ts-ignore
-PicoMixed.convertString = function (...args : Parameters<typeof Str.string>) {
+PicoMixed.convertString = (...args : Parameters<typeof Str.string>) : any => {
     console.warn('Mix.convertString() is deprecated, use Str.string() instead.');
     return Str.string(...args);
 };
 
+/**
+ * @deprecated use Str.date instead
+ */
 // @ts-ignore
-PicoMixed.convertDatetime = function (...args : Parameters<typeof Str.date>) {
+PicoMixed.convertDatetime = (...args : Parameters<typeof Str.date>) : any => {
     console.warn('Mix.convertDatetime() is deprecated, use Str.date() instead.');
     return Str.date(...args);
 };
 
+/**
+ * @deprecated use Str.boolean instead
+ */
 // @ts-ignore
-PicoMixed.convertBool = function (...args : Parameters<typeof Str.boolean>) {
+PicoMixed.convertBool = (...args : Parameters<typeof Str.boolean>) : any => {
     console.warn('Mix.convertBool() is deprecated, use Str.boolean() instead.');
     return Str.boolean(...args);
 };
 
+/**
+ * @deprecated use Str.boolean instead
+ */
 // @ts-ignore
-PicoMixed.convertBoolean = function (...args : Parameters<typeof Str.boolean>) {
+PicoMixed.convertBoolean = (...args : Parameters<typeof Str.boolean>) : any => {
     console.warn('Mix.convertBoolean() is deprecated, use Str.boolean() instead.');
     return Str.boolean(...args);
 };
-
 
 export default PicoMixed;

@@ -197,40 +197,58 @@ export class PicoNowGrid
 
 }
 
+/**
+ * @deprecated use Now.grid instead
+ */
 // @ts-ignore
-PicoNowGrid.prototype.getYears = function () {
+PicoNowGrid.prototype.getYears = function() : Array<PicoNowInterface> {
     console.warn('Now.getYears() is deprecated, use Now.grid(\'years\') instead.');
     return this.grid('years');
-}
+};
 
+/**
+ * @deprecated use Now.grid instead
+ */
 // @ts-ignore
-PicoNowGrid.prototype.getMonths = function () {
+PicoNowGrid.prototype.getMonths = function() : Array<PicoNowInterface> {
     console.warn('Now.getMonths() is deprecated, use Now.grid(\'months\') instead.');
     return this.grid('months');
-}
+};
 
+/**
+ * @deprecated use Now.grid instead
+ */
 // @ts-ignore
-PicoNowGrid.prototype.getDates = function () {
+PicoNowGrid.prototype.getDates = function() : Array<PicoNowInterface> {
     console.warn('Now.getDates() is deprecated, use Now.grid(\'dates\') instead.');
     return this.grid('dates');
-}
+};
 
+/**
+ * @deprecated use Now.grid instead
+ */
 // @ts-ignore
-PicoNowGrid.prototype.getHours = function () {
+PicoNowGrid.prototype.getHours = function() : Array<PicoNowInterface> {
     console.warn('Now.getHours() is deprecated, use Now.grid(\'hours\') instead.');
     return this.grid('hours');
-}
+};
 
+/**
+ * @deprecated use Now.grid instead
+ */
 // @ts-ignore
-PicoNowGrid.prototype.getMinutes = function () {
+PicoNowGrid.prototype.getMinutes = function() : Array<PicoNowInterface> {
     console.warn('Now.getMinutes() is deprecated, use Now.grid(\'minutes\') instead.');
     return this.grid('minutes');
-}
+};
 
+/**
+ * @deprecated use Now.grid instead
+ */
 // @ts-ignore
-PicoNowGrid.prototype.getSeconds = function () {
+PicoNowGrid.prototype.getSeconds = function() : Array<PicoNowInterface> {
     console.warn('Now.getSeconds() is deprecated, use Now.grid(\'seconds\') instead.');
     return this.grid('seconds');
-}
+};
 
 export default PicoNowGrid;

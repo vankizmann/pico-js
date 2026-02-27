@@ -14,6 +14,16 @@ export interface PicoDomPopover extends PicoDomInterface,
 export class PicoDomPopover
 {
 
+    /**
+     * Calculate popover position
+     *
+     * @example Dom.find(".popover").popover(".target", "bottom-center")
+     *
+     * @param {any} target Target element
+     * @param {string} [position] Popover position
+     * @param {any} [options] Popover options
+     * @returns {any} Position result
+     */
     popover(target : any, position : string = 'botttom-center', options : any = {}) : any
     {
         if ( /^(top|bottom)-/.test(position) ) {
@@ -25,6 +35,16 @@ export class PicoDomPopover
         }
     }
 
+    /**
+     * Calculate vertical popover position
+     *
+     * @example Dom.find(".popover").popoverY(".target", "bottom-center")
+     *
+     * @param {any} target Target element
+     * @param {string} [position] Popover position
+     * @param {any} [options] Popover options
+     * @returns {any} Position result
+     */
     popoverY(target : any, position : string = 'bottom-center', options : any = {}) : any
     {
         target = Dom.find(target);
@@ -120,6 +140,16 @@ export class PicoDomPopover
         return { ...result, position };
     }
 
+    /**
+     * Calculate horizontal popover position
+     *
+     * @example Dom.find(".popover").popoverX(".target", "left-center")
+     *
+     * @param {any} target Target element
+     * @param {string} [position] Popover position
+     * @param {any} [options] Popover options
+     * @returns {any} Position result
+     */
     popoverX(target : any, position : string = 'left-center', options : any = {}) : any
     {
         target = Dom.find(target);
@@ -199,6 +229,15 @@ export class PicoDomPopover
         return { ...result, position };
     }
 
+    /**
+     * Normalize popover position
+     *
+     * @param {any} offset Current offset
+     * @param {any} self Popover size
+     * @param {any} rect Target rect
+     * @param {any} win Window size
+     * @returns {any} Normalized position
+     */
     popoverNormalize(offset : any, self : any, rect : any, win : any)
     {
         const scroll = Dom.find(document.body).scroll();

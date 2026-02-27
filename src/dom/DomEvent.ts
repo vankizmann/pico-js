@@ -1,4 +1,4 @@
-import { Arr, Hash, Mix, Obj, Dom, Run } from "../index.esm.ts";
+import { Arr, Hash, Mix, Dom, Run } from "../index.esm.ts";
 import { PicoDom, PicoDomInterface } from "../utils/Dom.ts";
 import PicoDomFinder from "./DomFinder.js";
 import PicoDomRectangle from "./DomRectangle.js";
@@ -279,24 +279,36 @@ export class PicoDomEvent
 
 }
 
+/**
+ * @deprecated use Dom.once instead
+ */
 // @ts-ignore
-PicoDomEvent.prototype.one = function (...args : Parameters<typeof PicoDomEvent.prototype.once>) {
+PicoDomEvent.prototype.one = function(...args : Parameters<typeof PicoDomEvent.prototype.once>) : any {
     console.warn('Dom.one() is deprecated, use Dom.once() instead.');
     return this.once(...args);
 };
 
+/**
+ * @deprecated not implemented anymore
+ */
 // @ts-ignore
-PicoDomEvent.prototype.delayed = function () {
+PicoDomEvent.prototype.delayed = function() : void {
     console.error('Dom.delayed() is not implemented anymore.');
 };
 
+/**
+ * @deprecated not implemented anymore
+ */
 // @ts-ignore
-PicoDomEvent.prototype.pause = function () {
+PicoDomEvent.prototype.pause = function() : void {
     console.error('Dom.pause() is not implemented anymore.');
 };
 
+/**
+ * @deprecated not implemented anymore
+ */
 // @ts-ignore
-PicoDomEvent.prototype.unpause = function () {
+PicoDomEvent.prototype.unpause = function() : void {
     console.error('Dom.unpause() is not implemented anymore.');
 };
 

@@ -105,6 +105,12 @@ export function device() : void
     scope.piudv = result;
 }
 
+/**
+ * Trait multiple classes
+ *
+ * @param {any[]} values Class array
+ * @returns {any} Traited class
+ */
 export function trait(values : any[]) {
 
     const traited : any = values[0];

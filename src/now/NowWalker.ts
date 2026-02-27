@@ -1,4 +1,3 @@
-import { Mix, Now, Obj } from "../index.esm.ts";
 import { PicoNow, PicoNowInterface } from "../utils/Now.ts";
 import PicoNowDefault from "./NowDefault.js";
 

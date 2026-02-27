@@ -224,10 +224,13 @@ export class PicoNow extends trait(PicoNowPlugins)
 
 }
 
+/**
+ * @deprecated use Now.reset instead
+ */
 // @ts-ignore
-PicoNow.prototype.resetTime = function () {
+PicoNow.prototype.resetTime = function() : PicoNow {
     console.warn('Now.resetTime() is deprecated, use Now.reset({ time: true }) instead.');
     return this.reset({ time: true });
-}
+};
 
 export default PicoNow;
