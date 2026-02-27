@@ -112,6 +112,32 @@ export class PicoNumber
     }
 
     /**
+     * Keep value within min and max range
+     *
+     * @example Num.minmax(10, 0, 5) // => 0
+     * @example Num.minmax(-1, 0, 5) // => 5
+     *
+     * @param {any} value Input value
+     * @param {number} [min=0] Minimum value
+     * @param {number} [max=Number.MAX_SAFE_INTEGER] Maximum value
+     * @returns {number} Normalized value
+     */
+    static minmax(value : any, min : number = 0, max : number = Number.MAX_SAFE_INTEGER) : number
+    {
+        value = Mix.num(value);
+
+        if ( value < min ) {
+            value = max;
+        }
+
+        if ( value > max ) {
+            value = min;
+        }
+
+        return Mix.num(value);
+    }
+
+    /**
      * Sum numbers in list
      *
      * @example Num.combine([1, 2]) // => 3
