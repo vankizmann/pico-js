@@ -221,14 +221,20 @@ export class PicoNumber
 
 }
 
+/**
+ * @deprecated use Str.number instead
+ */
 // @ts-ignore
-PicoNumber.format = (value : any, ...args : [any, any, any]) => {
+PicoNumber.format = (value : any, ...args : [any, any, any]) : any => {
     console.warn('Num.format() is deprecated, use Str.number() instead.');
     return Str.number(value, args[2] || null);
 };
 
+/**
+ * @deprecated use Hash.number instead
+ */
 // @ts-ignore
-PicoNumber.random = (...args : Parameters<typeof Hash.number>) => {
+PicoNumber.random = (...args : Parameters<typeof Hash.number>) : any => {
     console.warn('Num.random() is deprecated, use Hash.number() instead.');
     return Hash.number(...args);
 };

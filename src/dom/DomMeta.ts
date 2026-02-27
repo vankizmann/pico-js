@@ -37,6 +37,7 @@ export class PicoDomMeta
 
         return <PicoDom> <unknown> this;
     }
+
 }
 
 // @ts-ignore

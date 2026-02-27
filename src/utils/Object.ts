@@ -609,6 +609,15 @@ export class PicoObject
         return result;
     }
 
+    /**
+     * Sort object entries by key
+     *
+     * @example Obj.sort({b:1,a:2}, "key") // => [{_key:"a",...},{_key:"b",...}]
+     *
+     * @param {any} value Input object
+     * @param {string} key Sort key
+     * @returns {any} Sorted result
+     */
     static sort(value : any, key : string) : any
     {
         let result = Arr.sort(value, key);
@@ -622,28 +631,40 @@ export class PicoObject
 
 }
 
+/**
+ * @deprecated use Obj.sort instead
+ */
 // @ts-ignore
-PicoObject.sortString = (...args : Parameters<typeof PicoObject.sort>) => {
+PicoObject.sortString = (...args : Parameters<typeof PicoObject.sort>) : any => {
     console.warn('Obj.sortString() is deprecated, use Obj.sort() instead.');
     return PicoObject.sort(...args);
 };
 
+/**
+ * @deprecated use Mix.vals instead
+ */
 // @ts-ignore
-PicoObject.values = (...args : Parameters<typeof Mix.vals>) => {
+PicoObject.values = (...args : Parameters<typeof Mix.vals>) : any => {
     console.warn('Obj.values() is deprecated, use Mix.vals() instead.');
     return Mix.vals(...args);
 };
 
+/**
+ * @deprecated use Arr.find instead
+ */
 // @ts-ignore
-PicoObject.find = (...args : Parameters<typeof Arr.find>) => {
+PicoObject.find = (...args : Parameters<typeof Arr.find>) : any => {
     console.warn('Obj.find() is deprecated, use Arr.find() instead.');
     return Arr.find(...args);
 };
 
+/**
+ * @deprecated use Arr.findIndex instead
+ */
 // @ts-ignore
-PicoObject.findIndex = (...args : Parameters<typeof Arr.findIndex>) => {
+PicoObject.findIndex = (...args : Parameters<typeof Arr.findIndex>) : any => {
     console.warn('Obj.findIndex() is deprecated, use Arr.findIndex() instead.');
     return Arr.findIndex(...args);
 };
 
-export default PicoObject
+export default PicoObject;

@@ -401,100 +401,148 @@ export class PicoNowDefault
 
 }
 
+/**
+ * @deprecated use Now.add instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.addSecond = function (value : any) {
+PicoNowDefault.prototype.addSecond = function(value : any) : PicoNow {
     console.warn('Now.addSecond() is deprecated, use Now.add(value, \'second\') instead.');
     return this.add(value, 'second');
-}
+};
 
+/**
+ * @deprecated use Now.sub instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.subSecond = function (value : any) {
+PicoNowDefault.prototype.subSecond = function(value : any) : PicoNow {
     console.warn('Now.subSecond() is deprecated, use Now.sub(value, \'second\') instead.');
     return this.sub(value, 'second');
-}
+};
 
+/**
+ * @deprecated use Now.add instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.addMinute = function (value : any) {
+PicoNowDefault.prototype.addMinute = function(value : any) : PicoNow {
     console.warn('Now.addMinute() is deprecated, use Now.add(value, \'minute\') instead.');
     return this.add(value, 'minute');
-}
+};
 
+/**
+ * @deprecated use Now.sub instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.subMinute = function (value : any) {
+PicoNowDefault.prototype.subMinute = function(value : any) : PicoNow {
     console.warn('Now.subMinute() is deprecated, use Now.sub(value, \'minute\') instead.');
     return this.sub(value, 'minute');
-}
+};
 
+/**
+ * @deprecated use Now.add instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.addHour = function (value : any) {
+PicoNowDefault.prototype.addHour = function(value : any) : PicoNow {
     console.warn('Now.addHour() is deprecated, use Now.add(value, \'hour\') instead.');
     return this.add(value, 'hour');
-}
+};
 
+/**
+ * @deprecated use Now.sub instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.subHour = function (value : any) {
+PicoNowDefault.prototype.subHour = function(value : any) : PicoNow {
     console.warn('Now.subHour() is deprecated, use Now.sub(value, \'hour\') instead.');
     return this.sub(value, 'hour');
-}
+};
 
+/**
+ * @deprecated use Now.add instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.addDates = function (value : any) {
+PicoNowDefault.prototype.addDates = function(value : any) : PicoNow {
     console.warn('Now.addDates() is deprecated, use Now.add(value, \'date\') instead.');
     return this.add(value, 'date');
-}
+};
 
+/**
+ * @deprecated use Now.sub instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.subDates = function (value : any) {
+PicoNowDefault.prototype.subDates = function(value : any) : PicoNow {
     console.warn('Now.subDates() is deprecated, use Now.sub(value, \'date\') instead.');
     return this.sub(value, 'date');
-}
+};
 
+/**
+ * @deprecated use Now.add instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.addMonths = function (value : any) {
+PicoNowDefault.prototype.addMonths = function(value : any) : PicoNow {
     console.warn('Now.addMonths() is deprecated, use Now.add(value, \'month\') instead.');
     return this.add(value, 'month');
-}
+};
 
+/**
+ * @deprecated use Now.sub instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.subMonths = function (value : any) {
+PicoNowDefault.prototype.subMonths = function(value : any) : PicoNow {
     console.warn('Now.subMonths() is deprecated, use Now.sub(value, \'month\') instead.');
     return this.sub(value, 'month');
-}
+};
 
+/**
+ * @deprecated use Now.add instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.addYears = function (value : any) {
+PicoNowDefault.prototype.addYears = function(value : any) : PicoNow {
     console.warn('Now.addYears() is deprecated, use Now.add(value, \'year\') instead.');
     return this.add(value, 'year');
-}
+};
 
+/**
+ * @deprecated use Now.sub instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.subYears = function (value : any) {
+PicoNowDefault.prototype.subYears = function(value : any) : PicoNow {
     console.warn('Now.subYears() is deprecated, use Now.sub(value, \'year\') instead.');
     return this.sub(value, 'year');
-}
+};
 
+/**
+ * @deprecated use Now.add instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.addDecades = function (value : any) {
+PicoNowDefault.prototype.addDecades = function(value : any) : PicoNow {
     console.warn('Now.addDecades() is deprecated, use Now.grid(10 * value, \'year\') instead.');
     return this.add(10 * value, 'year');
-}
+};
 
+/**
+ * @deprecated use Now.sub instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.subDecades = function (value : any) {
+PicoNowDefault.prototype.subDecades = function(value : any) : PicoNow {
     console.warn('Now.subDecades() is deprecated, use Now.grid(10 * value, \'year\') instead.');
     return this.sub(10 * value, 'year');
-}
+};
 
+/**
+ * @deprecated use Now.day instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.humanDay = function () {
+PicoNowDefault.prototype.humanDay = function() : number {
     console.warn('Now.humanDay() is deprecated, use Now.day() instead.');
     return this.day();
-}
+};
 
+/**
+ * @deprecated use Now.month instead
+ */
 // @ts-ignore
-PicoNowDefault.prototype.humanMonth = function () {
+PicoNowDefault.prototype.humanMonth = function() : number {
     console.warn('Now.humanMonth() is deprecated, use Now.month() instead.');
     return this.month();
-}
+};
 
 export default PicoNowDefault;

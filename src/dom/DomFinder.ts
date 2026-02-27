@@ -1,4 +1,4 @@
-import { Arr, Mix, Obj, Dom } from "../index.esm.ts";
+import { Arr, Mix, Dom } from "../index.esm.ts";
 import { PicoDomInterface, PicoDom } from "../utils/Dom.ts";
 
 export interface PicoDomFinder extends PicoDomInterface
@@ -610,32 +610,47 @@ export class PicoDomFinder
 
 }
 
+/**
+ * @deprecated use Dom.above instead
+ */
 // @ts-ignore
-PicoDomFinder.prototype.isParent = function (...args : Parameters<typeof PicoDomFinder.prototype.above>) {
+PicoDomFinder.prototype.isParent = function(...args : Parameters<typeof PicoDomFinder.prototype.above>) : any {
     console.warn('Dom.isParent() is deprecated, use Dom.above() instead.');
     return this.above(...args);
 };
 
+/**
+ * @deprecated use Dom.prev instead
+ */
 // @ts-ignore
-PicoDomFinder.prototype.previous = function () {
+PicoDomFinder.prototype.previous = function() : any {
     console.warn('Dom.previous() is deprecated, use Dom.prev() instead.');
     return this.prev();
 };
 
+/**
+ * @deprecated use Dom.filter instead
+ */
 // @ts-ignore
-PicoDomFinder.prototype.where = function (...args : Parameters<typeof PicoDomFinder.prototype.filter>) {
+PicoDomFinder.prototype.where = function(...args : Parameters<typeof PicoDomFinder.prototype.filter>) : any {
     console.warn('Dom.where() is deprecated, use Dom.filter() instead.');
     return this.filter(...args);
 };
 
+/**
+ * @deprecated use Dom.except instead
+ */
 // @ts-ignore
-PicoDomFinder.prototype.not = function (...args : Parameters<typeof PicoDomFinder.prototype.except>) {
+PicoDomFinder.prototype.not = function(...args : Parameters<typeof PicoDomFinder.prototype.except>) : any {
     console.warn('Dom.not() is deprecated, use Dom.except() instead.');
     return this.except(...args);
 };
 
+/**
+ * @deprecated not implemented anymore
+ */
 // @ts-ignore
-PicoDomFinder.prototype.getNot = () => {
+PicoDomFinder.prototype.getNot = function() : void {
     console.error('Dom.getNot() is not implemented anymore.');
 };
 

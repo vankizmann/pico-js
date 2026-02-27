@@ -1,5 +1,5 @@
 import { trait } from "../tool/scope.ts";
-import { Mix, Dom, Arr } from "../index.esm.ts";
+import { Mix, Dom } from "../index.esm.ts";
 import { PicoDomFinder } from "../dom/DomFinder.ts";
 import { PicoDomForm } from "../dom/DomForm.ts";
 import { PicoDomEvent } from "../dom/DomEvent.ts";

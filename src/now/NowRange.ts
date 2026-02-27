@@ -54,10 +54,13 @@ export class PicoNowRange
 
 }
 
+/**
+ * @deprecated use Now.range instead
+ */
 // @ts-ignore
-PicoNowRange.prototype.getDatesRange = function (...args:Parameters<typeof PicoNowRange.range>) {
+PicoNowRange.prototype.getDatesRange = function(...args:Parameters<typeof PicoNowRange.prototype.range>) : Array<PicoNow> {
     console.warn('Now.getDatesRange() is deprecated, use Now.range() instead.');
     return this.range(...args);
-}
+};
 
 export default PicoNowRange;

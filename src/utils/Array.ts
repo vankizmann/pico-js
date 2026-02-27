@@ -1,4 +1,4 @@
-import { Obj, Mix, Any, Arr } from "../index.esm.ts";
+import { Obj, Mix } from "../index.esm.ts";
 
 export class PicoArray
 {
@@ -70,6 +70,15 @@ export class PicoArray
         return this.splice(target, index, 1);
     }
 
+    /**
+     * Get previous index
+     *
+     * @example Arr.prev([1,2,3], 0) // => 2
+     *
+     * @param {any} target Target array
+     * @param {number} index Current index
+     * @returns {number} Previous index
+     */
     static prev(target : any, index : number) : number
     {
         if ( Mix.isEmpty(target) || !Mix.isArr(target) ) {
@@ -83,6 +92,15 @@ export class PicoArray
         return index - 1;
     }
 
+    /**
+     * Get next index
+     *
+     * @example Arr.next([1,2,3], 2) // => 0
+     *
+     * @param {any} target Target array
+     * @param {number} index Current index
+     * @returns {number} Next index
+     */
     static next(target : any, index : number) : number
     {
         if ( Mix.isEmpty(target) || !Mix.isArr(target) ) {
@@ -376,27 +394,104 @@ export class PicoArray
         return value;
     }
 
-    static cascade(value : any, childs : string, key : string, cascade : any[] = [], result : any = {}) : any
+    /**
+     * Run callback on cascade
+     *
+     * @example Arr.cascade({a:1, b:[{a:2}]}, "b", v => v.a) // => [1, 2]
+     *
+     * @param {any} value Input object
+     * @param {string} childs Child key
+     * @param {Function} cb Callback fn
+     * @param {any[]} [cascade] Initial cascade
+     * @param {any[]} [result] Initial result
+     * @returns {any} Cascade result
+     */
+    static cascade(value : any, childs : string, cb: Function, cascade: any[] = [], result = []) : any
     {
+        let fn = (cas : any) => (val : any) => {
+            return this.cascade(val, childs, cb, cas, result);
+        };
+
+        if ( Mix.isArr(value) ) {
+            return (this.each(value, fn(cascade)), result);
+        }
+
+        if ( Mix.isObj(value) ) {
+            result.push(cb(value, cascade));
+        }
+
+        cascade = [
+            ...this.clone(cascade), value
+        ];
+
         if ( value == null ) {
             return result;
         }
 
-        if ( Mix.isObj(value) ) {
-            return this.cascade(value[key], childs, key);
+        if ( Mix.isObj(value[childs]) ) {
+            result.push(fn(cascade)(value[childs]));
         }
 
-        const fn = (val : any) => {
-            return this.cascade(...[
-                val[childs], childs, key, result[val[key]], result
-            ]);
+        if ( Mix.isArr(value[childs]) ) {
+            this.each(value[childs], fn(cascade));
+        }
+
+        return result;
+    }
+
+    /**
+     * Find item in cascade
+     *
+     * @example Arr.cascadeFind({a:1, b:[{a:2}]}, "b", v => v.a === 2) // => [{...}, {a:2}]
+     *
+     * @param {any} value Input object
+     * @param {string} childs Child key
+     * @param {Function} cb Callback fn
+     * @returns {any} Find result
+     */
+    static cascadeFind(value : any, childs : string, cb : Function) : any
+    {
+        if ( value == null ) {
+            return null;
+        }
+
+        let result = null
+
+        const fn = (val : any, cascade: any[]) => {
+            return cb(val, cascade) ? [...cascade, val] : null;
         };
 
-        this.each(value, (val : any) => {
-            (result[val[key]] = [...cascade, val[key]], fn(val));
+        this.cascade(value, childs, (val:any, cascade : any[]) => {
+            if ( result == null ) result = fn(val, cascade);
         });
 
         return result;
+    }
+
+    /**
+     * Map items in cascade
+     *
+     * @example Arr.cascadeMap({a:1, b:[{a:2}]}, "b", "a") // => {1: [1], 2: [1, 2]}
+     *
+     * @param {any} value Input object
+     * @param {string} childs Child key
+     * @param {string} key Map key
+     * @returns {any} Map result
+     */
+    static cascadeMap(value : any, childs : string, key : string) : any
+    {
+        let result = {};
+
+        if ( value == null ) {
+            return result;
+        }
+
+        result = this.cascade(value, childs, (val : any, cascade : any[]) => {
+            return { [val[key]]: [...this.extract(cascade, key), val[key]] };
+        });
+
+        // @ts-ignore
+        return Obj.assign(...result);
     }
 
     /**
@@ -1073,35 +1168,49 @@ export class PicoArray
 
 }
 
+/**
+ * @deprecated use Arr.unset instead
+ */
 // @ts-ignore
-PicoArray.removeIndex = function (...args : Parameters<typeof PicoArray.splice>) {
+PicoArray.removeIndex = (...args : Parameters<typeof PicoArray.unset>) : any => {
     console.warn('Arr.removeIndex() is deprecated, use Arr.unset() instead.');
-    return this.unset(...args);
+    return PicoArray.unset(...args);
 };
 
+/**
+ * @deprecated use Arr.sortPrim instead
+ */
 // @ts-ignore
-PicoArray.sortString = function (...args : Parameters<typeof PicoArray.sortPrim>) {
+PicoArray.sortString = (...args : Parameters<typeof PicoArray.sortPrim>) : any => {
     console.warn('Arr.sortString() is deprecated, use Arr.sortPrim() instead.');
-    return this.sortPrim(...args);
+    return PicoArray.sortPrim(...args);
 };
 
+/**
+ * @deprecated use Arr.append instead
+ */
 // @ts-ignore
-PicoArray.push = function (...args : Parameters<typeof PicoArray.append>) {
+PicoArray.push = (...args : Parameters<typeof PicoArray.append>) : any => {
     console.warn('Arr.push() is deprecated, use Arr.append() instead.');
-    return this.append(...args);
+    return PicoArray.append(...args);
 };
 
+/**
+ * @deprecated use Arr.merge instead
+ */
 // @ts-ignore
-PicoArray.concat = function (...args : Parameters<typeof PicoArray.merge>) {
+PicoArray.concat = (...args : Parameters<typeof PicoArray.merge>) : any => {
     console.warn('Arr.concat() is deprecated, use Arr.merge() instead.');
-    return this.merge(...args);
+    return PicoArray.merge(...args);
 };
 
+/**
+ * @deprecated use Arr.matches instead
+ */
 // @ts-ignore
-PicoArray.equal = function (...args : Parameters<typeof PicoArray.matches>) {
+PicoArray.equal = (...args : Parameters<typeof PicoArray.matches>) : any => {
     console.warn('Arr.equal() is deprecated, use Arr.matches() instead.');
-    return this.matches(...args);
+    return PicoArray.matches(...args);
 };
-
 
 export default PicoArray;

@@ -94,6 +94,7 @@
 <script>
     pi.Dom.ready(() => {
         console.log('DOM ready');
+
         pi.Dom.find('[data-boundry]').on('scroll', () => {
 
             pi.Dom.find('[data-inview]').each((el) => {
@@ -111,6 +112,58 @@
 
             // console.log(first && first.getAttribute('data-inview'));
         });
+
+        const cascade = [
+            {
+                key: pi.Hash.uuid(), name: 'aa', childs: [
+                    {
+                        key: pi.Hash.uuid(), name: 'ab', childs: [
+                            {
+                                key: pi.Hash.uuid(), name: 'ac'
+                            }
+                        ]
+                    }
+                ],
+            },
+            {
+                key: pi.Hash.uuid(), name: 'ba', childs: [
+                    {
+                        key: pi.Hash.uuid(), name: 'bb', childs: [
+                            {
+                                key: pi.Hash.uuid(), name: 'bc'
+                            }
+                        ]
+                    }
+                ],
+            },
+            {
+                key: pi.Hash.uuid(), name: 'ca', childs: [
+                    {
+                        key: pi.Hash.uuid(), name: 'cb', childs: [
+                            {
+                                key: pi.Hash.uuid(), name: 'cc'
+                            }
+                        ]
+                    }
+                ],
+            },
+        ];
+
+        const res1 = pi.Arr.cascade(cascade, 'childs', (child) => {
+            console.log(child.name);
+        });
+
+        console.log('res1', res1);
+
+        const res2 = pi.Arr.cascadeFind(cascade, 'childs', (child) => {
+            return child.name === 'bb';
+        });
+
+        console.log('res2', res2);
+
+        const res3 = pi.Arr.cascadeMap(cascade, 'childs', 'key');
+
+        console.log('res3', res3);
 
     });
 </script>

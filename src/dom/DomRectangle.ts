@@ -32,6 +32,14 @@ export class PicoDomRectangle
         return Mix.num(value, 0);
     }
 
+    /**
+     * Get bounding rectangle
+     *
+     * @example Dom.find("div").rect()
+     *
+     * @param {any} [fallback] Fallback value
+     * @returns {any} Rect object
+     */
     rect(fallback : any = { left: 0, top: 0, width: 0, height: 0 })
     {
         if ( !this.el.getBoundingClientRect ) {

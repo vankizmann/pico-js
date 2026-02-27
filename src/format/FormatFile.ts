@@ -1,5 +1,4 @@
-import { Mix, Obj, Num } from "../index.esm.ts";
-import { PicoFormat } from "../utils/Format.ts";
+import { Mix, Num } from "../index.esm.ts";
 
 export const FILE_UNITS = [
     'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'
