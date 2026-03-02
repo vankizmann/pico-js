@@ -66,7 +66,7 @@ export class PicoNowHuman
      */
     getHumanDay(substr : number = null) : string
     {
-        let day = this.day() - 1;
+        let day = this.day();
 
         if ( !NOW_HUMAN_DAYS[day] ) {
             throw new Error(`Invalid day number "${day}".`);
@@ -91,7 +91,7 @@ export class PicoNowHuman
      */
     getHumanMonth(substr : number = null) : string
     {
-        let month = this.day() - 1;
+        let month = this.month() - 1;
 
         if ( !NOW_HUMAN_MONTHS[month] ) {
             throw new Error(`Invalid month number "${month}".`);

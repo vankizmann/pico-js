@@ -1,5 +1,5 @@
 import { Arr } from "../index.esm.ts";
-import { PicoNowInterface } from "../utils/Now.ts";
+import { PicoNow, PicoNowInterface } from "../utils/Now.ts";
 import PicoNowWalker from "./NowWalker.js";
 
 export interface PicoNowGrid extends PicoNowInterface,
@@ -19,9 +19,9 @@ export class PicoNowGrid
      * @example Now.grid("month") // => [Now, Now, ...]
      *
      * @param {string} [scope] Grid scope
-     * @returns {Array<PicoNowInterface>} Array of dates
+     * @returns {Array<PicoNow>} Array of dates
      */
-    grid(scope : string = 'day') : Array<PicoNowInterface>
+    grid(scope : string = 'day') : Array<PicoNow>
     {
         if ( /^seconds?$/i.test(scope) ) {
             return this.getSecondsGrid();
@@ -64,9 +64,9 @@ export class PicoNowGrid
      * @example Now.getSecondsGrid(10)
      *
      * @param {number} [interval] Step interval
-     * @returns {Array<PicoNowInterface>} Array of dates
+     * @returns {Array<PicoNow>} Array of dates
      */
-    getSecondsGrid(interval : number = 1) : Array<PicoNowInterface>
+    getSecondsGrid(interval : number = 1) : Array<PicoNow>
     {
         if ( interval == null ) {
             interval = 1;
@@ -83,9 +83,9 @@ export class PicoNowGrid
      * @example Now.getMinutesGrid(10)
      *
      * @param {number} [interval] Step interval
-     * @returns {Array<PicoNowInterface>} Array of dates
+     * @returns {Array<PicoNow>} Array of dates
      */
-    getMinutesGrid(interval : number = 1) : Array<PicoNowInterface>
+    getMinutesGrid(interval : number = 1) : Array<PicoNow>
     {
         if ( interval == null ) {
             interval = 1;
@@ -102,9 +102,9 @@ export class PicoNowGrid
      * @example Now.getHoursGrid(2)
      *
      * @param {number} [interval] Step interval
-     * @returns {Array<PicoNowInterface>} Array of dates
+     * @returns {Array<PicoNow>} Array of dates
      */
-    getHoursGrid(interval : number = 1) : Array<PicoNowInterface>
+    getHoursGrid(interval : number = 1) : Array<PicoNow>
     {
         if ( interval == null ) {
             interval = 1;
@@ -120,9 +120,9 @@ export class PicoNowGrid
      *
      * @example Now.getDaysGrid()
      *
-     * @returns {Array<PicoNowInterface>} Array of dates
+     * @returns {Array<PicoNow>} Array of dates
      */
-    getDaysGrid() : Array<PicoNowInterface>
+    getDaysGrid() : Array<PicoNow>
     {
         let dates = [
             this.first('date').first('day'), this.last('date').last('day')
@@ -136,9 +136,9 @@ export class PicoNowGrid
      *
      * @example Now.getDatesGrid()
      *
-     * @returns {Array<PicoNowInterface>} Array of dates
+     * @returns {Array<PicoNow>} Array of dates
      */
-    getDatesGrid() : Array<PicoNowInterface>
+    getDatesGrid() : Array<PicoNow>
     {
         let dates = [
             this.first('date'), this.last('date')
@@ -152,9 +152,9 @@ export class PicoNowGrid
      *
      * @example Now.getMonthsGrid()
      *
-     * @returns {Array<PicoNowInterface>} Array of dates
+     * @returns {Array<PicoNow>} Array of dates
      */
-    getMonthsGrid() : Array<PicoNowInterface>
+    getMonthsGrid() : Array<PicoNow>
     {
         let dates = [
             this.first('month'), this.last('month')
@@ -168,9 +168,9 @@ export class PicoNowGrid
      *
      * @example Now.getYearsGrid()
      *
-     * @returns {Array<PicoNowInterface>} Array of dates
+     * @returns {Array<PicoNow>} Array of dates
      */
-    getYearsGrid() : Array<PicoNowInterface>
+    getYearsGrid() : Array<PicoNow>
     {
         let dates = [
             this.first('year'), this.clone().last('year')
@@ -184,9 +184,9 @@ export class PicoNowGrid
      *
      * @example Now.getDecadesGrid()
      *
-     * @returns {Array<PicoNowInterface>} Array of dates
+     * @returns {Array<PicoNow>} Array of dates
      */
-    getDecadesGrid() : Array<PicoNowInterface>
+    getDecadesGrid() : Array<PicoNow>
     {
         let dates = [
             this.first('decade'), this.clone().last('decade')
@@ -201,7 +201,7 @@ export class PicoNowGrid
  * @deprecated use Now.grid instead
  */
 // @ts-ignore
-PicoNowGrid.prototype.getYears = function() : Array<PicoNowInterface> {
+PicoNowGrid.prototype.getYears = function() : Array<PicoNow> {
     console.warn('Now.getYears() is deprecated, use Now.grid(\'years\') instead.');
     return this.grid('years');
 };
@@ -210,7 +210,7 @@ PicoNowGrid.prototype.getYears = function() : Array<PicoNowInterface> {
  * @deprecated use Now.grid instead
  */
 // @ts-ignore
-PicoNowGrid.prototype.getMonths = function() : Array<PicoNowInterface> {
+PicoNowGrid.prototype.getMonths = function() : Array<PicoNow> {
     console.warn('Now.getMonths() is deprecated, use Now.grid(\'months\') instead.');
     return this.grid('months');
 };
@@ -219,7 +219,7 @@ PicoNowGrid.prototype.getMonths = function() : Array<PicoNowInterface> {
  * @deprecated use Now.grid instead
  */
 // @ts-ignore
-PicoNowGrid.prototype.getDates = function() : Array<PicoNowInterface> {
+PicoNowGrid.prototype.getDates = function() : Array<PicoNow> {
     console.warn('Now.getDates() is deprecated, use Now.grid(\'dates\') instead.');
     return this.grid('dates');
 };
@@ -228,7 +228,7 @@ PicoNowGrid.prototype.getDates = function() : Array<PicoNowInterface> {
  * @deprecated use Now.grid instead
  */
 // @ts-ignore
-PicoNowGrid.prototype.getHours = function() : Array<PicoNowInterface> {
+PicoNowGrid.prototype.getHours = function() : Array<PicoNow> {
     console.warn('Now.getHours() is deprecated, use Now.grid(\'hours\') instead.');
     return this.grid('hours');
 };
@@ -237,7 +237,7 @@ PicoNowGrid.prototype.getHours = function() : Array<PicoNowInterface> {
  * @deprecated use Now.grid instead
  */
 // @ts-ignore
-PicoNowGrid.prototype.getMinutes = function() : Array<PicoNowInterface> {
+PicoNowGrid.prototype.getMinutes = function() : Array<PicoNow> {
     console.warn('Now.getMinutes() is deprecated, use Now.grid(\'minutes\') instead.');
     return this.grid('minutes');
 };
@@ -246,7 +246,7 @@ PicoNowGrid.prototype.getMinutes = function() : Array<PicoNowInterface> {
  * @deprecated use Now.grid instead
  */
 // @ts-ignore
-PicoNowGrid.prototype.getSeconds = function() : Array<PicoNowInterface> {
+PicoNowGrid.prototype.getSeconds = function() : Array<PicoNow> {
     console.warn('Now.getSeconds() is deprecated, use Now.grid(\'seconds\') instead.');
     return this.grid('seconds');
 };

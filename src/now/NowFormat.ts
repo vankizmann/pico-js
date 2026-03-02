@@ -70,6 +70,7 @@ export class PicoNowFormat
             format = 'YYYY-MM-DD';
         }
 
+
         if ( this.isModifible(value) ) {
             return this.modify(value);
         }

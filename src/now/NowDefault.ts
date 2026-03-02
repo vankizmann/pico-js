@@ -81,6 +81,10 @@ export class PicoNowDefault
      */
     set(value : any, scope : string) : PicoNow
     {
+        if ( value == null) {
+            return <PicoNow> <unknown> this;
+        }
+
         if ( !Mix.isNum(value) ) {
             value = Mix.int(value);
         }
