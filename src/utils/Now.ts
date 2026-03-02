@@ -62,9 +62,9 @@ export class PicoNow extends trait(PicoNowPlugins)
     /**
      * Original input value
      *
-     * @type {any}
+     * @type {Date}
      */
-    input : any = null;
+    input : Date = null;
 
     /**
      * Current Date instance
@@ -195,7 +195,8 @@ export class PicoNow extends trait(PicoNowPlugins)
      */
     valid() : boolean
     {
-        return !isNaN(this.input);
+        // @ts-ignore
+        return !isNaN(this.input) && !isNaN(this.value);
     }
 
     /**
