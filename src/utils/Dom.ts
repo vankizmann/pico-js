@@ -28,11 +28,35 @@ export const PicoDomPlugins = [
 
 export interface PicoDomInterface
 {
+    /**
+     * @type {any}
+     */
     el: any;
+
+    /**
+     * @type {any[]}
+     */
     els: any[];
+
+    /**
+     * @param {Function} plugin
+     * @returns {void}
+     */
     extend(plugin : Function) : void;
+
+    /**
+     * @returns {any}
+     */
     win() : any;
+
+    /**
+     * @returns {any}
+     */
     doc() : any;
+
+    /**
+     * @returns {any}
+     */
     body() : any;
 }
 
@@ -199,6 +223,13 @@ export class PicoDom extends trait(PicoDomPlugins)
         return this.doc().body;
     }
 
+    /**
+     * Remove elements from DOM
+     *
+     * @example Dom.find("div").remove()
+     *
+     * @returns {void} No return value
+     */
     remove() : void
     {
         this.each((el : any) => el.remove());

@@ -159,6 +159,14 @@ export class PicoHash
         return hash;
     }
 
+    /**
+     * Get a numeric hash for object
+     *
+     * @example Hash.object({ a: 1 }) // => '8823432'
+     *
+     * @param {any} value Object to hash
+     * @returns {string} String numeric hash
+     */
     static object(value : any) : string
     {
         let conv = JSON.stringify(value), hash = 0;
