@@ -285,6 +285,10 @@ export class PicoString
      */
     static has(value : any, search : any) : boolean
     {
+        if ( Mix.isEmpty(search) ) {
+            return true;
+        }
+
         return this.lc(value).indexOf(this.lc(search)) !== -1;
     }
 

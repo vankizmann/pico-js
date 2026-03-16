@@ -199,6 +199,11 @@ export class PicoDom extends trait(PicoDomPlugins)
         return this.doc().body;
     }
 
+    remove() : void
+    {
+        this.each((el : any) => el.remove());
+    }
+
 }
 
 export default PicoDom;

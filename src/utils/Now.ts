@@ -7,6 +7,7 @@ import { PicoNowGrid } from "../now/NowGrid.ts";
 import { PicoNowWalker } from "../now/NowWalker.ts";
 import { PicoNowRange } from "../now/NowRange.ts";
 import { PicoNowHuman } from "../now/NowHuman.ts";
+import PicoNowDuration from "../now/NowDuration.ts";
 
 export const PicoNowPlugins = [
     PicoNowDefault,
@@ -16,6 +17,7 @@ export const PicoNowPlugins = [
     PicoNowWalker,
     PicoNowRange,
     PicoNowHuman,
+    PicoNowDuration,
 ];
 
 export interface PicoNowInterface

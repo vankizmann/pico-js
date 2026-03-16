@@ -1,4 +1,4 @@
-import { Str } from "../index.esm.ts";
+import { Mix, Str } from "../index.esm.ts";
 
 /**
  * @var {string[]} RADIX_NUMBER Radix from 0 to 9
@@ -157,6 +157,17 @@ export class PicoHash
         }
 
         return hash;
+    }
+
+    static object(value : any) : string
+    {
+        let conv = JSON.stringify(value), hash = 0;
+
+        for (let i = 0; i < conv.length; i++) {
+            hash = (hash << 5) - hash + conv.charCodeAt(i) | 0;
+        }
+
+        return Mix.str(hash).replace('-', 'X');
     }
 
 }

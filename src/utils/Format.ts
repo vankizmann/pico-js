@@ -27,6 +27,13 @@ export interface PicoFormat extends PicoFormatParser,
     //
 }
 
+/**
+ * @class PicoFormat
+ * @extends PicoFormatParam
+ * @extends PicoFormatOption
+ * @extends PicoFormatUrl
+ * @extends PicoFormatFile
+ */
 export class PicoFormat extends trait(PicoFormatPlugins)
 {
 

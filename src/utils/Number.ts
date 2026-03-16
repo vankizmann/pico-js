@@ -148,7 +148,13 @@ export class PicoNumber
      */
     static combine(value : number[]) : number
     {
-        return Arr.reduce(value, (acc : number, val : any) => acc + val, 0);
+        const iter = Arr.slice(...[
+            value, 1, value.length
+        ]);
+
+        return Arr.reduce(iter, (acc : number, val : any) => {
+            return acc + val;
+        }, Arr.first(value) ?? 0);
     }
 
     /**
@@ -162,7 +168,13 @@ export class PicoNumber
      */
     static subtract(value : number[]) : number
     {
-        return Arr.reduce(value, (acc : number, val : any) => acc - val, 0);
+        const iter = Arr.slice(...[
+            value, 1, value.length
+        ]);
+
+        return Arr.reduce(iter, (acc : number, val : any) => {
+            return acc - val;
+        }, Arr.first(value) ?? 0);
     }
 
     /**
