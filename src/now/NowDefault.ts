@@ -20,11 +20,36 @@ export interface PicoNowDefault extends PicoNowInterface
  */
 export class PicoNowDefault
 {
-    static test(value : any) : boolean
+    calc(value : any, scope : string) : PicoNow
     {
-        return value instanceof Date;
-    }
+        if ( ! Mix.isNum(value) ) {
+            value = Mix.int(value);
+        }
 
+        let result = 0;
+
+        if ( /^seconds?$/i.test(scope) ) {
+            result = value * 1000;
+        }
+
+        if ( /^minutes?$/i.test(scope) ) {
+            result = value * 1000 * 60;
+        }
+
+        if ( /^hours?$/i.test(scope) ) {
+            result = value * 1000 * 60 * 60;
+        }
+
+        if ( /^dates?$/i.test(scope) ) {
+            result = value * 1000 * 60 * 60 * 24;
+        }
+
+        this.value.setTime(...[
+            this.value.getTime() + result
+        ]);
+
+        return <PicoNow> <unknown> this;
+    }
     /**
      * Get value by scope
      *
@@ -293,6 +318,22 @@ export class PicoNowDefault
             scope = 'date';
         }
 
+        if ( /^seconds?$/i.test(scope) ) {
+            return this.calc(value, scope);
+        }
+
+        if ( /^minutes?$/i.test(scope) ) {
+            return this.calc(value, scope);
+        }
+
+        if ( /^hours?$/i.test(scope) ) {
+            return this.calc(value, scope);
+        }
+
+        if ( /^dates?$/i.test(scope) ) {
+            return this.calc(value, scope);
+        }
+
         this.set(this.get(scope) + Mix.int(value), scope);
 
         return <PicoNow> <unknown> this;
@@ -313,7 +354,25 @@ export class PicoNowDefault
             scope = 'date';
         }
 
-        this.set(this.get(scope) - Mix.int(value), scope);
+        if ( /^seconds?$/i.test(scope) ) {
+            return this.calc(value * -1, scope);
+        }
+
+        if ( /^minutes?$/i.test(scope) ) {
+            return this.calc(value * -1, scope);
+        }
+
+        if ( /^hours?$/i.test(scope) ) {
+            return this.calc(value * -1, scope);
+        }
+
+        if ( /^dates?$/i.test(scope) ) {
+            return this.calc(value * -1, scope);
+        }
+
+        this.set(...[
+            this.get(scope) - Mix.int(value), scope
+        ]);
 
         return <PicoNow> <unknown> this;
     }

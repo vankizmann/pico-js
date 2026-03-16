@@ -107,7 +107,7 @@ export class PicoArray
             return 0;
         }
 
-        if ( index + 1 > target.length ) {
+        if ( index + 1 > target.length - 1 ) {
             return 0;
         }
 

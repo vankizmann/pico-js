@@ -28,12 +28,12 @@ export {
 }
 
 // Work in progress (not started yet)
-// import { default as Map } from "./wip/Map.ts";
-// import { default as Element } from "./wip/Element.ts";
+import { default as Map } from "./wip/Map.ts";
+import { default as Element } from "./wip/Element.ts";
 
-// export {
-//     Map, Element
-// }
+export {
+    Map, Element
+}
 
 /**
  * @type {Mix}

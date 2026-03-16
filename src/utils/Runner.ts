@@ -221,7 +221,7 @@ export class PicoRunner
      */
     static framerate(cb : Function, fps : number = 30, finish : boolean = true) : Function
     {
-        let timer : any, last = 0, hertz = 1000 / fps;
+        let timer : any, frame : any, last = 0, hertz = 1000 / fps;
 
         const fn = (...args : any) => {
 
@@ -231,7 +231,13 @@ export class PicoRunner
                 return finish && (timer = setTimeout(fn, hertz + 1));
             }
 
-            (this.frame(() => cb(...args)), last = Date.now());
+            cancelAnimationFrame(frame);
+
+            frame = requestAnimationFrame(() => {
+                cb(...args);
+            });
+
+            last = Date.now()
         };
 
         return fn;
