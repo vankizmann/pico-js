@@ -44,6 +44,27 @@ export class PicoMixed
     }
 
     /**
+     * Check if the value is true
+     *
+     * @example Mix.isTrue('') // => false
+     * @example Mix.isTrue('foobar') // => true
+     * @example Mix.isTrue([]) // => false
+     * @example Mix.isTrue(['foobar']) // => true
+     * @example Mix.isTrue(false) // => false
+     *
+     * @param {any} value The value to test
+     * @returns {boolean} Returns true if value is true
+     */
+    static isTrue(value : any) : boolean
+    {
+        if ( this.isBool(value) ) {
+            return this.bool(value) === true;
+        }
+
+        return ! this.isEmpty(value);
+    }
+
+    /**
      * Check if the value is null
      *
      * @example Mix.isNull(null) // => true

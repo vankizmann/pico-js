@@ -96,7 +96,7 @@ export class PicoCookie
             return Mix.bool(this.$cookie[key]);
         }
 
-        if ( /^obj(ext)?$/.test(decode) ) {
+        if ( /^obj(ect)?$/.test(decode) ) {
             return For.parseOptions(this.$cookie[key]);
         }
 
