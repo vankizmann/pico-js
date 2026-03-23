@@ -53,7 +53,7 @@ export class PicoFormatParam
         }
 
         let result = Arr.each(value, (v : any, k : any) => {
-            return this.castParam(Mix.isArr(value) ? '' : k, v, key);
+            return this.castParam(Mix.isArr(value) && ! Mix.isObj(v) ? '' : k, v, key);
         });
 
         return result.join('&');
