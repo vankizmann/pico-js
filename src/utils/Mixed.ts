@@ -570,14 +570,14 @@ export class PicoMixed
     static extend(target : any, value : any, exclude : string[] = ['constructor'])
     {
         if ( value == null ) {
-            return {};
+            return target;
         }
 
         let proto = Object.getPrototypeOf(value);
 
         for ( const key of Object.getOwnPropertyNames(value) ) {
 
-            if ( !exclude.length || Arr.has(exclude, key) ) {
+            if ( exclude.length && Arr.has(exclude, key) ) {
                 continue;
             }
 
@@ -587,7 +587,7 @@ export class PicoMixed
                 desc = Object.getOwnPropertyDescriptor(value, key);
             }
 
-            if ( !desc && (!desc.get && !desc.set) ) {
+            if ( !desc || (!desc.get && !desc.set) ) {
                 target[key] = value[key];
             }
 
