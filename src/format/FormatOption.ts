@@ -57,7 +57,7 @@ export class PicoFormatOption
             return Mix.str(key) + div + For.casted(value, false);
         }
 
-        let result = Arr.map(value, (v : any, k : any) => {
+        let result = Arr.each(value, (v : any, k : any) => {
             return this.castOption(k, v, key, space);
         });
 
