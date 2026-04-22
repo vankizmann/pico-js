@@ -1,4 +1,4 @@
-import { Mix, Obj, Locale } from "../index.esm.ts";
+import { Mix, Obj, Locale, Arr } from "../index.esm.ts";
 
 export class PicoLocale
 {
@@ -15,6 +15,13 @@ export class PicoLocale
      * @type {Intl.Collator}
      */
     static $sort : Intl.Collator = null;
+
+    /**
+     * Number format
+     *
+     * @type {string[]}
+     */
+    static $number : string[] = null;
 
     /**
      * Active locale code
@@ -125,6 +132,31 @@ export class PicoLocale
     }
 
     /**
+     * Get decimal and group separators
+     *
+     * @returns {string[]} Separators [group, decimal]
+     */
+    static decimals() : string[]
+    {
+        if ( Locale.$number != null ) {
+            return Locale.$number;
+        }
+
+        const parts = new Intl.NumberFormat(Locale.code())
+            .formatToParts(1234.5);
+
+        const group = Arr.find(parts, {
+            type: 'group'
+        });
+
+        const decimal = Arr.find(parts, {
+            type: 'decimal'
+        });
+
+        return Locale.$number = [group, decimal];
+    }
+
+    /**
      * Replace :tokens in text
      *
      * @example Locale.replace("Hi :x", {x:"Bob"}) // => "Hi Bob"
@@ -222,6 +254,46 @@ export class PicoLocale
         }
 
         return splits[0];
+    }
+
+    /**
+     * Parse localized number string
+     *
+     * @example Locale.num("1,234.50") // => 1234.5
+     *
+     * @param {string} value Localized string
+     * @returns {number} Number value
+     */
+    static num(value : string) : number
+    {
+        const [group, decimal] = Locale.decimals();
+
+        const text = value
+            .replaceAll(' ', '')
+            .replaceAll(group, '')
+            .replaceAll(decimal, '.');
+
+        return Mix.num(text);
+    }
+
+    /**
+     * Parse localized integer string
+     *
+     * @example Locale.int("1,234") // => 1234
+     *
+     * @param {string} value Localized string
+     * @returns {number} Integer value
+     */
+    static int(value : string) : number
+    {
+        const [group, decimal] = Locale.decimals();
+
+        const text = value
+            .replaceAll(' ', '')
+            .replaceAll(group, '')
+            .replaceAll(decimal, '.');
+
+        return Mix.int(text);
     }
 
 }
