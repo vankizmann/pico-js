@@ -153,7 +153,9 @@ export class PicoLocale
             type: 'decimal'
         });
 
-        return Locale.$number = [group, decimal];
+        return Locale.$number = [
+            group.value || ',', decimal.value || '.'
+        ];
     }
 
     /**

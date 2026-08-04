@@ -406,7 +406,7 @@ export class PicoArray
      * @param {any[]} [result] Initial result
      * @returns {any} Cascade result
      */
-    static cascade(value : any, childs : string, cb: Function, cascade: any[] = [], result = []) : any
+    static cascade(value : any, childs : string, cb : Function, cascade : any[] = [], result = []) : any
     {
         let fn = (cas : any) => (val : any) => {
             return this.cascade(val, childs, cb, cas, result);
@@ -440,6 +440,27 @@ export class PicoArray
     }
 
     /**
+     * Flatten nested array cascade
+     *
+     * @example Arr.cascadeFlatten([{n:1, children:[{n:2}]}]) // => [{n:1,...}, {n:2}]
+     *
+     * @param {any[]} items Input list
+     * @param {string} [key] Child key
+     * @param {any[]} [result] Initial result
+     * @returns {any[]} Flattened list
+     */
+    static cascadeFlatten(items : any[], key : string = 'children', result : any[] = []) : any[]
+    {
+        let cb = (input : any) => {
+            result.push(input), Mix.isArr(input[key]) && input[key].forEach(cb);
+        };
+
+        items.forEach(cb);
+
+        return result;
+    }
+
+    /**
      * Find item in cascade
      *
      * @example Arr.cascadeFind({a:1, b:[{a:2}]}, "b", v => v.a === 2) // => [{...}, {a:2}]
@@ -457,11 +478,11 @@ export class PicoArray
 
         let result = null
 
-        const fn = (val : any, cascade: any[]) => {
+        const fn = (val : any, cascade : any[]) => {
             return cb(val, cascade) ? [...cascade, val] : null;
         };
 
-        this.cascade(value, childs, (val:any, cascade : any[]) => {
+        this.cascade(value, childs, (val : any, cascade : any[]) => {
             if ( result == null ) result = fn(val, cascade);
         });
 

@@ -1,6 +1,6 @@
 {
     "name": "@kizmann/pico-js",
-    "version": "2.1.4",
+    "version": "2.1.5",
     "license": "MIT",
     "type": "module",
     "private": false,
