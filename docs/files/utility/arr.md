@@ -788,3 +788,22 @@ cascade `Array`: Track of parent objects (default: `[]`).
 
 **Returns:**  
 `Array|Object`: Recursively processed data.
+
+<hr>
+
+### Arr.cascadeFlatten
+Flattens a nested array structure into a single-level array.
+
+```js
+// Arr.cascadeFlatten(items, key = 'children')
+
+Array.cascadeFlatten([{ n: 1, children: [{ n: 2 }] }]);
+// => [{ n: 1, children: [...] }, { n: 2 }]
+```
+
+**Arguments:**  
+items `Array`: The nested array structure to flatten.  
+key `String`: The key containing children arrays (default: `'children'`).
+
+**Returns:**  
+`Array`: A flattened array containing all items.

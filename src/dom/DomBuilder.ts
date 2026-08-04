@@ -32,7 +32,9 @@ export class PicoDomBuilder
             el = document.createElement(el);
         }
 
-        el = Obj.assign(el, options);
+        if ( el != null ) {
+            el = Obj.assign(el, options);
+        }
 
         let ini = new Dom(el);
 
